@@ -1,5 +1,5 @@
 {
-  "name": "python",
+  "name": "nim",
   "word": "identifier",
   "rules": {
     "module": {
@@ -4610,15 +4610,15 @@
     },
     "true": {
       "type": "STRING",
-      "value": "True"
+      "value": "true"
     },
     "false": {
       "type": "STRING",
-      "value": "False"
+      "value": "false"
     },
     "none": {
       "type": "STRING",
-      "value": "None"
+      "value": "nil"
     },
     "await": {
       "type": "PREC",
@@ -4640,15 +4640,37 @@
     "comment": {
       "type": "TOKEN",
       "content": {
-        "type": "SEQ",
+        "type": "CHOICE",
         "members": [
           {
-            "type": "STRING",
-            "value": "#"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "#[^\\[]"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
           },
           {
-            "type": "PATTERN",
-            "value": ".*"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "#["
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^\\]]*\\]+([^#\\]][^\\]]*\\]+)*"
+              },
+              {
+                "type": "STRING",
+                "value": "#"
+              }
+            ]
           }
         ]
       }

@@ -22,7 +22,7 @@ const PREC = {
 }
 
 module.exports = grammar({
-  name: 'python',
+  name: 'nim',
 
   extras: $ => [
     $.comment,
@@ -861,16 +861,19 @@ module.exports = grammar({
 
     keyword_identifier: $ => alias(choice('print', 'exec'), $.identifier),
 
-    true: $ => 'True',
-    false: $ => 'False',
-    none: $ => 'None',
+    true: $ => 'true',
+    false: $ => 'false',
+    none: $ => 'nil',
 
     await: $ => prec(PREC.unary, seq(
       'await',
       $._expression
     )),
 
-    comment: $ => token(seq('#', /.*/)),
+    comment: $ => token(choice(
+      seq(/#[^\[]/, /.*/),
+      seq('#[', /[^\]]*\]+([^#\]][^\]]*\]+)*/, '#')
+    )),
 
     _semicolon: $ => ';'
   }
