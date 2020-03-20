@@ -339,12 +339,7 @@ module.exports = grammar({
       $.tuple,
       $.typed_parameter,
       $.default_parameter,
-      $.typed_default_parameter,
-      choice(
-        $.list_splat,
-        alias('*', $.list_splat),
-      ),
-      $.dictionary_splat
+      $.typed_default_parameter
     ),
 
     default_parameter: $ => seq(
@@ -360,16 +355,6 @@ module.exports = grammar({
       '=',
       field('value', $._expression)
     )),
-
-    list_splat: $ => seq(
-      '*',
-      $._expression,
-    ),
-
-    dictionary_splat: $ => seq(
-      '**',
-      $._expression
-    ),
 
     global_statement: $ => seq(
       'global',
@@ -400,23 +385,11 @@ module.exports = grammar({
       field('body', $._suite)
     ),
 
-    parenthesized_list_splat: $ => seq(
-      '(',
-      choice(
-        alias($.parenthesized_list_splat, $.parenthesized_expression),
-        $.list_splat,
-      ),
-      ')',
-    ),
-
     argument_list: $ => seq(
       '(',
       optional(commaSep1(
         choice(
           $._expression,
-          $.list_splat,
-          $.dictionary_splat,
-          alias($.parenthesized_list_splat, $.parenthesized_expression),
           $.keyword_argument
         )
       )),
@@ -648,11 +621,7 @@ module.exports = grammar({
     )),
 
     typed_parameter: $ => prec(PREC.typed_parameter, seq(
-      choice(
-        $.identifier,
-        $.list_splat,
-        $.dictionary_splat
-      ),
+      $.identifier,
       ':',
       field('type', $.type)
     )),
@@ -669,7 +638,7 @@ module.exports = grammar({
 
     list: $ => seq(
       '[',
-      optional(commaSep1(choice($._expression, $.list_splat))),
+      optional(commaSep1($._expression)),
       optional(','),
       ']'
     ),
@@ -691,7 +660,7 @@ module.exports = grammar({
 
     dictionary: $ => seq(
       '{',
-      optional(commaSep1(choice($.pair, $.dictionary_splat))),
+      optional(commaSep1($.pair)),
       optional(','),
       '}'
     ),
@@ -711,7 +680,7 @@ module.exports = grammar({
 
     set: $ => seq(
       '{',
-      commaSep1(choice($._expression, $.list_splat)),
+      commaSep1($._expression),
       optional(','),
       '}'
     ),

@@ -454,9 +454,6 @@ async def c(a: b.c):
 async def d(a: Sequence[T]) -> T:
   a
 
-async def i(a, b=c, *c, **d):
-  a
-
 async def d(a: str) -> nil:
   return nil
 
@@ -511,17 +508,6 @@ async def d(a:str="default", b=c) -> nil:
   (function_definition
     name: (identifier)
     parameters: (parameters
-      (identifier)
-      (default_parameter
-        name: (identifier)
-        value: (identifier))
-      (list_splat (identifier))
-      (dictionary_splat (identifier)))
-    body: (block
-      (expression_statement (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
       (typed_parameter (identifier) type: (type (identifier))))
     return_type: (type (none))
     body: (block
@@ -547,21 +533,8 @@ Function definitions
 def e((a,b)):
   return (a,b)
 
-def e(*list: str):
-  pass
-
-def e(**list: str):
-  pass
-
 def f():
   nonlocal a
-
-def g(h, i, *, j, k=100, **kwarg):
-  return h,i,j,k,kwarg
-
-def h(*a):
-  i((*a))
-  j(((*a)))
 
 ---
 
@@ -573,52 +546,9 @@ def h(*a):
       (return_statement (expression_list (tuple (identifier) (identifier))))))
   (function_definition
     name: (identifier)
-    parameters: (parameters (typed_parameter
-      (list_splat (identifier))
-      type: (type (identifier))))
-    body: (block
-      (pass_statement)))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters (typed_parameter
-      (dictionary_splat (identifier))
-      type: (type (identifier))))
-    body: (block
-      (pass_statement)))
-  (function_definition
-    name: (identifier)
     parameters: (parameters)
     body: (block
-      (nonlocal_statement (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (identifier)
-      (identifier)
-      (list_splat)
-      (identifier)
-      (default_parameter name: (identifier) value: (integer))
-      (dictionary_splat (identifier)))
-    body: (block
-      (return_statement (expression_list
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier)))))
-   (function_definition
-     name: (identifier)
-     parameters: (parameters (list_splat (identifier)))
-     body: (block
-       (expression_statement
-         (call function:
-           (identifier)
-           arguments:
-             (argument_list (parenthesized_expression (list_splat (identifier))))))
-       (expression_statement
-         (call function:
-           (identifier)
-           arguments: (argument_list (parenthesized_expression (parenthesized_expression (list_splat (identifier))))))))))
+      (nonlocal_statement (identifier)))))
 
 ====================================================
 Class definitions
@@ -704,9 +634,6 @@ class C:
   @d(1)
   @e(2, 3)
   @a(b=true)
-  @a(*b)
-  @a(**c)
-  @a(1, b=true, *b, **c)
   def f():
     g
 
@@ -736,21 +663,6 @@ class C:
           (dotted_name (identifier))
           (argument_list
             (keyword_argument (identifier) (true))))
-        (decorator
-          (dotted_name (identifier))
-          (argument_list
-            (list_splat (identifier))))
-        (decorator
-          (dotted_name (identifier))
-          (argument_list
-            (dictionary_splat (identifier))))
-        (decorator
-          (dotted_name (identifier))
-          (argument_list
-            (integer)
-            (keyword_argument (identifier) (true))
-            (list_splat (identifier))
-            (dictionary_splat (identifier))))
         (function_definition
           (identifier)
           (parameters)

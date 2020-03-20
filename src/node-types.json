@@ -84,15 +84,7 @@
         "named": true
       },
       {
-        "type": "dictionary_splat",
-        "named": true
-      },
-      {
         "type": "identifier",
-        "named": true
-      },
-      {
-        "type": "list_splat",
         "named": true
       },
       {
@@ -312,19 +304,7 @@
           "named": true
         },
         {
-          "type": "dictionary_splat",
-          "named": true
-        },
-        {
           "type": "keyword_argument",
-          "named": true
-        },
-        {
-          "type": "list_splat",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
           "named": true
         }
       ]
@@ -915,10 +895,6 @@
       "required": false,
       "types": [
         {
-          "type": "dictionary_splat",
-          "named": true
-        },
-        {
           "type": "pair",
           "named": true
         }
@@ -950,21 +926,6 @@
         },
         {
           "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "dictionary_splat",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "_expression",
           "named": true
         }
       ]
@@ -1566,10 +1527,6 @@
         {
           "type": "_expression",
           "named": true
-        },
-        {
-          "type": "list_splat",
-          "named": true
         }
       ]
     }
@@ -1599,21 +1556,6 @@
         },
         {
           "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "list_splat",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "_expression",
           "named": true
         }
       ]
@@ -1749,14 +1691,6 @@
           "named": true
         },
         {
-          "type": "list_splat",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
           "type": "yield",
           "named": true
         }
@@ -1864,10 +1798,6 @@
       "types": [
         {
           "type": "_expression",
-          "named": true
-        },
-        {
-          "type": "list_splat",
           "named": true
         }
       ]
@@ -2095,15 +2025,7 @@
       "required": true,
       "types": [
         {
-          "type": "dictionary_splat",
-          "named": true
-        },
-        {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "list_splat",
           "named": true
         }
       ]

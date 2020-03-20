@@ -124,8 +124,6 @@ print()
 print(a)
 print(a, b=c)
 print(d, e)
-print(d, *e)
-print(*f, **g,)
 a(print)
 
 ---
@@ -154,18 +152,6 @@ a(print)
   (expression_statement
     (call
       (identifier)
-      (argument_list
-        (identifier)
-        (list_splat (identifier)))))
-  (expression_statement
-    (call
-      (identifier)
-      (argument_list
-        (list_splat (identifier))
-        (dictionary_splat (identifier)))))
-  (expression_statement
-    (call
-      (identifier)
       (argument_list (identifier)))))
 
 =====================================
@@ -176,10 +162,6 @@ def a(print):
   b
 def a(printer=print):
   c
-def a(*print):
-  b
-def a(**print):
-  b
 def print():
   a
 
@@ -193,14 +175,6 @@ def print():
   (function_definition
     (identifier)
     (parameters (default_parameter (identifier) (identifier)))
-    (block (expression_statement (identifier))))
-  (function_definition
-    (identifier)
-    (parameters (list_splat (identifier)))
-    (block (expression_statement (identifier))))
-  (function_definition
-    (identifier)
-    (parameters (dictionary_splat (identifier)))
     (block (expression_statement (identifier))))
   (function_definition
     (identifier)
@@ -232,34 +206,6 @@ exec("""exec _code_ in _globs_, _locs_""")
       (identifier)
       (argument_list (string)))))
 
-=====================================
-Calls with splats
-=====================================
-
-a(*())
-a(**{})
-a(*b)
-c(d, *e, **g)
-
----
-
-(module
-  (expression_statement (call
-    (identifier)
-    (argument_list (list_splat (tuple)))))
-  (expression_statement (call
-    (identifier)
-    (argument_list (dictionary_splat (dictionary)))))
-  (expression_statement (call
-    (identifier)
-    (argument_list
-      (list_splat (identifier)))))
-  (expression_statement (call
-    (identifier)
-    (argument_list
-      (identifier)
-      (list_splat (identifier))
-      (dictionary_splat (identifier))))))
 
 =====================================
 Math operators
