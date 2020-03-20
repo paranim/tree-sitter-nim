@@ -77,10 +77,9 @@ module.exports = grammar({
     ),
 
     _simple_statement: $ => choice(
-      $.future_import_statement,
       $.import_statement,
       $.import_from_statement,
-      $.print_statement,
+      $.echo_statement,
       $.assert_statement,
       $.expression_statement,
       $.return_statement,
@@ -104,16 +103,6 @@ module.exports = grammar({
     relative_import: $ => seq(
       $.import_prefix,
       optional($.dotted_name)
-    ),
-
-    future_import_statement: $ => seq(
-      'from',
-      '__future__',
-      'import',
-      choice(
-        $._import_list,
-        seq('(', $._import_list, ')'),
-      )
     ),
 
     import_from_statement: $ => seq(
@@ -146,24 +135,12 @@ module.exports = grammar({
 
     wildcard_import: $ => '*',
 
-    print_statement: $ => choice(
-      prec(1, seq(
-        'print',
-        $.chevron,
-        repeat(seq(',', field('argument', $._expression))),
-        optional(','))
-      ),
+    echo_statement: $ =>
       prec(-1, seq(
-        'print',
+        'echo',
         commaSep1(field('argument', $._expression)),
         optional(','))
-      )
-    ),
-
-    chevron: $ => seq(
-      '>>',
-      $._expression
-    ),
+      ),
 
     assert_statement: $ => seq(
       'assert',

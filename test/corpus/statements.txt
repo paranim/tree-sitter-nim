@@ -66,56 +66,24 @@ from ..a import b
       (dotted_name (identifier))))
 
 =====================================
-Future import statements
+Echo statements
 =====================================
 
-from __future__ import print_statement
-from __future__ import python4
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
----
-
-(module
-  (future_import_statement (dotted_name (identifier)))
-  (future_import_statement (dotted_name (identifier)))
-  (future_import_statement
-    (dotted_name (identifier))
-    (dotted_name (identifier))
-    (dotted_name (identifier))
-    (dotted_name (identifier))))
-
-=====================================
-Print statements
-=====================================
-
-print a
-print b, c
-print 0 or 1, 1 or 0,
-print 0 or 1
+echo a
+echo b, c
+echo 0 or 1, 1 or 0,
+echo 0 or 1
 
 ---
 
 (module
-  (print_statement (identifier))
-  (print_statement (identifier) (identifier))
-  (print_statement
+  (echo_statement (identifier))
+  (echo_statement (identifier) (identifier))
+  (echo_statement
     (boolean_operator (integer) (integer))
     (boolean_operator (integer) (integer)))
-  (print_statement
+  (echo_statement
     (boolean_operator (integer) (integer))))
-
-=====================================
-Print statements with redirection
-=====================================
-
-print >> a
-print >> a, "b", "c"
-
----
-
-(module
-  (print_statement (chevron (identifier)))
-  (print_statement (chevron (identifier)) (string) (string)))
 
 =====================================
 Assert statements
@@ -328,11 +296,11 @@ For statements
 =====================================
 
 for line, i in lines:
-  print line
+  echo line
   for character, j in line:
-    print character
+    echo character
 else:
-  print x
+  echo x
 
 for x, in [(1,), (2,), (3,)]:
   x
@@ -344,17 +312,17 @@ for x, in [(1,), (2,), (3,)]:
     left: (variables (identifier) (identifier))
     right: (expression_list (identifier))
     body: (block
-      (print_statement
+      (echo_statement
         argument: (identifier))
       (for_statement
         left: (variables (identifier) (identifier))
         right: (expression_list (identifier))
         body: (block
-          (print_statement
+          (echo_statement
             argument: (identifier)))))
     alternative: (else_clause
       body: (block
-        (print_statement
+        (echo_statement
           argument: (identifier)))))
   (for_statement
     left: (variables (identifier))
@@ -698,19 +666,19 @@ raise RunTimeError('NO') from e
 Comments
 ====================================================
 
-print a
+echo a
 # hi
-print b # bye
-print c
+echo b # bye
+echo c
 
 ---
 
 (module
-  (print_statement (identifier))
+  (echo_statement (identifier))
   (comment)
-  (print_statement (identifier))
+  (echo_statement (identifier))
   (comment)
-  (print_statement (identifier)))
+  (echo_statement (identifier)))
 
 ====================================================
 Comments at different indentation levels
@@ -760,11 +728,11 @@ c
 Newline tokens followed by comments
 ====================================================
 
-print "a"
+echo "a"
   # We need to recognize the newline *preceding* this comment, because there's no newline after it
 ---
 
-(module (print_statement (string)) (comment))
+(module (echo_statement (string)) (comment))
 
 ====================================================
 Global statements
