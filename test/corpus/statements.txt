@@ -80,10 +80,10 @@ echo 0 or 1
   (echo_statement (identifier))
   (echo_statement (identifier) (identifier))
   (echo_statement
-    (boolean_operator (integer) (integer))
-    (boolean_operator (integer) (integer)))
+    (binary_operator (integer) (integer))
+    (binary_operator (integer) (integer)))
   (echo_statement
-    (boolean_operator (integer) (integer))))
+    (binary_operator (integer) (integer))))
 
 =====================================
 Assert statements
@@ -162,7 +162,7 @@ return not b
   (return_statement (expression_list
     (binary_operator (identifier) (identifier))
     (identifier)))
-  (return_statement (expression_list (not_operator (identifier)))))
+  (return_statement (expression_list (unary_operator (identifier)))))
 
 =====================================
 If statements
@@ -299,11 +299,6 @@ for line, i in lines:
   echo line
   for character, j in line:
     echo character
-else:
-  echo x
-
-for x, in [(1,), (2,), (3,)]:
-  x
 
 ---
 
@@ -319,16 +314,7 @@ for x, in [(1,), (2,), (3,)]:
         right: (expression_list (identifier))
         body: (block
           (echo_statement
-            argument: (identifier)))))
-    alternative: (else_clause
-      body: (block
-        (echo_statement
-          argument: (identifier)))))
-  (for_statement
-    left: (variables (identifier))
-    right: (expression_list (list (tuple (integer)) (tuple (integer)) (tuple (integer))))
-    body: (block
-      (expression_statement (identifier)))))
+            argument: (identifier)))))))
 
 =====================================
 Try statements

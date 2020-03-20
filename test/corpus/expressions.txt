@@ -211,10 +211,10 @@ exec("""exec _code_ in _globs_, _locs_""")
 Math operators
 =====================================
 
-a + b * c ** d - e / 5
+a + b * c ^ d - e / 5
 -5
 +x
-~x
+not x
 
 ---
 
@@ -267,8 +267,8 @@ Binary Addition / Subtraction With Floats
 Power Operator Precedence
 =====================================
 
-2**2**3
--2**2
+2^2^3
+-2^2
 
 ---
 
@@ -311,7 +311,7 @@ a() + b * c.d.e
 Bitwise operators
 =====================================
 
-a << b | c >> d & e
+a shl b or c shr d and e
 
 ---
 
@@ -338,36 +338,40 @@ not d
 
 (module
   (expression_statement
-    (boolean_operator
+    (binary_operator
       (identifier)
-      (boolean_operator
+      (binary_operator
         (identifier)
         (identifier))))
   (expression_statement
-    (not_operator (identifier))))
+    (unary_operator (identifier))))
 
 =====================================
 Comparison operators
 =====================================
 
 a < b <= c == d >= e > f
-not a == b or c == d
+a == b or c == d
 
 ---
 
 (module
   (expression_statement
-    (comparison_operator
-      (identifier)
-      (identifier)
-      (identifier)
-      (identifier)
-      (identifier)
+    (binary_operator
+      (binary_operator
+        (binary_operator
+          (binary_operator
+            (binary_operator
+              (identifier)
+              (identifier))
+            (identifier))
+          (identifier))
+        (identifier))
       (identifier)))
   (expression_statement
-    (not_operator (boolean_operator
-      (comparison_operator (identifier) (identifier))
-      (comparison_operator (identifier) (identifier))))))
+    (binary_operator
+      (binary_operator (identifier) (identifier))
+      (binary_operator (identifier) (identifier)))))
 
 ====================================================
 Assignments

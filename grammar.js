@@ -6,18 +6,19 @@ const PREC = {
   conditional: -1,
 
   parenthesized_expression: 1,
-  not: 1,
-  compare: 2,
-  or: 10,
-  and: 11,
-  bitwise_or: 12,
-  bitwise_and: 13,
-  xor: 14,
+
+  or: 9,
+  and: 10,
+  bitwise_or: 11,
+  bitwise_and: 12,
+  xor: 13,
+  compare: 14,
   shift: 15,
   plus: 16,
   times: 17,
   unary: 18,
   power: 19,
+
   call: 20,
 }
 
@@ -223,8 +224,7 @@ module.exports = grammar({
       'in',
       field('right', $.expression_list),
       ':',
-      field('body', $._suite),
-      field('alternative', optional($.else_clause))
+      field('body', $._suite)
     ),
 
     while_statement: $ => seq(
@@ -400,7 +400,7 @@ module.exports = grammar({
     ),
 
     variables: $ => seq(
-      commaSep1($._primary_expression),
+      commaSep1(choice($.identifier, $.tuple)),
       optional(',')
     ),
 
@@ -417,9 +417,6 @@ module.exports = grammar({
     ),
 
     _expression: $ => choice(
-      $.comparison_operator,
-      $.not_operator,
-      $.boolean_operator,
       $.await,
       $.lambda,
       $._primary_expression,
@@ -454,39 +451,30 @@ module.exports = grammar({
       $.ellipsis
     ),
 
-    not_operator: $ => prec(PREC.not, seq(
-      'not',
-      field('argument', $._expression)
-    )),
-
-    boolean_operator: $ => choice(
-      prec.left(PREC.and, seq(
-        field('left', $._expression),
-        field('operator', 'and'),
-        field('right', $._expression)
-      )),
-      prec.left(PREC.or, seq(
-        field('left', $._expression),
-        field('operator', 'or'),
-        field('right', $._expression)
-      ))
-    ),
-
     binary_operator: $ => {
       const table = [
         [prec.left, '+', PREC.plus],
         [prec.left, '-', PREC.plus],
         [prec.left, '*', PREC.times],
-        [prec.left, '@', PREC.times],
         [prec.left, '/', PREC.times],
-        [prec.left, '%', PREC.times],
-        [prec.left, '//', PREC.times],
-        [prec.right, '**', PREC.power],
-        [prec.left, '|', PREC.bitwise_or],
-        [prec.left, '&', PREC.bitwise_and],
-        [prec.left, '^', PREC.xor],
-        [prec.left, '<<', PREC.shift],
-        [prec.left, '>>', PREC.shift],
+        [prec.left, 'mod', PREC.times],
+        [prec.right, '^', PREC.power],
+        [prec.left, 'or', PREC.bitwise_or],
+        [prec.left, 'and', PREC.bitwise_and],
+        [prec.left, 'xor', PREC.xor],
+        [prec.left, 'shl', PREC.shift],
+        [prec.left, 'shr', PREC.shift],
+        [prec.left, '<', PREC.compare],
+        [prec.left, '<=', PREC.compare],
+        [prec.left, '==', PREC.compare],
+        [prec.left, '!=', PREC.compare],
+        [prec.left, '>=', PREC.compare],
+        [prec.left, '>', PREC.compare],
+        [prec.left, '<>', PREC.compare],
+        [prec.left, 'in', PREC.compare],
+        [prec.left, 'notin', PREC.compare],
+        [prec.left, 'is', PREC.compare],
+        [prec.left, 'isnot', PREC.compare],
       ];
 
       return choice(...table.map(([fn, operator, precedence]) => fn(precedence, seq(
@@ -497,28 +485,8 @@ module.exports = grammar({
     },
 
     unary_operator: $ => prec(PREC.unary, seq(
-      field('operator', choice('+', '-', '~')),
+      field('operator', choice('+', '-', 'not')),
       field('argument', $._primary_expression)
-    )),
-
-    comparison_operator: $ => prec.left(PREC.compare, seq(
-      $._primary_expression,
-      repeat1(seq(
-        choice(
-          '<',
-          '<=',
-          '==',
-          '!=',
-          '>=',
-          '>',
-          '<>',
-          'in',
-          seq('not', 'in'),
-          'is',
-          seq('is', 'not')
-        ),
-        $._primary_expression
-      ))
     )),
 
     lambda: $ => prec(PREC.lambda, seq(

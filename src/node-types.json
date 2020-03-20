@@ -50,14 +50,6 @@
         "named": true
       },
       {
-        "type": "boolean_operator",
-        "named": true
-      },
-      {
-        "type": "comparison_operator",
-        "named": true
-      },
-      {
         "type": "conditional_expression",
         "named": true
       },
@@ -67,10 +59,6 @@
       },
       {
         "type": "named_expression",
-        "named": true
-      },
-      {
-        "type": "not_operator",
         "named": true
       }
     ]
@@ -525,19 +513,11 @@
         "required": true,
         "types": [
           {
-            "type": "%",
-            "named": false
-          },
-          {
-            "type": "&",
+            "type": "!=",
             "named": false
           },
           {
             "type": "*",
-            "named": false
-          },
-          {
-            "type": "**",
             "named": false
           },
           {
@@ -553,19 +533,27 @@
             "named": false
           },
           {
-            "type": "//",
+            "type": "<",
             "named": false
           },
           {
-            "type": "<<",
+            "type": "<=",
             "named": false
           },
           {
-            "type": ">>",
+            "type": "<>",
             "named": false
           },
           {
-            "type": "@",
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
             "named": false
           },
           {
@@ -573,7 +561,43 @@
             "named": false
           },
           {
-            "type": "|",
+            "type": "and",
+            "named": false
+          },
+          {
+            "type": "in",
+            "named": false
+          },
+          {
+            "type": "is",
+            "named": false
+          },
+          {
+            "type": "isnot",
+            "named": false
+          },
+          {
+            "type": "mod",
+            "named": false
+          },
+          {
+            "type": "notin",
+            "named": false
+          },
+          {
+            "type": "or",
+            "named": false
+          },
+          {
+            "type": "shl",
+            "named": false
+          },
+          {
+            "type": "shr",
+            "named": false
+          },
+          {
+            "type": "xor",
             "named": false
           }
         ]
@@ -607,46 +631,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "boolean_operator",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "and",
-            "named": false
-          },
-          {
-            "type": "or",
-            "named": false
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -718,21 +702,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "comparison_operator",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_primary_expression",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1121,16 +1090,6 @@
     "type": "for_statement",
     "named": true,
     "fields": {
-      "alternative": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "else_clause",
-            "named": true
-          }
-        ]
-      },
       "body": {
         "multiple": false,
         "required": true,
@@ -1599,22 +1558,6 @@
     }
   },
   {
-    "type": "not_operator",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "pair",
     "named": true,
     "fields": {
@@ -2009,7 +1952,7 @@
             "named": false
           },
           {
-            "type": "~",
+            "type": "not",
             "named": false
           }
         ]
@@ -2025,7 +1968,11 @@
       "required": true,
       "types": [
         {
-          "type": "_primary_expression",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "tuple",
           "named": true
         }
       ]
@@ -2152,15 +2099,7 @@
     "named": false
   },
   {
-    "type": "%",
-    "named": false
-  },
-  {
     "type": "%=",
-    "named": false
-  },
-  {
-    "type": "&",
     "named": false
   },
   {
@@ -2177,10 +2116,6 @@
   },
   {
     "type": "*",
-    "named": false
-  },
-  {
-    "type": "**",
     "named": false
   },
   {
@@ -2224,10 +2159,6 @@
     "named": false
   },
   {
-    "type": "//",
-    "named": false
-  },
-  {
     "type": "//=",
     "named": false
   },
@@ -2245,10 +2176,6 @@
   },
   {
     "type": "<",
-    "named": false
-  },
-  {
-    "type": "<<",
     "named": false
   },
   {
@@ -2277,10 +2204,6 @@
   },
   {
     "type": ">=",
-    "named": false
-  },
-  {
-    "type": ">>",
     "named": false
   },
   {
@@ -2428,6 +2351,14 @@
     "named": false
   },
   {
+    "type": "isnot",
+    "named": false
+  },
+  {
+    "type": "mod",
+    "named": false
+  },
+  {
     "type": "none",
     "named": true
   },
@@ -2437,6 +2368,10 @@
   },
   {
     "type": "not",
+    "named": false
+  },
+  {
+    "type": "notin",
     "named": false
   },
   {
@@ -2460,6 +2395,14 @@
     "named": false
   },
   {
+    "type": "shl",
+    "named": false
+  },
+  {
+    "type": "shr",
+    "named": false
+  },
+  {
     "type": "true",
     "named": true
   },
@@ -2480,6 +2423,10 @@
     "named": false
   },
   {
+    "type": "xor",
+    "named": false
+  },
+  {
     "type": "yield",
     "named": false
   },
@@ -2488,19 +2435,11 @@
     "named": false
   },
   {
-    "type": "|",
-    "named": false
-  },
-  {
     "type": "|=",
     "named": false
   },
   {
     "type": "}",
-    "named": false
-  },
-  {
-    "type": "~",
     "named": false
   }
 ]
