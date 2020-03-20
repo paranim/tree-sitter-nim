@@ -328,8 +328,6 @@ module.exports = grammar({
       ')'
     ),
 
-    lambda_parameters: $ => $._parameters,
-
     _parameters: $ => seq(
       commaSep1($._parameter),
       optional(',')
@@ -465,8 +463,7 @@ module.exports = grammar({
 
     // Expressions
     _expression_within_for_in_clause: $ => choice(
-      $._expression,
-      alias($.lambda_within_for_in_clause, $.lambda)
+      $._expression
     ),
 
     _expression: $ => choice(
@@ -575,18 +572,13 @@ module.exports = grammar({
     )),
 
     lambda: $ => prec(PREC.lambda, seq(
-      'lambda',
-      field('parameters', optional($.lambda_parameters)),
+      'proc',
+      field('parameters', $.parameters),
       ':',
+      field('type', $.type),
+      '=',
       field('body', $._expression)
     )),
-
-    lambda_within_for_in_clause: $ => seq(
-      'lambda',
-      field('parameters', optional($.lambda_parameters)),
-      ':',
-      field('body', $._expression_within_for_in_clause)
-    ),
 
     assignment: $ => seq(
       field('left', $.expression_list),

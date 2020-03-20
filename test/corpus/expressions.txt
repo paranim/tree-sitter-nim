@@ -616,37 +616,18 @@ def example():
 lambdas
 ====================================================
 
-lambda b, c: d("e" % f)
-lambda: true
-lambda a, b = c, *d, **e: a
-lambda (a,b): (a, b)
+proc (a: int, b: int): int = a + b
 
 ---
 
 (module
   (expression_statement
     (lambda
-      (lambda_parameters
-        (identifier)
-        (identifier))
-      (call
-        (identifier)
-        (argument_list
-          (binary_operator (string) (identifier))))))
-  (expression_statement
-    (lambda (true)))
-  (expression_statement
-    (lambda
-      (lambda_parameters
-        (identifier)
-        (default_parameter (identifier) (identifier))
-        (list_splat (identifier))
-        (dictionary_splat (identifier)))
-      (identifier)))
-  (expression_statement
-    (lambda
-      (lambda_parameters (tuple (identifier) (identifier)))
-      (tuple (identifier) (identifier)))))
+      (parameters
+        (typed_parameter (identifier) (type (identifier)))
+        (typed_parameter (identifier) (type (identifier))))
+      (type (identifier))
+      (binary_operator (identifier) (identifier)))))
 
 =====================================
 Conditional if expressions
