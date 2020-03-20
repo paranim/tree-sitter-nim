@@ -19,13 +19,5 @@
     "build": "tree-sitter generate && node-gyp build",
     "test": "tree-sitter test"
   },
-  "repository": "https://github.com/paranim/tree-sitter-nim",
-  "tree-sitter": [
-    {
-      "scope": "source.python",
-      "file-types": [
-        "py"
-      ]
-    }
-  ]
+  "repository": "https://github.com/paranim/tree-sitter-nim"
 }
