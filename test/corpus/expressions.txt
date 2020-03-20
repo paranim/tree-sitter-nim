@@ -212,7 +212,7 @@ def print():
 Exec used as an identifier
 =====================================
 
-exec("print \"'%s' has %i characters\" % (public_function(), len(public_function()))", {"__builtins__" : None}, safe_dict)
+exec("print \"'%s' has %i characters\" % (public_function(), len(public_function()))", {"__builtins__" : nil}, safe_dict)
 exec("""exec _code_ in _globs_, _locs_""")
 
 ---
@@ -617,7 +617,7 @@ lambdas
 ====================================================
 
 lambda b, c: d("e" % f)
-lambda: True
+lambda: true
 lambda a, b = c, *d, **e: a
 lambda (a,b): (a, b)
 

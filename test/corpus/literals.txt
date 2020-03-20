@@ -215,9 +215,9 @@ Unicode escape sequences
 Other primitives
 =====================================
 
-True
-False
-None
+true
+false
+nil
 
 ---
 
@@ -333,8 +333,8 @@ List comprehensions
 
 [a + b for (a, b) in items]
 [a for b in c for a in b]
-[(x,y) for x in [1,2,3] for y in [1,2,3] if True]
-[a for a in lambda: True, lambda: False if a()]
+[(x,y) for x in [1,2,3] for y in [1,2,3] if true]
+[a for a in lambda: true, lambda: false if a()]
 
 ---
 
