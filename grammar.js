@@ -189,7 +189,6 @@ module.exports = grammar({
       $.with_statement,
       $.function_definition,
       $.class_definition,
-      $.decorated_definition
     ),
 
     if_statement: $ => seq(
@@ -237,7 +236,6 @@ module.exports = grammar({
     ),
 
     for_statement: $ => seq(
-      optional('async'),
       'for',
       field('left', $.variables),
       'in',
@@ -288,7 +286,6 @@ module.exports = grammar({
     ),
 
     with_statement: $ => seq(
-      optional('async'),
       'with',
       commaSep1($.with_item),
       ':',
@@ -304,7 +301,6 @@ module.exports = grammar({
     ),
 
     function_definition: $ => seq(
-      optional('async'),
       'def',
       field('name', $.identifier),
       field('parameters', $.parameters),
@@ -393,21 +389,6 @@ module.exports = grammar({
       ')'
     ),
 
-    decorated_definition: $ => seq(
-      repeat1($.decorator),
-      field('definition', choice(
-        $.class_definition,
-        $.function_definition
-      ))
-    ),
-
-    decorator: $ => seq(
-      '@',
-      $.dotted_name,
-      field('arguments', optional($.argument_list)),
-      $._newline
-    ),
-
     _suite: $ => choice(
       alias($._simple_statements, $.block),
       seq($._indent, $.block)
@@ -433,7 +414,6 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
-      $.await,
       $.lambda,
       $._primary_expression,
       $.if_expression,
@@ -777,11 +757,6 @@ module.exports = grammar({
     true: $ => 'true',
     false: $ => 'false',
     none: $ => 'nil',
-
-    await: $ => prec(PREC.unary, seq(
-      'await',
-      $._expression
-    )),
 
     comment: $ => token(choice(
       seq(/#[^\[]/, /.*/),

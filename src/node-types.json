@@ -8,10 +8,6 @@
         "named": true
       },
       {
-        "type": "decorated_definition",
-        "named": true
-      },
-      {
         "type": "for_statement",
         "named": true
       },
@@ -43,10 +39,6 @@
     "subtypes": [
       {
         "type": "_primary_expression",
-        "named": true
-      },
-      {
-        "type": "await",
         "named": true
       },
       {
@@ -466,21 +458,6 @@
     }
   },
   {
-    "type": "await",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "block",
     "named": true,
     "fields": {},
@@ -636,62 +613,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "decorated_definition",
-    "named": true,
-    "fields": {
-      "definition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "class_definition",
-            "named": true
-          },
-          {
-            "type": "function_definition",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "decorator",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "decorator",
-    "named": true,
-    "fields": {
-      "arguments": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "argument_list",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "dotted_name",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -2286,10 +2207,6 @@
     "named": false
   },
   {
-    "type": "@",
-    "named": false
-  },
-  {
     "type": "@=",
     "named": false
   },
@@ -2319,14 +2236,6 @@
   },
   {
     "type": "assert",
-    "named": false
-  },
-  {
-    "type": "async",
-    "named": false
-  },
-  {
-    "type": "await",
     "named": false
   },
   {
