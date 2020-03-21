@@ -188,7 +188,6 @@ module.exports = grammar({
       $.try_statement,
       $.with_statement,
       $.function_definition,
-      $.class_definition,
     ),
 
     if_statement: $ => seq(
@@ -301,16 +300,16 @@ module.exports = grammar({
     ),
 
     function_definition: $ => seq(
-      'def',
+      choice('proc', 'func'),
       field('name', $.identifier),
       field('parameters', $.parameters),
       optional(
         seq(
-          '->',
+          ':',
           field('return_type', $.type)
         )
       ),
-      ':',
+      '=',
       field('body', $._suite)
     ),
 
@@ -367,14 +366,6 @@ module.exports = grammar({
           commaSep1($._expression)
         )
       )
-    ),
-
-    class_definition: $ => seq(
-      'class',
-      field('name', $.identifier),
-      field('superclasses', optional($.argument_list)),
-      ':',
-      field('body', $._suite)
     ),
 
     argument_list: $ => seq(

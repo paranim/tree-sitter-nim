@@ -139,11 +139,11 @@ a(print)
 Print used as a parameter
 =====================================
 
-def a(print):
+proc a(print) =
   b
-def a(printer=print):
+proc a(printer=print) =
   c
-def print():
+proc print() =
   a
 
 ---
@@ -441,10 +441,10 @@ a := x
 (y := f(x))
 foo(x=(y := f(x)))
 y0 = (y1 := f(x))
-def foo(answer=(p := 42)):
-  return answer;
-def foo(answer: (p := 42) = 5):
-  return answer;
+proc foo(answer=(p := 42)) =
+  return answer
+proc foo(answer: (p := 42) = 5) =
+  return answer
 foo(x := 3, cat='vector')
 (z := (y := (x := 0)))
 
@@ -515,7 +515,7 @@ foo(x := 3, cat='vector')
 Yield expressions
 ====================================================
 
-def example():
+proc example() =
   yield
   yield 1
   x = yield 2

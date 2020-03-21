@@ -391,10 +391,10 @@ with a as b:
 Function definitions
 =====================================
 
-def e((a,b)):
+proc e((a,b)) =
   return (a,b)
 
-def f():
+proc f() =
   nonlocal a
 
 ---
@@ -411,79 +411,6 @@ def f():
     body: (block
       (nonlocal_statement (identifier)))))
 
-====================================================
-Class definitions
-====================================================
-
-class A:
-  def b(self):
-    return c
-class B():
-  pass
-class B(method1):
-  def method1(self):
-    return
-class C(method1, Sequence[T]):
-  pass
-class D(Sequence[T, U]):
-  pass
-
----
-
-(module
-  (class_definition
-    (identifier)
-    (block
-      (function_definition
-        (identifier)
-        (parameters (identifier))
-        (block
-          (return_statement (expression_list (identifier)))))))
- (class_definition
-    (identifier)
-    (argument_list)
-    (block
-      (pass_statement)))
- (class_definition
-    (identifier)
-    (argument_list (identifier))
-    (block
-      (function_definition
-        (identifier)
-        (parameters (identifier))
-        (block
-          (return_statement)))))
- (class_definition
-    (identifier)
-    (argument_list (identifier) (subscript (identifier) (identifier)))
-    (block
-      (pass_statement)))
- (class_definition
-    (identifier)
-    (argument_list (subscript (identifier) (identifier) (identifier)))
-    (block
-      (pass_statement))))
-
-====================================================
-Class definitions with superclasses
-====================================================
-
-class A(B, C):
-  def d():
-    e
-
----
-
-(module
-  (class_definition
-    (identifier)
-    (argument_list (identifier) (identifier))
-    (block
-      (function_definition
-        (identifier)
-        (parameters)
-        (block
-          (expression_statement (identifier)))))))
 
 
 ====================================================
@@ -617,7 +544,7 @@ if a:
     c()
 
 
-    def d():
+    proc d() =
 
 
         e()
