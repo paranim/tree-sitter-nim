@@ -415,15 +415,15 @@ a[b] = c = d
         (expression_list (identifier))))))
 
 ====================================================
-Assignments with type annotations
+Declarations with type annotations
 ====================================================
 
-tail_leaves: List[Leaf] = []
+let tail_leaves: seq[Leaf] = []
 
 ---
 
 (module
-  (expression_statement (assignment
+  (expression_statement (declaration
     (expression_list (identifier))
     (type (subscript (identifier) (identifier)))
     (expression_list (list)))))
@@ -583,9 +583,9 @@ proc (a: int, b: int): int = a + b
 Conditional if expressions
 =====================================
 
-a = b if c else d
-something() if a else d
-slice(1,1,1) if a else d
+a = if c: b else: d
+if a: something() else: d
+if a: slice(1,1,1) else: d
 
 ---
 
@@ -594,31 +594,11 @@ slice(1,1,1) if a else d
     (assignment
       (expression_list (identifier))
       (expression_list
-        (conditional_expression (identifier) (identifier) (identifier)))))
+        (if_expression (identifier) (identifier) (else_expression (identifier))))))
   (expression_statement
-    (conditional_expression (call (identifier) (argument_list)) (identifier) (identifier)))
+    (if_expression (identifier) (call (identifier) (argument_list)) (else_expression (identifier))))
   (expression_statement
-    (conditional_expression
+    (if_expression (identifier)
       (call (identifier) (argument_list (integer) (integer) (integer)))
-      (identifier) (identifier))))
+      (else_expression (identifier)))))
 
-========================================
-Async context managers and iterators
-========================================
-
-async with a as b:
-  async for c in d:
-     [e async for f in g]
-
----
-
-(module
-  (with_statement
-    (with_item (identifier) (identifier))
-    (block
-      (for_statement
-        (variables (identifier))
-        (expression_list (identifier))
-        (block
-          (expression_statement
-            (list_comprehension (identifier) (for_in_clause (variables (identifier)) (identifier)))))))))

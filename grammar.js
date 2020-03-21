@@ -1,8 +1,4 @@
 const PREC = {
-  // this resolves a conflict between the usage of ':' in a lambda vs in a
-  // typed parameter. In the case of a lambda, we don't allow typed parameters.
-  lambda: -2,
-  typed_parameter: -1,
   conditional: -1,
 
   parenthesized_expression: 1,
@@ -152,6 +148,7 @@ module.exports = grammar({
       $._expression,
       seq(commaSep1($._expression), optional(',')),
       $.assignment,
+      $.declaration,
       $.augmented_assignment,
       $.yield
     ),
@@ -215,6 +212,28 @@ module.exports = grammar({
       'else',
       ':',
       field('body', $._suite)
+    ),
+
+    if_expression: $ => prec.right(PREC.conditional, seq(
+      'if',
+      field('condition', $._expression),
+      ':',
+      field('consequence', $._expression),
+      repeat(field('alternative', $.elif_expression)),
+      optional(field('alternative', $.else_expression))
+    )),
+
+    elif_expression: $ => seq(
+      'elif',
+      field('condition', $._expression),
+      ':',
+      field('consequence', $._expression)
+    ),
+
+    else_expression: $ => seq(
+      'else',
+      ':',
+      field('body', $._expression)
     ),
 
     for_statement: $ => seq(
@@ -325,13 +344,13 @@ module.exports = grammar({
       field('value', $._expression)
     ),
 
-    typed_default_parameter: $ => prec(PREC.typed_parameter, seq(
+    typed_default_parameter: $ => seq(
       field('name', choice($.identifier, $.keyword_identifier)),
       ':',
       field('type', $.type),
       '=',
       field('value', $._expression)
-    )),
+    ),
 
     global_statement: $ => seq(
       'global',
@@ -412,15 +431,12 @@ module.exports = grammar({
     dotted_name: $ => sep1($.identifier, '.'),
 
     // Expressions
-    _expression_within_for_in_clause: $ => choice(
-      $._expression
-    ),
 
     _expression: $ => choice(
       $.await,
       $.lambda,
       $._primary_expression,
-      $.conditional_expression,
+      $.if_expression,
       $.named_expression
     ),
 
@@ -484,16 +500,22 @@ module.exports = grammar({
       ))));
     },
 
-    lambda: $ => prec(PREC.lambda, seq(
+    lambda: $ => seq(
       'proc',
       field('parameters', $.parameters),
       ':',
       field('type', $.type),
       '=',
       field('body', $._expression)
-    )),
+    ),
 
     assignment: $ => seq(
+      field('left', $.expression_list),
+      seq('=', field('right', $._right_hand_side))
+    ),
+
+    declaration: $ => seq(
+      choice('var', 'let', 'const'),
       field('left', $.expression_list),
       choice(
         seq('=', field('right', $._right_hand_side)),
@@ -560,11 +582,11 @@ module.exports = grammar({
       ))
     )),
 
-    typed_parameter: $ => prec(PREC.typed_parameter, seq(
+    typed_parameter: $ => seq(
       $.identifier,
       ':',
       field('type', $.type)
-    )),
+    ),
 
     type: $ => $._expression,
 
@@ -653,26 +675,16 @@ module.exports = grammar({
     ),
 
     for_in_clause: $ => seq(
-      optional('async'),
       'for',
       field('left', $.variables),
       'in',
-      field('right', commaSep1($._expression_within_for_in_clause)),
-      optional(',')
+      field('right', commaSep1($._primary_expression))
     ),
 
     if_clause: $ => seq(
       'if',
       $._expression
     ),
-
-    conditional_expression: $ => prec.right(PREC.conditional, seq(
-      $._expression,
-      'if',
-      $._expression,
-      'else',
-      $._expression
-    )),
 
     concatenated_string: $ => seq(
       $.string,
