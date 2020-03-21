@@ -9,7 +9,7 @@ Identifiers with Greek letters
 (module
   (expression_statement (assignment
     left: (expression_list (identifier))
-    right: (expression_list (binary_operator
+    right: (expression_list (operator
       left: (identifier)
       right: (identifier))))))
 
@@ -220,20 +220,20 @@ not x
 
 (module
   (expression_statement
-    (binary_operator
-      (binary_operator
+    (operator
+      (operator
         (identifier)
-        (binary_operator
+        (operator
           (identifier)
-          (binary_operator
+          (operator
             (identifier)
             (identifier))))
-      (binary_operator
+      (operator
         (identifier)
         (integer))))
-  (expression_statement (unary_operator (integer)))
-  (expression_statement (unary_operator (identifier)))
-  (expression_statement (unary_operator (identifier))))
+  (expression_statement (operator (integer)))
+  (expression_statement (operator (identifier)))
+  (expression_statement (operator (identifier))))
 
 =====================================
 Binary Addition / Subtraction With Floats
@@ -251,17 +251,17 @@ Binary Addition / Subtraction With Floats
 
 (module
   (expression_statement
-    (binary_operator (float) (float)))
+    (operator (float) (float)))
   (expression_statement
-    (binary_operator (float) (float)))
+    (operator (float) (float)))
   (expression_statement
-    (binary_operator (float) (integer)))
+    (operator (float) (integer)))
   (expression_statement
-    (binary_operator (float) (integer)))
+    (operator (float) (integer)))
   (expression_statement
-    (binary_operator (integer) (float)))
+    (operator (integer) (float)))
   (expression_statement
-    (binary_operator (integer) (float))))
+    (operator (integer) (float))))
 
 =====================================
 Power Operator Precedence
@@ -274,14 +274,14 @@ Power Operator Precedence
 
 (module
   (expression_statement
-    (binary_operator
+    (operator
       (integer)
-      (binary_operator
+      (operator
         (integer)
         (integer))))
   (expression_statement
-    (unary_operator
-      (binary_operator
+    (operator
+      (operator
         (integer)
         (integer)))))
 
@@ -295,11 +295,11 @@ a() + b * c.d.e
 
 (module
   (expression_statement
-    (binary_operator
+    (operator
       left: (call
         function: (identifier)
         arguments: (argument_list))
-      right: (binary_operator
+      right: (operator
         left: (identifier)
         right: (attribute
           object: (attribute
@@ -317,12 +317,12 @@ a shl b or c shr d and e
 
 (module
   (expression_statement
-    (binary_operator
-      (binary_operator
+    (operator
+      (operator
         (identifier)
         (identifier))
-      (binary_operator
-        (binary_operator
+      (operator
+        (operator
           (identifier)
           (identifier))
         (identifier)))))
@@ -338,13 +338,13 @@ not d
 
 (module
   (expression_statement
-    (binary_operator
+    (operator
       (identifier)
-      (binary_operator
+      (operator
         (identifier)
         (identifier))))
   (expression_statement
-    (unary_operator (identifier))))
+    (operator (identifier))))
 
 =====================================
 Comparison operators
@@ -357,11 +357,11 @@ a == b or c == d
 
 (module
   (expression_statement
-    (binary_operator
-      (binary_operator
-        (binary_operator
-          (binary_operator
-            (binary_operator
+    (operator
+      (operator
+        (operator
+          (operator
+            (operator
               (identifier)
               (identifier))
             (identifier))
@@ -369,9 +369,9 @@ a == b or c == d
         (identifier))
       (identifier)))
   (expression_statement
-    (binary_operator
-      (binary_operator (identifier) (identifier))
-      (binary_operator (identifier) (identifier)))))
+    (operator
+      (operator (identifier) (identifier))
+      (operator (identifier) (identifier)))))
 
 ====================================================
 Assignments
@@ -577,7 +577,7 @@ proc (a: int, b: int): int = a + b
         (typed_parameter (identifier) (type (identifier)))
         (typed_parameter (identifier) (type (identifier))))
       (type (identifier))
-      (binary_operator (identifier) (identifier)))))
+      (operator (identifier) (identifier)))))
 
 =====================================
 Conditional if expressions

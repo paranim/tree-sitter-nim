@@ -425,7 +425,7 @@ module.exports = grammar({
     ),
 
     _primary_expression: $ => choice(
-      $.binary_operator,
+      $.operator,
       $.identifier,
       $.keyword_identifier,
       $.string,
@@ -435,7 +435,6 @@ module.exports = grammar({
       $.true,
       $.false,
       $.none,
-      $.unary_operator,
       $.attribute,
       $.subscript,
       $.call,
@@ -451,7 +450,7 @@ module.exports = grammar({
       $.ellipsis
     ),
 
-    binary_operator: $ => {
+    operator: $ => {
       const table = [
         [prec.left, '+', PREC.plus],
         [prec.left, '-', PREC.plus],
@@ -475,19 +474,15 @@ module.exports = grammar({
         [prec.left, 'notin', PREC.compare],
         [prec.left, 'is', PREC.compare],
         [prec.left, 'isnot', PREC.compare],
+        [prec.left, 'not', PREC.unary],
       ];
 
       return choice(...table.map(([fn, operator, precedence]) => fn(precedence, seq(
-        field('left', $._primary_expression),
+        optional(field('left', $._primary_expression)),
         field('operator', operator),
         field('right', $._primary_expression)
       ))));
     },
-
-    unary_operator: $ => prec(PREC.unary, seq(
-      field('operator', choice('+', '-', 'not')),
-      field('argument', $._primary_expression)
-    )),
 
     lambda: $ => prec(PREC.lambda, seq(
       'proc',
