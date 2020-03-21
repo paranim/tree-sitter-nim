@@ -3,17 +3,18 @@ const PREC = {
 
   parenthesized_expression: 1,
 
-  or: 9,
-  and: 10,
-  bitwise_or: 11,
-  bitwise_and: 12,
-  xor: 13,
-  compare: 14,
-  shift: 15,
-  plus: 16,
-  times: 17,
-  unary: 18,
-  power: 19,
+  // https://nim-lang.org/docs/manual.html#syntax-precedence
+  op0: 9,
+  op1: 10,
+  op2: 11,
+  op3: 12,
+  op4: 13,
+  op5: 14,
+  op6: 15,
+  op7: 16,
+  op8: 17,
+  op9: 18,
+  op10: 19,
 
   call: 20,
 }
@@ -438,30 +439,45 @@ module.exports = grammar({
     ),
 
     operator: $ => {
+      // https://nim-lang.org/docs/manual.html#lexical-analysis-operators
       const table = [
-        [prec.left, '+', PREC.plus],
-        [prec.left, '-', PREC.plus],
-        [prec.left, '*', PREC.times],
-        [prec.left, '/', PREC.times],
-        [prec.left, 'mod', PREC.times],
-        [prec.right, '^', PREC.power],
-        [prec.left, 'or', PREC.bitwise_or],
-        [prec.left, 'and', PREC.bitwise_and],
-        [prec.left, 'xor', PREC.xor],
-        [prec.left, 'shl', PREC.shift],
-        [prec.left, 'shr', PREC.shift],
-        [prec.left, '<', PREC.compare],
-        [prec.left, '<=', PREC.compare],
-        [prec.left, '==', PREC.compare],
-        [prec.left, '!=', PREC.compare],
-        [prec.left, '>=', PREC.compare],
-        [prec.left, '>', PREC.compare],
-        [prec.left, '<>', PREC.compare],
-        [prec.left, 'in', PREC.compare],
-        [prec.left, 'notin', PREC.compare],
-        [prec.left, 'is', PREC.compare],
-        [prec.left, 'isnot', PREC.compare],
-        [prec.left, 'not', PREC.unary],
+        // arrow
+        [prec.left, /[=+\-*/<>@$~&%|!?\^.:\\]*->/, PREC.op0],
+        [prec.left, /[=+\-*/<>@$~&%|!?\^.:\\]*=>/, PREC.op0],
+        [prec.left, /[=+\-*/<>@$~&%|!?\^.:\\]*~>/, PREC.op0],
+        // assignment
+        // If the operator ends with = and its first character is none of <, >, !, =, ~, ?
+        [prec.left, /[+\-*/@$&%|\^.:\\]+[=+\-*/<>@$~&%|!?\^.:\\]*=/, PREC.op1],
+        // (first char @ : ?)
+        [prec.left, /[@:?][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op2],
+        // or xor
+        [prec.left, 'or', PREC.op3],
+        [prec.left, 'xor', PREC.op3],
+        // and
+        [prec.left, 'and', PREC.op4],
+        // in notin is isnot not of (first char = < > !)
+        [prec.left, 'in', PREC.op5],
+        [prec.left, 'notin', PREC.op5],
+        [prec.left, 'is', PREC.op5],
+        [prec.left, 'isnot', PREC.op5],
+        [prec.left, 'not', PREC.op5],
+        [prec.left, 'of', PREC.op5],
+        [prec.left, /[=<>!][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op5],
+        // (first char .)
+        [prec.left, /\.[=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op6],
+        // (first char &)
+        [prec.left, /&[=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op7],
+        // (first char + - ~ |)
+        [prec.left, /[+\-~|][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op8],
+        // (first char * % \ /)
+        [prec.left, /[*%\\/][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op9],
+        [prec.left, 'div', PREC.op9],
+        [prec.left, 'mod', PREC.op9],
+        [prec.left, 'shl', PREC.op9],
+        [prec.left, 'shr', PREC.op9],
+        // (first char $ ^)
+        [prec.left, /\$[=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op10],
+        [prec.right, /\^[=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op10],
       ];
 
       return choice(...table.map(([fn, operator, precedence]) => fn(precedence, seq(

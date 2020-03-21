@@ -1442,55 +1442,11 @@
         "required": true,
         "types": [
           {
-            "type": "!=",
-            "named": false
-          },
-          {
-            "type": "*",
-            "named": false
-          },
-          {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "<",
-            "named": false
-          },
-          {
-            "type": "<=",
-            "named": false
-          },
-          {
-            "type": "<>",
-            "named": false
-          },
-          {
-            "type": "==",
-            "named": false
-          },
-          {
-            "type": ">",
-            "named": false
-          },
-          {
-            "type": ">=",
-            "named": false
-          },
-          {
-            "type": "^",
-            "named": false
-          },
-          {
             "type": "and",
+            "named": false
+          },
+          {
+            "type": "div",
             "named": false
           },
           {
@@ -1515,6 +1471,10 @@
           },
           {
             "type": "notin",
+            "named": false
+          },
+          {
+            "type": "of",
             "named": false
           },
           {
@@ -1971,11 +1931,6 @@
     }
   },
   {
-    "type": "wildcard_import",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "with_item",
     "named": true,
     "fields": {
@@ -2047,10 +2002,6 @@
     }
   },
   {
-    "type": "!=",
-    "named": false
-  },
-  {
     "type": "\"",
     "named": false
   },
@@ -2071,19 +2022,11 @@
     "named": false
   },
   {
-    "type": "*",
-    "named": false
-  },
-  {
     "type": "**=",
     "named": false
   },
   {
     "type": "*=",
-    "named": false
-  },
-  {
-    "type": "+",
     "named": false
   },
   {
@@ -2095,19 +2038,11 @@
     "named": false
   },
   {
-    "type": "-",
-    "named": false
-  },
-  {
     "type": "-=",
     "named": false
   },
   {
     "type": ".",
-    "named": false
-  },
-  {
-    "type": "/",
     "named": false
   },
   {
@@ -2127,35 +2062,11 @@
     "named": false
   },
   {
-    "type": "<",
-    "named": false
-  },
-  {
     "type": "<<=",
     "named": false
   },
   {
-    "type": "<=",
-    "named": false
-  },
-  {
-    "type": "<>",
-    "named": false
-  },
-  {
     "type": "=",
-    "named": false
-  },
-  {
-    "type": "==",
-    "named": false
-  },
-  {
-    "type": ">",
-    "named": false
-  },
-  {
-    "type": ">=",
     "named": false
   },
   {
@@ -2172,10 +2083,6 @@
   },
   {
     "type": "]",
-    "named": false
-  },
-  {
-    "type": "^",
     "named": false
   },
   {
@@ -2208,6 +2115,10 @@
   },
   {
     "type": "del",
+    "named": false
+  },
+  {
+    "type": "div",
     "named": false
   },
   {
@@ -2319,6 +2230,10 @@
     "named": false
   },
   {
+    "type": "of",
+    "named": false
+  },
+  {
     "type": "or",
     "named": false
   },
@@ -2365,6 +2280,10 @@
   {
     "type": "while",
     "named": false
+  },
+  {
+    "type": "wildcard_import",
+    "named": true
   },
   {
     "type": "with",

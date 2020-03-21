@@ -33,27 +33,14 @@ c[4, 5,]
 Subscript slice expressions
 =====================================
 
-a[:]
-b[5:]
-b[5:6, ...]
-c[::]
+b[5:6]
 
 ---
 
 (module
   (expression_statement (subscript
     (identifier)
-    (slice)))
-  (expression_statement (subscript
-    (identifier)
-    (slice (integer))))
-  (expression_statement (subscript
-    (identifier)
-    (slice (integer) (integer))
-    (ellipsis)))
-  (expression_statement (subscript
-    (identifier)
-    (slice))))
+    (slice (integer) (integer)))))
 
 =====================================
 Attribute references
@@ -220,13 +207,13 @@ not x
 Binary Addition / Subtraction With Floats
 =====================================
 
-.1-.0
-.1+.0
-.1-0
-.1+0
+0.1-0.0
+0.1+0.0
+0.1-0
+0.1+0
 
-1-.0
-1+.0
+1-0.0
+1+0.0
 
 ---
 
@@ -353,6 +340,33 @@ a == b or c == d
     (operator
       (operator (identifier) (identifier))
       (operator (identifier) (identifier)))))
+
+=====================================
+Arrow operators
+=====================================
+
+proc passTwoAndTwo(f: (int, int) -> int): int =
+  f(2, 2)
+
+passTwoAndTwo((x, y) => x + y)
+
+---
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (identifier)
+        (type (operator (tuple (identifier) (identifier)) (identifier)))))
+    (type (identifier))
+    (block
+      (expression_statement (call (identifier) (argument_list (integer) (integer))))))
+  (expression_statement
+    (call
+      (identifier)
+      (argument_list
+        (operator (tuple (identifier) (identifier)) (operator (identifier) (identifier)))))))
 
 ====================================================
 Assignments
