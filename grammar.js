@@ -146,7 +146,6 @@ module.exports = grammar({
       seq(commaSep1($._expression), optional(',')),
       $.assignment,
       $.declaration,
-      $.augmented_assignment,
     ),
 
     named_expression: $ => seq(
@@ -476,19 +475,9 @@ module.exports = grammar({
       )
     ),
 
-    augmented_assignment: $ => seq(
-      field('left', $.expression_list),
-      field('operator', choice(
-        '+=', '-=', '*=', '/=', '@=', '//=', '%=', '**=',
-        '>>=', '<<=', '&=', '^=', '|='
-      )),
-      field('right', $._right_hand_side)
-    ),
-
     _right_hand_side: $ => choice(
       $.expression_list,
       $.assignment,
-      $.augmented_assignment,
     ),
 
     attribute: $ => prec(PREC.call, seq(

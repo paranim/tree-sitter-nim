@@ -296,10 +296,6 @@
             "named": true
           },
           {
-            "type": "augmented_assignment",
-            "named": true
-          },
-          {
             "type": "expression_list",
             "named": true
           }
@@ -327,98 +323,6 @@
         "types": [
           {
             "type": "_primary_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "augmented_assignment",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression_list",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "%=",
-            "named": false
-          },
-          {
-            "type": "&=",
-            "named": false
-          },
-          {
-            "type": "**=",
-            "named": false
-          },
-          {
-            "type": "*=",
-            "named": false
-          },
-          {
-            "type": "+=",
-            "named": false
-          },
-          {
-            "type": "-=",
-            "named": false
-          },
-          {
-            "type": "//=",
-            "named": false
-          },
-          {
-            "type": "/=",
-            "named": false
-          },
-          {
-            "type": "<<=",
-            "named": false
-          },
-          {
-            "type": ">>=",
-            "named": false
-          },
-          {
-            "type": "@=",
-            "named": false
-          },
-          {
-            "type": "^=",
-            "named": false
-          },
-          {
-            "type": "|=",
-            "named": false
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "augmented_assignment",
-            "named": true
-          },
-          {
-            "type": "expression_list",
             "named": true
           }
         ]
@@ -519,10 +423,6 @@
         "types": [
           {
             "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "augmented_assignment",
             "named": true
           },
           {
@@ -765,10 +665,6 @@
         },
         {
           "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "augmented_assignment",
           "named": true
         },
         {
@@ -1869,14 +1765,6 @@
     "named": false
   },
   {
-    "type": "%=",
-    "named": false
-  },
-  {
-    "type": "&=",
-    "named": false
-  },
-  {
     "type": "(",
     "named": false
   },
@@ -1885,35 +1773,11 @@
     "named": false
   },
   {
-    "type": "**=",
-    "named": false
-  },
-  {
-    "type": "*=",
-    "named": false
-  },
-  {
-    "type": "+=",
-    "named": false
-  },
-  {
     "type": ",",
     "named": false
   },
   {
-    "type": "-=",
-    "named": false
-  },
-  {
     "type": ".",
-    "named": false
-  },
-  {
-    "type": "//=",
-    "named": false
-  },
-  {
-    "type": "/=",
     "named": false
   },
   {
@@ -1925,19 +1789,7 @@
     "named": false
   },
   {
-    "type": "<<=",
-    "named": false
-  },
-  {
     "type": "=",
-    "named": false
-  },
-  {
-    "type": ">>=",
-    "named": false
-  },
-  {
-    "type": "@=",
     "named": false
   },
   {
@@ -1946,10 +1798,6 @@
   },
   {
     "type": "]",
-    "named": false
-  },
-  {
-    "type": "^=",
     "named": false
   },
   {
@@ -2134,10 +1982,6 @@
   },
   {
     "type": "{",
-    "named": false
-  },
-  {
-    "type": "|=",
     "named": false
   },
   {
