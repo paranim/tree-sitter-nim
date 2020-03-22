@@ -545,6 +545,7 @@ module.exports = grammar({
 
     integer: $ => token(choice(
       seq(
+        optional(choice('0b', '0o', '0x')),
         repeat1(/[0-9]+_?/),
         optional(choice(/[iI]/, /[iI]8/, /[iI]16/, /[iI]32/, /[iI]64/, /[uU]/, /[uU]8/, /[uU]16/, /[uU]32/, /[uU]64/))
       )
@@ -556,6 +557,7 @@ module.exports = grammar({
       var suffix = choice(/[fF]/, /[fF]32/, /[fF]64/, /[dD]/, /[dD]32/, /[dD]64/);
 
       return token(seq(
+        optional(choice('0b', '0o', '0x')),
         choice(
           seq(digits, '.', digits, optional(exponent), optional(suffix)),
           seq(digits, exponent, optional(suffix)),
