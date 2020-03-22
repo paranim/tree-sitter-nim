@@ -81,7 +81,6 @@ module.exports = grammar({
       $.assert_statement,
       $.expression_statement,
       $.return_statement,
-      $.delete_statement,
       $.raise_statement,
       $.pass_statement,
       $.break_statement,
@@ -148,7 +147,6 @@ module.exports = grammar({
       $.assignment,
       $.declaration,
       $.augmented_assignment,
-      $.yield
     ),
 
     named_expression: $ => seq(
@@ -160,11 +158,6 @@ module.exports = grammar({
     return_statement: $ => seq(
       'return',
       optional($.expression_list)
-    ),
-
-    delete_statement: $ => seq(
-      'del',
-      $.expression_list
     ),
 
     raise_statement: $ => seq(
@@ -496,18 +489,6 @@ module.exports = grammar({
       $.expression_list,
       $.assignment,
       $.augmented_assignment,
-      $.yield
-    ),
-
-    yield: $ => seq(
-      'yield',
-      choice(
-        seq(
-          'from',
-          $._expression
-        ),
-        optional($.expression_list)
-      )
     ),
 
     attribute: $ => prec(PREC.call, seq(
@@ -605,13 +586,13 @@ module.exports = grammar({
 
     parenthesized_expression: $ => prec(PREC.parenthesized_expression, seq(
       '(',
-      choice($._expression, $.yield),
+      $._expression,
       ')'
     )),
 
     tuple: $ => seq(
       '(',
-      optional(commaSep1(choice($._expression, $.yield))),
+      optional(commaSep1($._expression)),
       optional(','),
       ')'
     ),

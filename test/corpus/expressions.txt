@@ -522,38 +522,6 @@ foo(x := 3, cat='vector')
                 (integer)))))))))
 
 ====================================================
-Yield expressions
-====================================================
-
-proc example() =
-  yield
-  yield 1
-  x = yield 2
-  yield from a
-  yield from (yield from (x for x in range(1, 10)))
-
----
-
-(module
-  (function_definition (identifier) (parameters) (block
-    (expression_statement (yield))
-    (expression_statement (yield (expression_list (integer))))
-    (expression_statement
-      (assignment
-        (expression_list (identifier))
-        (yield (expression_list (integer)))))
-    (expression_statement (yield (identifier)))
-    (expression_statement
-      (yield
-        (parenthesized_expression
-          (yield
-            (generator_expression
-              (identifier)
-              (for_in_clause
-              (variables (identifier))
-              (call (identifier) (argument_list (integer) (integer))))))))))))
-
-====================================================
 lambdas
 ====================================================
 

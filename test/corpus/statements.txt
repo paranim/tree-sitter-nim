@@ -116,19 +116,6 @@ b + c
   (expression_statement (integer) (integer) (integer)))
 
 =====================================
-Delete statements
-=====================================
-
-del a[1], b[2]
-
----
-
-(module
-  (delete_statement (expression_list
-    (subscript (identifier) (integer))
-    (subscript (identifier) (integer)))))
-
-=====================================
 Control-flow statements
 =====================================
 
