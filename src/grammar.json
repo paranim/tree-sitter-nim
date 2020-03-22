@@ -465,31 +465,6 @@
         }
       ]
     },
-    "named_expression": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ":="
-        },
-        {
-          "type": "FIELD",
-          "name": "value",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        }
-      ]
-    },
     "return_statement": {
       "type": "SEQ",
       "members": [
@@ -584,10 +559,6 @@
     "_compound_statement": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "function_definition"
-        },
         {
           "type": "SYMBOL",
           "name": "generic_statement"
@@ -1170,15 +1141,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "lambda"
-        },
-        {
-          "type": "SYMBOL",
           "name": "_primary_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "named_expression"
         }
       ]
     },
@@ -2470,56 +2433,6 @@
                 }
               }
             ]
-          }
-        }
-      ]
-    },
-    "lambda": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "proc"
-            },
-            {
-              "type": "STRING",
-              "value": "func"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "parameters",
-          "content": {
-            "type": "SYMBOL",
-            "name": "parameters"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "FIELD",
-          "name": "type",
-          "content": {
-            "type": "SYMBOL",
-            "name": "type"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "="
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
           }
         }
       ]

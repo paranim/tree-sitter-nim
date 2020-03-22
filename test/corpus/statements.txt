@@ -150,49 +150,6 @@ if a:
       (expression_statement (identifier))
       (expression_statement (identifier)))))
 
-=====================================
-Function definitions
-=====================================
-
-proc e((a,b)) =
-  return (a,b)
-
-proc `$`(a: array[2, int]): string =
-  result = ""
-  for i in a:
-    result.add($i)
-
----
-
-(module
-  (function_definition
-    name: (identifier)
-    parameters: (parameters (tuple (identifier) (identifier)))
-    (op)
-    body: (block
-      (return_statement (expression_list (tuple (identifier) (identifier))))))
-  (function_definition
-    name: (string)
-    parameters: (parameters
-      (typed_parameter (identifier)
-        type: (type (subscript value: (identifier) subscript: (integer) subscript: (identifier)))))
-    return_type: (type (identifier))
-    (op)
-    body: (block
-      (expression_statement
-        (assignment
-          left: (expression_list (identifier))
-          (op)
-          right: (block (expression_statement (string)))))
-      (generic_statement
-        (identifier)
-        (operator left: (identifier) (op) right: (identifier))
-        body: (block
-          (expression_statement
-            (call
-              function: (attribute object: (identifier) attribute: (identifier))
-              arguments: (argument_list (operator (op) right: (identifier))))))))))
-
 
 
 ====================================================
@@ -285,33 +242,4 @@ echo "a"
 
 (module (omit_parens_statement (identifier) (string)) (comment))
 
-==================================================
-Extra newlines
-==================================================
 
-if a:
-
-
-    b()
-
-
-    c()
-
-
-    proc d() =
-
-
-        e()
-
-
-    f()
-
----
-
-(module
-  (generic_statement (identifier) (identifier) (block
-    (expression_statement (call (identifier) (argument_list)))
-    (expression_statement (call (identifier) (argument_list)))
-    (function_definition (identifier) (parameters) (op) (block
-      (expression_statement (call (identifier) (argument_list)))))
-    (expression_statement (call (identifier) (argument_list))))))

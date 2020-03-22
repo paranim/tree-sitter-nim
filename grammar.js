@@ -149,12 +149,6 @@ module.exports = grammar({
       $.declaration,
     ),
 
-    named_expression: $ => seq(
-      field('name', $.identifier),
-      ':=',
-      field('value', $._expression)
-    ),
-
     return_statement: $ => seq(
       'return',
       optional($.expression_list)
@@ -173,7 +167,8 @@ module.exports = grammar({
     // Compount statements
 
     _compound_statement: $ => choice(
-      $.function_definition,
+      // not ready for prime time...
+      //$.function_definition,
       $.generic_statement
     ),
 
@@ -272,9 +267,7 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
-      $.lambda,
       $._primary_expression,
-      $.named_expression
     ),
 
     _primary_expression: $ => choice(
@@ -348,15 +341,6 @@ module.exports = grammar({
         field('right', $._primary_expression)
       ))));
     },
-
-    lambda: $ => seq(
-      choice('proc', 'func'),
-      field('parameters', $.parameters),
-      ':',
-      field('type', $.type),
-      '=',
-      field('body', $._expression)
-    ),
 
     assignment: $ => seq(
       field('left', $.expression_list),
