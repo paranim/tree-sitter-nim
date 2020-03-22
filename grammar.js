@@ -3,6 +3,7 @@ const PREC = {
   conditional: -1,
 
   parenthesized_expression: 1,
+  subscript: 2,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
   op0: 10,
@@ -172,120 +173,15 @@ module.exports = grammar({
     // Compount statements
 
     _compound_statement: $ => choice(
-      $.if_statement,
-      $.for_statement,
-      $.while_statement,
-      $.try_statement,
-      $.with_statement,
       $.function_definition,
+      $.generic_statement
     ),
 
-    if_statement: $ => seq(
-      'if',
-      field('condition', $._expression),
-      ':',
-      field('consequence', $._suite),
-      repeat(field('alternative', $.elif_clause)),
-      optional(field('alternative', $.else_clause))
-    ),
-
-    elif_clause: $ => seq(
-      'elif',
-      field('condition', $._expression),
-      ':',
-      field('consequence', $._suite)
-    ),
-
-    else_clause: $ => seq(
-      'else',
+    generic_statement: $ => seq(
+      $.identifier,
+      optional($._expression),
       ':',
       field('body', $._suite)
-    ),
-
-    if_expression: $ => prec.right(PREC.conditional, seq(
-      'if',
-      field('condition', $._expression),
-      ':',
-      field('consequence', $._expression),
-      repeat(field('alternative', $.elif_expression)),
-      optional(field('alternative', $.else_expression))
-    )),
-
-    elif_expression: $ => seq(
-      'elif',
-      field('condition', $._expression),
-      ':',
-      field('consequence', $._expression)
-    ),
-
-    else_expression: $ => seq(
-      'else',
-      ':',
-      field('body', $._expression)
-    ),
-
-    for_statement: $ => seq(
-      'for',
-      field('left', $.variables),
-      'in',
-      field('right', $.expression_list),
-      ':',
-      field('body', $._suite)
-    ),
-
-    while_statement: $ => seq(
-      'while',
-      field('condition', $._expression),
-      ':',
-      field('body', $._suite)
-    ),
-
-    try_statement: $ => seq(
-      'try',
-      ':',
-      field('body', $._suite),
-      choice(
-        seq(
-          repeat1($.except_clause),
-          optional($.else_clause),
-          optional($.finally_clause)
-        ),
-        $.finally_clause
-      )
-    ),
-
-    except_clause: $ => seq(
-      'except',
-      optional(seq(
-        $._expression,
-        optional(seq(
-          choice('as', ','),
-          $._expression
-        ))
-      )),
-      ':',
-      $._suite
-    ),
-
-    finally_clause: $ => seq(
-      'finally',
-      ':',
-      $._suite
-    ),
-
-    with_statement: $ => seq(
-      'with',
-      commaSep1($.with_item),
-      ':',
-      field('body', $._suite)
-    ),
-
-    with_item: $ => seq(
-      field('value', $._expression),
-      optional(seq(
-        'as',
-        field('alias', $._expression)
-      ))
     ),
 
     function_definition: $ => seq(
@@ -298,8 +194,12 @@ module.exports = grammar({
           field('return_type', $.type)
         )
       ),
-      '=',
-      field('body', $._suite)
+      optional(
+        seq(
+          alias('=', $.op),
+          field('body', $._suite)
+        )
+      ),
     ),
 
     parameters: $ => seq(
@@ -309,8 +209,8 @@ module.exports = grammar({
     ),
 
     _parameters: $ => seq(
-      commaSep1($._parameter),
-      optional(',')
+      commaOrSemiSep1($._parameter),
+      optional(choice(',', ';'))
     ),
 
     _parameter: $ => choice(
@@ -374,7 +274,6 @@ module.exports = grammar({
     _expression: $ => choice(
       $.lambda,
       $._primary_expression,
-      $.if_expression,
       $.named_expression
     ),
 
@@ -382,7 +281,6 @@ module.exports = grammar({
       $.operator,
       $.identifier,
       $.string,
-      $.concatenated_string,
       $.integer,
       $.float,
       $.true,
@@ -430,7 +328,7 @@ module.exports = grammar({
         [prec.left, 'of', PREC.op5],
         [prec.left, /[=<>!][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op5],
         // (first char .)
-        [prec.left, /\.[=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op6],
+        [prec.left, /\.[=+\-*/<>@$~&%|!?\^.:\\]+/, PREC.op6],
         // (first char &)
         [prec.left, /&[=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op7],
         // (first char + - ~ |)
@@ -467,22 +365,17 @@ module.exports = grammar({
     assignment: $ => seq(
       field('left', $.expression_list),
       alias('=', $.op),
-      field('right', $._right_hand_side)
+      field('right', $._expression)
     ),
 
     declaration: $ => seq(
       choice('var', 'let', 'const'),
       field('left', $.expression_list),
       choice(
-        seq(alias('=', $.op), field('right', $._right_hand_side)),
+        seq(alias('=', $.op), field('right', $._expression)),
         seq(':', field('type', $.type)),
-        seq(':', field('type', $.type), alias('=', $.op), field('right', $._right_hand_side))
+        seq(':', field('type', $.type), alias('=', $.op), field('right', $._expression))
       )
-    ),
-
-    _right_hand_side: $ => choice(
-      $.expression_list,
-      $.assignment,
     ),
 
     attribute: $ => prec(PREC.call, seq(
@@ -491,12 +384,12 @@ module.exports = grammar({
       field('attribute', $.identifier)
     )),
 
-    subscript: $ => seq(
+    subscript: $ => prec(PREC.subscript, seq(
       field('value', $._primary_expression),
       '[',
       field('subscript', commaSep1($._expression)),
       ']'
-    ),
+    )),
 
     call: $ => prec(PREC.call, seq(
       field('function', $._primary_expression),
@@ -512,7 +405,7 @@ module.exports = grammar({
       field('type', $.type)
     ),
 
-    type: $ => $._expression,
+    type: $ => $._primary_expression,
 
     keyword_argument: $ => seq(
       field('name', choice($.identifier, $.string)),
@@ -610,11 +503,6 @@ module.exports = grammar({
       $._expression
     ),
 
-    concatenated_string: $ => seq(
-      $.string,
-      repeat1($.string)
-    ),
-
     string: $ => seq(
       alias($._string_start, '"'),
       repeat(choice($.interpolation, $.escape_sequence, $._not_escape_sequence, $._string_content)),
@@ -693,6 +581,10 @@ module.exports = grammar({
 
 function commaSep1 (rule) {
   return sep1(rule, ',')
+}
+
+function commaOrSemiSep1 (rule) {
+  return sep1(rule, choice(',', ';'))
 }
 
 function sep1 (rule, separator) {

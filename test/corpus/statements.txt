@@ -107,8 +107,9 @@ while true:
 ---
 
 (module
-  (while_statement
-    condition: (true)
+  (generic_statement
+    (identifier)
+    (true)
     body: (block
       (pass_statement)
       (break_statement)
@@ -142,201 +143,11 @@ if a:
 ---
 
 (module
-  (if_statement
-    condition: (identifier)
-    consequence: (block
+  (generic_statement
+    (identifier)
+    (identifier)
+    body: (block
       (expression_statement (identifier))
-      (expression_statement (identifier)))))
-
-=====================================
-If else statements
-=====================================
-
-if a:
-  b
-elif c:
-  d
-else:
-  f
-
-if a:
-  b
-else:
-  f
-
-if a: b
-
-if a: b; c
-
----
-
-(module
-  (if_statement
-    condition: (identifier)
-    consequence: (block
-      (expression_statement (identifier)))
-    alternative: (elif_clause
-      condition: (identifier)
-      consequence: (block
-        (expression_statement (identifier))))
-    alternative: (else_clause
-      body: (block
-        (expression_statement (identifier)))))
-  (if_statement
-    condition: (identifier)
-    consequence: (block
-      (expression_statement (identifier)))
-    alternative: (else_clause
-      body: (block
-        (expression_statement (identifier)))))
-  (if_statement
-    condition: (identifier)
-    consequence: (block
-      (expression_statement (identifier))))
-  (if_statement
-    condition: (identifier)
-    consequence: (block
-      (expression_statement (identifier))
-      (expression_statement (identifier)))))
-
-=====================================
-Nested if statements
-=====================================
-
-if a:
-  if b:
-    c
-  else:
-    if e:
-      f
-g
-
----
-
-(module
-  (if_statement
-    condition: (identifier)
-    consequence: (block
-      (if_statement
-        condition: (identifier)
-        consequence: (block
-          (expression_statement (identifier)))
-        alternative: (else_clause
-          body: (block
-            (if_statement
-              condition: (identifier)
-              consequence: (block
-                (expression_statement (identifier)))))))))
-  (expression_statement (identifier)))
-
-=====================================
-While statements
-=====================================
-
-while a:
-  b
-
----
-
-(module
-  (while_statement
-    condition: (identifier)
-    body: (block
-      (expression_statement (identifier)))))
-
-=====================================
-For statements
-=====================================
-
-for line, i in lines:
-  echo line
-  for character, j in line:
-    echo character
-
----
-
-(module
-  (for_statement
-    left: (variables (identifier) (identifier))
-    right: (expression_list (identifier))
-    body: (block
-      (omit_parens_statement (identifier)
-        argument: (identifier))
-      (for_statement
-        left: (variables (identifier) (identifier))
-        right: (expression_list (identifier))
-        body: (block
-          (omit_parens_statement (identifier)
-            argument: (identifier)))))))
-
-=====================================
-Try statements
-=====================================
-
-try:
-  a
-except b:
-  c
-except d as e:
-  f
-except g, h:
-  i
-except:
-  j
-
-try:
-  a
-except b:
-  c
-  d
-else:
-  e
-finally:
-  f
-
----
-
-(module
-  (try_statement
-    body: (block
-      (expression_statement (identifier)))
-    (except_clause (identifier)
-      (block
-        (expression_statement (identifier))))
-    (except_clause (identifier) (identifier)
-      (block
-        (expression_statement (identifier))))
-    (except_clause (identifier) (identifier)
-      (block
-        (expression_statement (identifier))))
-    (except_clause
-      (block
-        (expression_statement (identifier)))))
-  (try_statement
-    body: (block
-      (expression_statement (identifier)))
-    (except_clause (identifier)
-      (block
-        (expression_statement (identifier))
-        (expression_statement (identifier))))
-    (else_clause body: (block
-      (expression_statement (identifier))))
-    (finally_clause (block
-      (expression_statement (identifier))))))
-
-=====================================
-With statements
-=====================================
-
-with a as b:
-  c
-
----
-
-(module
-  (with_statement
-    (with_item (identifier) (identifier))
-    (block
       (expression_statement (identifier)))))
 
 =====================================
@@ -357,6 +168,7 @@ proc `$`(a: array[2, int]): string =
   (function_definition
     name: (identifier)
     parameters: (parameters (tuple (identifier) (identifier)))
+    (op)
     body: (block
       (return_statement (expression_list (tuple (identifier) (identifier))))))
   (function_definition
@@ -365,15 +177,16 @@ proc `$`(a: array[2, int]): string =
       (typed_parameter (identifier)
         type: (type (subscript value: (identifier) subscript: (integer) subscript: (identifier)))))
     return_type: (type (identifier))
+    (op)
     body: (block
       (expression_statement
         (assignment
           left: (expression_list (identifier))
           (op)
-          right: (expression_list (string))))
-      (for_statement
-        left: (variables (identifier))
-        right: (expression_list (identifier))
+          right: (string)))
+      (generic_statement
+        (identifier)
+        (operator left: (identifier) (op) right: (identifier))
         body: (block
           (expression_statement
             (call
@@ -433,7 +246,7 @@ if a:
 ---
 
 (module
-  (if_statement (identifier)
+  (generic_statement (identifier) (identifier)
     (comment)
     (comment)
     (comment)
@@ -455,7 +268,7 @@ c
 ---
 
 (module
-  (if_statement
+  (generic_statement (identifier)
     (identifier)
     (block
       (expression_statement (identifier))))
@@ -496,9 +309,9 @@ if a:
 ---
 
 (module
-  (if_statement (identifier) (block
+  (generic_statement (identifier) (identifier) (block
     (expression_statement (call (identifier) (argument_list)))
     (expression_statement (call (identifier) (argument_list)))
-    (function_definition (identifier) (parameters) (block
+    (function_definition (identifier) (parameters) (op) (block
       (expression_statement (call (identifier) (argument_list)))))
     (expression_statement (call (identifier) (argument_list))))))

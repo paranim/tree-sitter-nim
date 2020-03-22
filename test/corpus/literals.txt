@@ -124,7 +124,7 @@ ur"\n"
 Raw strings with escaped quotes
 =====================================
 
-re.compile(r"(\n|\A)#include\s*['\"]"
+re.compile(r"(\n|\A)#include\s*['\"]" &
            r"(?P<name>[\w\d./\\]+[.]src)['\"]")
 
 ---
@@ -134,7 +134,7 @@ re.compile(r"(\n|\A)#include\s*['\"]"
     (call
       (attribute (identifier) (identifier))
       (argument_list
-        (concatenated_string (string) (string))))))
+        (operator (string) (op) (string))))))
 
 =====================================
 Format strings
@@ -212,15 +212,18 @@ nil
 Concatenated strings
 =====================================
 
-"one" "two" "three"
+"one" & "two" & "three"
 
 ---
 
 (module
   (expression_statement
-    (concatenated_string
-      (string)
-      (string)
+    (operator
+      (operator
+        (string)
+        (op)
+        (string))
+      (op)
       (string))))
 
 =====================================

@@ -4,27 +4,11 @@
     "named": true,
     "subtypes": [
       {
-        "type": "for_statement",
-        "named": true
-      },
-      {
         "type": "function_definition",
         "named": true
       },
       {
-        "type": "if_statement",
-        "named": true
-      },
-      {
-        "type": "try_statement",
-        "named": true
-      },
-      {
-        "type": "while_statement",
-        "named": true
-      },
-      {
-        "type": "with_statement",
+        "type": "generic_statement",
         "named": true
       }
     ]
@@ -35,10 +19,6 @@
     "subtypes": [
       {
         "type": "_primary_expression",
-        "named": true
-      },
-      {
-        "type": "if_expression",
         "named": true
       },
       {
@@ -87,10 +67,6 @@
       },
       {
         "type": "call",
-        "named": true
-      },
-      {
-        "type": "concatenated_string",
         "named": true
       },
       {
@@ -292,11 +268,7 @@
         "required": true,
         "types": [
           {
-            "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "expression_list",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -394,21 +366,6 @@
     }
   },
   {
-    "type": "concatenated_string",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "continue_statement",
     "named": true,
     "fields": {}
@@ -432,11 +389,7 @@
         "required": false,
         "types": [
           {
-            "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "expression_list",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -539,109 +492,6 @@
     }
   },
   {
-    "type": "elif_clause",
-    "named": true,
-    "fields": {
-      "condition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "elif_expression",
-    "named": true,
-    "fields": {
-      "condition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "else_clause",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "else_expression",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "except_clause",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_expression",
-          "named": true
-        },
-        {
-          "type": "block",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "expression_list",
     "named": true,
     "fields": {},
@@ -680,21 +530,6 @@
     }
   },
   {
-    "type": "finally_clause",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "block",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "for_in_clause",
     "named": true,
     "fields": {
@@ -718,42 +553,6 @@
           },
           {
             "type": "_primary_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "for_statement",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "variables",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression_list",
             "named": true
           }
         ]
@@ -796,7 +595,7 @@
     "fields": {
       "body": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "block",
@@ -838,6 +637,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "op",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -871,6 +680,36 @@
     }
   },
   {
+    "type": "generic_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "if_clause",
     "named": true,
     "fields": {},
@@ -883,86 +722,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "if_expression",
-    "named": true,
-    "fields": {
-      "alternative": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "elif_expression",
-            "named": true
-          },
-          {
-            "type": "else_expression",
-            "named": true
-          }
-        ]
-      },
-      "condition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "if_statement",
-    "named": true,
-    "fields": {
-      "alternative": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "elif_clause",
-            "named": true
-          },
-          {
-            "type": "else_clause",
-            "named": true
-          }
-        ]
-      },
-      "condition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -1506,40 +1265,6 @@
     }
   },
   {
-    "type": "try_statement",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "else_clause",
-          "named": true
-        },
-        {
-          "type": "except_clause",
-          "named": true
-        },
-        {
-          "type": "finally_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "tuple",
     "named": true,
     "fields": {},
@@ -1563,7 +1288,7 @@
       "required": true,
       "types": [
         {
-          "type": "_expression",
+          "type": "_primary_expression",
           "named": true
         }
       ]
@@ -1655,87 +1380,9 @@
     }
   },
   {
-    "type": "while_statement",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "condition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "wildcard_import",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "with_item",
-    "named": true,
-    "fields": {
-      "alias": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "with_statement",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "with_item",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "\"",
@@ -1774,6 +1421,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
@@ -1806,28 +1457,12 @@
     "named": false
   },
   {
-    "type": "elif",
-    "named": false
-  },
-  {
-    "type": "else",
-    "named": false
-  },
-  {
     "type": "escape_sequence",
     "named": true
   },
   {
-    "type": "except",
-    "named": false
-  },
-  {
     "type": "false",
     "named": true
-  },
-  {
-    "type": "finally",
-    "named": false
   },
   {
     "type": "float",
@@ -1898,23 +1533,11 @@
     "named": true
   },
   {
-    "type": "try",
-    "named": false
-  },
-  {
     "type": "type_conversion",
     "named": true
   },
   {
     "type": "var",
-    "named": false
-  },
-  {
-    "type": "while",
-    "named": false
-  },
-  {
-    "type": "with",
     "named": false
   },
   {

@@ -10,10 +10,10 @@ Identifiers with Greek letters
   (expression_statement (assignment
     left: (expression_list (identifier))
     (op)
-    right: (expression_list (operator
+    right: (operator
       left: (identifier)
       (op)
-      right: (identifier))))))
+      right: (identifier)))))
 
 =====================================
 Subscript expressions
@@ -137,14 +137,17 @@ proc print() =
   (function_definition
     (identifier)
     (parameters (identifier))
+    (op)
     (block (expression_statement (identifier))))
   (function_definition
     (identifier)
     (parameters (default_parameter (identifier) (identifier)))
+    (op)
     (block (expression_statement (identifier))))
   (function_definition
     (identifier)
     (parameters)
+    (op)
     (block (expression_statement (identifier)))))
 
 
@@ -381,6 +384,7 @@ passTwoAndTwo((x, y) => x + y)
         (identifier)
         (type (operator (tuple (identifier) (identifier)) (op) (identifier)))))
     (type (identifier))
+    (op)
     (block
       (expression_statement (call (identifier) (argument_list (integer) (integer))))))
   (expression_statement
@@ -394,9 +398,7 @@ Assignments
 ====================================================
 
 a = 1
-a, b = 1, 2
-a, = 1, 2
-a[b] = c = d
+a[b] = c
 
 ---
 
@@ -406,34 +408,13 @@ a[b] = c = d
       (expression_list
         (identifier))
       (op)
-      (expression_list
-        (integer))))
-  (expression_statement
-    (assignment
-      (expression_list
-        (identifier)
-        (identifier))
-      (op)
-      (expression_list
-        (integer)
-        (integer))))
-  (expression_statement
-    (assignment
-      (expression_list
-        (identifier))
-      (op)
-      (expression_list
-        (integer)
-        (integer))))
+      (integer)))
   (expression_statement
     (assignment
       (expression_list
         (subscript (identifier) (identifier)))
       (op)
-      (assignment
-        (expression_list (identifier))
-        (op)
-        (expression_list (identifier))))))
+      (identifier))))
 
 ====================================================
 Declarations with type annotations
@@ -448,7 +429,7 @@ let tail_leaves: seq[Leaf] = []
     (expression_list (identifier))
     (type (subscript (identifier) (identifier)))
     (op)
-    (expression_list (list)))))
+    (list))))
 
 ====================================================
 Augmented assignments
@@ -512,17 +493,17 @@ foo(x := 3, cat='vector')
     (assignment
       (expression_list (identifier))
       (op)
-      (expression_list
-        (parenthesized_expression
-          (named_expression
-            (identifier)
-            (call (identifier) (argument_list (identifier))))))))
+      (parenthesized_expression
+        (named_expression
+          (identifier)
+          (call (identifier) (argument_list (identifier)))))))
   (function_definition
     (identifier)
     (parameters
       (default_parameter
         (identifier)
         (parenthesized_expression (named_expression (identifier) (integer)))))
+    (op)
     (block (return_statement (expression_list (identifier)))))
   (function_definition
     (identifier)
@@ -531,6 +512,7 @@ foo(x := 3, cat='vector')
         (identifier)
         (type (parenthesized_expression (named_expression (identifier) (integer))))
         (integer)))
+    (op)
     (block (return_statement (expression_list (identifier)))))
   (expression_statement
     (call
@@ -566,30 +548,4 @@ proc (a: int, b: int): int = a + b
         (typed_parameter (identifier) (type (identifier))))
       (type (identifier))
       (operator (identifier) (op) (identifier)))))
-
-=====================================
-Conditional if expressions
-=====================================
-
-a = if c: b else: d
-if a: something() else: d
-if a: slice(1,1,1) else: d
-echo if a: "hi" else: "bye"
-
----
-
-(module
-  (expression_statement
-    (assignment
-      (expression_list (identifier))
-      (op)
-      (expression_list
-        (if_expression (identifier) (identifier) (else_expression (identifier))))))
-  (expression_statement
-    (if_expression (identifier) (call (identifier) (argument_list)) (else_expression (identifier))))
-  (expression_statement
-    (if_expression (identifier)
-      (call (identifier) (argument_list (integer) (integer) (integer)))
-      (else_expression (identifier))))
-  (omit_parens_statement (identifier) (if_expression (identifier) (string) (else_expression (string)))))
 
