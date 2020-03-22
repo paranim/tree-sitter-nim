@@ -10,10 +10,10 @@ Identifiers with Greek letters
   (expression_statement (assignment
     left: (expression_list (identifier))
     (op)
-    right: (operator
+    right: (block (expression_statement (operator
       left: (identifier)
       (op)
-      right: (identifier)))))
+      right: (identifier)))))))
 
 =====================================
 Subscript expressions
@@ -408,13 +408,13 @@ a[b] = c
       (expression_list
         (identifier))
       (op)
-      (integer)))
+      (block (expression_statement (integer)))))
   (expression_statement
     (assignment
       (expression_list
         (subscript (identifier) (identifier)))
       (op)
-      (identifier))))
+      (block (expression_statement (identifier))))))
 
 ====================================================
 Declarations with type annotations
@@ -429,7 +429,7 @@ let tail_leaves: seq[Leaf] = []
     (expression_list (identifier))
     (type (subscript (identifier) (identifier)))
     (op)
-    (list))))
+    (block (expression_statement (list))))))
 
 ====================================================
 Augmented assignments
@@ -493,10 +493,10 @@ foo(x := 3, cat='vector')
     (assignment
       (expression_list (identifier))
       (op)
-      (parenthesized_expression
+      (block (expression_statement (parenthesized_expression
         (named_expression
           (identifier)
-          (call (identifier) (argument_list (identifier)))))))
+          (call (identifier) (argument_list (identifier)))))))))
   (function_definition
     (identifier)
     (parameters

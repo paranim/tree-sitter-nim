@@ -183,7 +183,7 @@ proc `$`(a: array[2, int]): string =
         (assignment
           left: (expression_list (identifier))
           (op)
-          right: (string)))
+          right: (block (expression_statement (string)))))
       (generic_statement
         (identifier)
         (operator left: (identifier) (op) right: (identifier))

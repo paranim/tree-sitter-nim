@@ -365,16 +365,16 @@ module.exports = grammar({
     assignment: $ => seq(
       field('left', $.expression_list),
       alias('=', $.op),
-      field('right', $._expression)
+      field('right', $._suite)
     ),
 
     declaration: $ => seq(
       choice('var', 'let', 'const'),
       field('left', $.expression_list),
       choice(
-        seq(alias('=', $.op), field('right', $._expression)),
+        seq(alias('=', $.op), field('right', $._suite)),
         seq(':', field('type', $.type)),
-        seq(':', field('type', $.type), alias('=', $.op), field('right', $._expression))
+        seq(':', field('type', $.type), alias('=', $.op), field('right', $._suite))
       )
     ),
 
