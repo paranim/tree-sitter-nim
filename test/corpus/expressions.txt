@@ -9,6 +9,7 @@ Identifiers with Greek letters
 (module
   (expression_statement (assignment
     left: (expression_list (identifier))
+    (op)
     right: (expression_list (operator
       left: (identifier)
       (op)
@@ -404,6 +405,7 @@ a[b] = c = d
     (assignment
       (expression_list
         (identifier))
+      (op)
       (expression_list
         (integer))))
   (expression_statement
@@ -411,6 +413,7 @@ a[b] = c = d
       (expression_list
         (identifier)
         (identifier))
+      (op)
       (expression_list
         (integer)
         (integer))))
@@ -418,6 +421,7 @@ a[b] = c = d
     (assignment
       (expression_list
         (identifier))
+      (op)
       (expression_list
         (integer)
         (integer))))
@@ -425,8 +429,10 @@ a[b] = c = d
     (assignment
       (expression_list
         (subscript (identifier) (identifier)))
+      (op)
       (assignment
         (expression_list (identifier))
+        (op)
         (expression_list (identifier))))))
 
 ====================================================
@@ -441,6 +447,7 @@ let tail_leaves: seq[Leaf] = []
   (expression_statement (declaration
     (expression_list (identifier))
     (type (subscript (identifier) (identifier)))
+    (op)
     (expression_list (list)))))
 
 ====================================================
@@ -504,6 +511,7 @@ foo(x := 3, cat='vector')
   (expression_statement
     (assignment
       (expression_list (identifier))
+      (op)
       (expression_list
         (parenthesized_expression
           (named_expression
@@ -574,6 +582,7 @@ echo if a: "hi" else: "bye"
   (expression_statement
     (assignment
       (expression_list (identifier))
+      (op)
       (expression_list
         (if_expression (identifier) (identifier) (else_expression (identifier))))))
   (expression_statement

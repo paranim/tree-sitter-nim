@@ -287,16 +287,6 @@
           }
         ]
       },
-      "op": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "=",
-            "named": false
-          }
-        ]
-      },
       "right": {
         "multiple": false,
         "required": true,
@@ -311,6 +301,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "op",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -451,6 +451,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "op",
+          "named": true
+        }
+      ]
     }
   },
   {

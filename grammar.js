@@ -466,7 +466,7 @@ module.exports = grammar({
 
     assignment: $ => seq(
       field('left', $.expression_list),
-      field('op', '='),
+      alias('=', $.op),
       field('right', $._right_hand_side)
     ),
 
@@ -474,9 +474,9 @@ module.exports = grammar({
       choice('var', 'let', 'const'),
       field('left', $.expression_list),
       choice(
-        seq('=', field('right', $._right_hand_side)),
+        seq(alias('=', $.op), field('right', $._right_hand_side)),
         seq(':', field('type', $.type)),
-        seq(':', field('type', $.type), '=', field('right', $._right_hand_side))
+        seq(':', field('type', $.type), alias('=', $.op), field('right', $._right_hand_side))
       )
     ),
 

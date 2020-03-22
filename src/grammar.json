@@ -3024,12 +3024,13 @@
           }
         },
         {
-          "type": "FIELD",
-          "name": "op",
+          "type": "ALIAS",
           "content": {
             "type": "STRING",
             "value": "="
-          }
+          },
+          "named": true,
+          "value": "op"
         },
         {
           "type": "FIELD",
@@ -3076,8 +3077,13 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "="
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
+                    "value": "="
+                  },
+                  "named": true,
+                  "value": "op"
                 },
                 {
                   "type": "FIELD",
@@ -3122,8 +3128,13 @@
                   }
                 },
                 {
-                  "type": "STRING",
-                  "value": "="
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
+                    "value": "="
+                  },
+                  "named": true,
+                  "value": "op"
                 },
                 {
                   "type": "FIELD",

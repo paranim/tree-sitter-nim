@@ -339,7 +339,6 @@ with a as b:
     (block
       (expression_statement (identifier)))))
 
-
 =====================================
 Function definitions
 =====================================
@@ -370,6 +369,7 @@ proc `$`(a: array[2, int]): string =
       (expression_statement
         (assignment
           left: (expression_list (identifier))
+          (op)
           right: (expression_list (string))))
       (for_statement
         left: (variables (identifier))
