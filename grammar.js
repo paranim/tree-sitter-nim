@@ -290,14 +290,10 @@ module.exports = grammar({
       $.subscript,
       $.call,
       $.list,
-      $.list_comprehension,
       $.dictionary,
-      $.dictionary_comprehension,
       $.set,
-      $.set_comprehension,
       $.tuple,
       $.parenthesized_expression,
-      $.generator_expression,
     ),
 
     operator: $ => {
@@ -393,10 +389,7 @@ module.exports = grammar({
 
     call: $ => prec(PREC.call, seq(
       field('function', $._primary_expression),
-      field('arguments', choice(
-        $.generator_expression,
-        $.argument_list
-      ))
+      field('arguments', $.argument_list)
     )),
 
     typed_parameter: $ => seq(
@@ -422,32 +415,10 @@ module.exports = grammar({
       ']'
     ),
 
-    _comprehension_clauses: $ => seq(
-      $.for_in_clause,
-      repeat(choice(
-        $.for_in_clause,
-        $.if_clause
-      ))
-    ),
-
-    list_comprehension: $ => seq(
-      '[',
-      field('body', $._expression),
-      $._comprehension_clauses,
-      ']'
-    ),
-
     dictionary: $ => seq(
       '{',
       optional(commaSep1($.pair)),
       optional(','),
-      '}'
-    ),
-
-    dictionary_comprehension: $ => seq(
-      '{',
-      field('body', $.pair),
-      $._comprehension_clauses,
       '}'
     ),
 
@@ -464,13 +435,6 @@ module.exports = grammar({
       '}'
     ),
 
-    set_comprehension: $ => seq(
-      '{',
-      field('body', $._expression),
-      $._comprehension_clauses,
-      '}'
-    ),
-
     parenthesized_expression: $ => prec(PREC.parenthesized_expression, seq(
       '(',
       $._expression,
@@ -482,25 +446,6 @@ module.exports = grammar({
       optional(commaSep1($._expression)),
       optional(','),
       ')'
-    ),
-
-    generator_expression: $ => seq(
-      '(',
-      field('body', $._expression),
-      $._comprehension_clauses,
-      ')'
-    ),
-
-    for_in_clause: $ => seq(
-      'for',
-      field('left', $.variables),
-      'in',
-      field('right', commaSep1($._primary_expression))
-    ),
-
-    if_clause: $ => seq(
-      'if',
-      $._expression
     ),
 
     string: $ => seq(

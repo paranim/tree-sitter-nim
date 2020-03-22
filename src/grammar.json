@@ -1235,23 +1235,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "list_comprehension"
-        },
-        {
-          "type": "SYMBOL",
           "name": "dictionary"
         },
         {
           "type": "SYMBOL",
-          "name": "dictionary_comprehension"
-        },
-        {
-          "type": "SYMBOL",
           "name": "set"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "set_comprehension"
         },
         {
           "type": "SYMBOL",
@@ -1260,10 +1248,6 @@
         {
           "type": "SYMBOL",
           "name": "parenthesized_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "generator_expression"
         }
       ]
     },
@@ -2779,17 +2763,8 @@
             "type": "FIELD",
             "name": "arguments",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "generator_expression"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "argument_list"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "argument_list"
             }
           }
         ]
@@ -2912,56 +2887,6 @@
         }
       ]
     },
-    "_comprehension_clauses": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "for_in_clause"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "for_in_clause"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "if_clause"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "list_comprehension": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "["
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_comprehension_clauses"
-        },
-        {
-          "type": "STRING",
-          "value": "]"
-        }
-      ]
-    },
     "dictionary": {
       "type": "SEQ",
       "members": [
@@ -3013,31 +2938,6 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
-    "dictionary_comprehension": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "pair"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_comprehension_clauses"
         },
         {
           "type": "STRING",
@@ -3113,31 +3013,6 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
-    "set_comprehension": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_comprehension_clauses"
         },
         {
           "type": "STRING",
@@ -3221,94 +3096,6 @@
         {
           "type": "STRING",
           "value": ")"
-        }
-      ]
-    },
-    "generator_expression": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_comprehension_clauses"
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        }
-      ]
-    },
-    "for_in_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "for"
-        },
-        {
-          "type": "FIELD",
-          "name": "left",
-          "content": {
-            "type": "SYMBOL",
-            "name": "variables"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "in"
-        },
-        {
-          "type": "FIELD",
-          "name": "right",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_primary_expression"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_primary_expression"
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "if_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "if"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_expression"
         }
       ]
     },

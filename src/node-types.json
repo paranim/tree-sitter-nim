@@ -74,19 +74,11 @@
         "named": true
       },
       {
-        "type": "dictionary_comprehension",
-        "named": true
-      },
-      {
         "type": "false",
         "named": true
       },
       {
         "type": "float",
-        "named": true
-      },
-      {
-        "type": "generator_expression",
         "named": true
       },
       {
@@ -99,10 +91,6 @@
       },
       {
         "type": "list",
-        "named": true
-      },
-      {
-        "type": "list_comprehension",
         "named": true
       },
       {
@@ -119,10 +107,6 @@
       },
       {
         "type": "set",
-        "named": true
-      },
-      {
-        "type": "set_comprehension",
         "named": true
       },
       {
@@ -346,10 +330,6 @@
           {
             "type": "argument_list",
             "named": true
-          },
-          {
-            "type": "generator_expression",
-            "named": true
           }
         ]
       },
@@ -462,36 +442,6 @@
     }
   },
   {
-    "type": "dictionary_comprehension",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "pair",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "for_in_clause",
-          "named": true
-        },
-        {
-          "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "expression_list",
     "named": true,
     "fields": {},
@@ -527,36 +477,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "for_in_clause",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "variables",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "_primary_expression",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -650,36 +570,6 @@
     }
   },
   {
-    "type": "generator_expression",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "for_in_clause",
-          "named": true
-        },
-        {
-          "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "generic_statement",
     "named": true,
     "fields": {
@@ -704,21 +594,6 @@
         },
         {
           "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "if_clause",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "_expression",
           "named": true
         }
       ]
@@ -892,36 +767,6 @@
       "types": [
         {
           "type": "_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "list_comprehension",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "for_in_clause",
-          "named": true
-        },
-        {
-          "type": "if_clause",
           "named": true
         }
       ]
@@ -1171,36 +1016,6 @@
     }
   },
   {
-    "type": "set_comprehension",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "for_in_clause",
-          "named": true
-        },
-        {
-          "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "slashed_name",
     "named": true,
     "fields": {},
@@ -1361,25 +1176,6 @@
     }
   },
   {
-    "type": "variables",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "tuple",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "wildcard_import",
     "named": true,
     "fields": {}
@@ -1469,10 +1265,6 @@
     "named": true
   },
   {
-    "type": "for",
-    "named": false
-  },
-  {
     "type": "from",
     "named": false
   },
@@ -1485,15 +1277,7 @@
     "named": true
   },
   {
-    "type": "if",
-    "named": false
-  },
-  {
     "type": "import",
-    "named": false
-  },
-  {
-    "type": "in",
     "named": false
   },
   {

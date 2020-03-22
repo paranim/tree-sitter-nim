@@ -300,39 +300,6 @@ Lists
         (identifier)
         (identifier)))))
 
-=====================================
-List comprehensions
-=====================================
-
-[a + b for (a, b) in items]
-[a for b in c for a in b]
-[(x,y) for x in [1,2,3] for y in [1,2,3] if true]
-
----
-
-(module
-  (expression_statement
-    (list_comprehension
-      (operator (identifier) (op) (identifier))
-      (for_in_clause
-        (variables (tuple (identifier) (identifier))) (identifier))))
-  (expression_statement
-    (list_comprehension
-      (identifier)
-      (for_in_clause
-        (variables (identifier))
-        (identifier))
-      (for_in_clause
-        (variables (identifier))
-        (identifier))))
-  (expression_statement
-    (list_comprehension
-      (tuple (identifier) (identifier))
-      (for_in_clause (variables (identifier))
-        (list (integer) (integer) (integer)))
-      (for_in_clause (variables (identifier))
-        (list (integer) (integer) (integer)))
-      (if_clause (true)))))
 
 =====================================
 Dictionaries
@@ -351,27 +318,6 @@ Dictionaries
   (expression_statement
     (dictionary)))
 
-=====================================
-Dictionary comprehensions
-=====================================
-
-{a: b for a, b in items}
-{a: b for c in d for e in items}
-
----
-
-(module
-  (expression_statement
-    (dictionary_comprehension
-      (pair (identifier) (identifier))
-      (for_in_clause
-        (variables (identifier) (identifier)) (identifier))))
-  (expression_statement
-    (dictionary_comprehension
-      (pair (identifier) (identifier))
-      (for_in_clause
-        (variables (identifier)) (identifier))
-      (for_in_clause (variables (identifier)) (identifier)))))
 
 =====================================
 Sets
@@ -383,30 +329,6 @@ Sets
 
 (module
   (expression_statement (set (identifier) (identifier) (identifier))))
-
-=====================================
-Set comprehensions
-=====================================
-
-{a[b][c] for a, b, c in items}
-{r for s in qs for n in ms}
-
----
-
-(module
-  (expression_statement
-    (set_comprehension
-      (subscript (subscript (identifier) (identifier)) (identifier))
-      (for_in_clause
-        (variables (identifier) (identifier) (identifier))
-        (identifier))))
-  (expression_statement
-    (set_comprehension
-      (identifier)
-      (for_in_clause
-        (variables (identifier)) (identifier))
-      (for_in_clause
-        (variables (identifier)) (identifier)))))
 
 =====================================
 Tuples
@@ -425,44 +347,3 @@ Tuples
   (expression_statement (tuple (identifier) (identifier) (identifier)))
   (expression_statement (tuple (identifier) (identifier))))
 
-=====================================
-Generator expression
-=====================================
-
-(a[b][c] for a, b, c in items)
-dict((a, b) for a, b in d)
-(a for b in c for d in e)
-(x for x in range(1, 10))
-
----
-
-(module
-  (expression_statement
-    (generator_expression
-      (subscript (subscript (identifier) (identifier)) (identifier))
-      (for_in_clause
-        (variables (identifier) (identifier) (identifier))
-        (identifier))))
-  (expression_statement
-    (call
-      (identifier)
-      (generator_expression
-        (tuple (identifier) (identifier))
-        (for_in_clause
-          (variables (identifier) (identifier))
-          (identifier)))))
-  (expression_statement
-    (generator_expression
-      (identifier)
-      (for_in_clause
-        (variables (identifier))
-        (identifier))
-      (for_in_clause
-        (variables (identifier))
-        (identifier))))
-  (expression_statement
-    (generator_expression
-      (identifier)
-      (for_in_clause
-        (variables (identifier))
-        (call (identifier) (argument_list (integer) (integer)))))))
