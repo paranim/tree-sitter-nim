@@ -102,10 +102,6 @@
         "named": true
       },
       {
-        "type": "ellipsis",
-        "named": true
-      },
-      {
         "type": "false",
         "named": true
       },
@@ -1678,21 +1674,6 @@
     }
   },
   {
-    "type": "slice",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "string",
     "named": true,
     "fields": {},
@@ -1716,19 +1697,11 @@
     "named": true,
     "fields": {
       "subscript": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": ",",
-            "named": false
-          },
-          {
             "type": "_expression",
-            "named": true
-          },
-          {
-            "type": "slice",
             "named": true
           }
         ]
@@ -2128,10 +2101,6 @@
   {
     "type": "elif",
     "named": false
-  },
-  {
-    "type": "ellipsis",
-    "named": true
   },
   {
     "type": "else",

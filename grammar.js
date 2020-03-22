@@ -435,7 +435,6 @@ module.exports = grammar({
       $.tuple,
       $.parenthesized_expression,
       $.generator_expression,
-      $.ellipsis
     ),
 
     operator: $ => {
@@ -547,19 +546,9 @@ module.exports = grammar({
     subscript: $ => seq(
       field('value', $._primary_expression),
       '[',
-      field('subscript', commaSep1(choice($._expression, $.slice))),
-      optional(','),
+      field('subscript', $._expression),
       ']'
     ),
-
-    slice: $ => seq(
-      optional($._expression),
-      ':',
-      optional($._expression),
-      optional(seq(':', optional($._expression)))
-    ),
-
-    ellipsis: $ => '...',
 
     call: $ => prec(PREC.call, seq(
       field('function', $._primary_expression),
@@ -720,40 +709,22 @@ module.exports = grammar({
 
     integer: $ => token(choice(
       seq(
-        choice('0x', '0X'),
-        repeat1(/_?[A-Fa-f0-9]+/),
-        optional(/[Ll]/)
-      ),
-      seq(
-        choice('0o', '0O'),
-        repeat1(/_?[0-7]+/),
-        optional(/[Ll]/)
-      ),
-      seq(
-        choice('0b', '0B'),
-        repeat1(/_?[0-1]+/),
-        optional(/[Ll]/)
-      ),
-      seq(
         repeat1(/[0-9]+_?/),
-        choice(
-          optional(/[Ll]/), // long numbers
-          optional(/[jJ]/) // complex numbers
-        )
+        optional(choice(/[iI]/, /[iI]8/, /[iI]16/, /[iI]32/, /[iI]64/, /[uU]/, /[uU]8/, /[uU]16/, /[uU]32/, /[uU]64/))
       )
     )),
 
     float: $ => {
       const digits = repeat1(/[0-9]+_?/);
       const exponent = seq(/[eE][\+-]?/, digits)
+      var suffix = choice(/[fF]/, /[fF]32/, /[fF]64/, /[dD]/, /[dD]32/, /[dD]64/);
 
       return token(seq(
         choice(
-          seq(digits, '.', optional(digits), optional(exponent)),
-          seq(optional(digits), '.', digits, optional(exponent)),
-          seq(digits, exponent)
-        ),
-        optional(choice(/[Ll]/, /[jJ]/))
+          seq(digits, '.', digits, optional(exponent), optional(suffix)),
+          seq(digits, exponent, optional(suffix)),
+          seq(digits, suffix)
+        )
       ))
     },
 

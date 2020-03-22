@@ -18,29 +18,25 @@ Subscript expressions
 =====================================
 
 a[1]
-b[2, 3]
-c[4, 5,]
 
 ---
 
 (module
-  (expression_statement (subscript (identifier) (integer)))
-  (expression_statement (subscript (identifier) (integer) (integer)))
-  (expression_statement (subscript (identifier) (integer) (integer))))
+  (expression_statement (subscript (identifier) (integer))))
 
 
 =====================================
 Subscript slice expressions
 =====================================
 
-b[5:6]
+b[5..6]
 
 ---
 
 (module
   (expression_statement (subscript
     (identifier)
-    (slice (integer) (integer)))))
+    (operator (integer) (integer)))))
 
 =====================================
 Attribute references

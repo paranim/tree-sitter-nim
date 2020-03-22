@@ -3,34 +3,16 @@ Integers
 =====================================
 
 -1
-0xDEAD
-0XDEAD
-1j
--1j
-0o123
-0O123
-0b001
-0B001
+1i
+-1u
 1_1
-0B1_1
-0O1_1
-0L
 
 ---
 
 (module
   (expression_statement (operator (integer)))
   (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
   (expression_statement (operator (integer)))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
   (expression_statement (integer)))
 
 =====================================
@@ -40,13 +22,13 @@ Floats
 -0.6_6
 +0.1_1
 123.4123
-123.123J
+123.123d
 1_1.3_1
-1_1.
-1e+3_4j
+1_1.0
+1e+3_4
 0.3e1_4
-1_0.l
-0.1l
+1_0.0f
+0f
 
 ---
 
@@ -67,12 +49,12 @@ Floats
 Scientific Notation Floats
 =====================================
 
-1e322
-1e-3
-1e+3
+1.0e322
+1.0e-3
+1.0e+3
 1.8e10
-1.e10
--1e10
+1.0e10
+-1.0e10
 
 ---
 
