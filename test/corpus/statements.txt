@@ -77,12 +77,12 @@ echo 0 or 1
 ---
 
 (module
-  (echo_statement (identifier))
-  (echo_statement (identifier) (identifier))
-  (echo_statement
+  (omit_parens_statement (identifier) (identifier))
+  (omit_parens_statement (identifier) (identifier) (identifier))
+  (omit_parens_statement (identifier)
     (operator (integer) (integer))
     (operator (integer) (integer)))
-  (echo_statement
+  (omit_parens_statement (identifier)
     (operator (integer) (integer))))
 
 =====================================
@@ -269,27 +269,13 @@ While statements
 while a:
   b
 
-while c:
-  d
-else:
-  e
-  f
-
 ---
 
 (module
   (while_statement
     condition: (identifier)
     body: (block
-      (expression_statement (identifier))))
-  (while_statement
-    condition: (identifier)
-    body: (block
-      (expression_statement (identifier)))
-    alternative: (else_clause
-      body: (block
-        (expression_statement (identifier))
-        (expression_statement (identifier))))))
+      (expression_statement (identifier)))))
 
 =====================================
 For statements
@@ -307,13 +293,13 @@ for line, i in lines:
     left: (variables (identifier) (identifier))
     right: (expression_list (identifier))
     body: (block
-      (echo_statement
+      (omit_parens_statement (identifier)
         argument: (identifier))
       (for_statement
         left: (variables (identifier) (identifier))
         right: (expression_list (identifier))
         body: (block
-          (echo_statement
+          (omit_parens_statement (identifier)
             argument: (identifier)))))))
 
 =====================================
@@ -394,8 +380,10 @@ Function definitions
 proc e((a,b)) =
   return (a,b)
 
-proc f() =
-  nonlocal a
+proc `$`(a: array[2, int]): string =
+  result = ""
+  for i in a:
+    result.add($i)
 
 ---
 
@@ -406,10 +394,24 @@ proc f() =
     body: (block
       (return_statement (expression_list (tuple (identifier) (identifier))))))
   (function_definition
-    name: (identifier)
-    parameters: (parameters)
+    name: (string)
+    parameters: (parameters
+      (typed_parameter (identifier)
+        type: (type (subscript value: (identifier) subscript: (integer) subscript: (identifier)))))
+    return_type: (type (identifier))
     body: (block
-      (nonlocal_statement (identifier)))))
+      (expression_statement
+        (assignment
+          left: (expression_list (identifier))
+          right: (expression_list (string))))
+      (for_statement
+        left: (variables (identifier))
+        right: (expression_list (identifier))
+        body: (block
+          (expression_statement
+            (call
+              function: (attribute object: (identifier) attribute: (identifier))
+              arguments: (argument_list (operator right: (identifier))))))))))
 
 
 
@@ -443,11 +445,11 @@ echo c
 ---
 
 (module
-  (echo_statement (identifier))
+  (omit_parens_statement (identifier) (identifier))
   (comment)
-  (echo_statement (identifier))
+  (omit_parens_statement (identifier) (identifier))
   (comment)
-  (echo_statement (identifier)))
+  (omit_parens_statement (identifier) (identifier)))
 
 ====================================================
 Comments at different indentation levels
@@ -501,35 +503,7 @@ echo "a"
   # We need to recognize the newline *preceding* this comment, because there's no newline after it
 ---
 
-(module (echo_statement (string)) (comment))
-
-====================================================
-Global statements
-====================================================
-
-global a
-global a, b
-
----
-
-(module
-  (global_statement (identifier))
-  (global_statement (identifier) (identifier)))
-
-====================================================
-Exec statements
-====================================================
-
-exec '1+1'
-exec 'x+=1' in nil
-exec 'x+=1' in a, b
-
----
-
-(module
-  (exec_statement (string))
-  (exec_statement (string) (none))
-  (exec_statement (string) (identifier) (identifier)))
+(module (omit_parens_statement (identifier) (string)) (comment))
 
 ==================================================
 Extra newlines

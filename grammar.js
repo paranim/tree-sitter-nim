@@ -1,4 +1,5 @@
 const PREC = {
+  omit_parens: -1,
   conditional: -1,
 
   parenthesized_expression: 1,
@@ -47,7 +48,6 @@ module.exports = grammar({
   inline: $ => [
     $._simple_statement,
     $._compound_statement,
-    $.keyword_identifier,
     $._suite,
     $._parameter,
   ],
@@ -77,7 +77,7 @@ module.exports = grammar({
     _simple_statement: $ => choice(
       $.import_statement,
       $.import_from_statement,
-      $.echo_statement,
+      $.omit_parens_statement,
       $.assert_statement,
       $.expression_statement,
       $.return_statement,
@@ -85,10 +85,7 @@ module.exports = grammar({
       $.raise_statement,
       $.pass_statement,
       $.break_statement,
-      $.continue_statement,
-      $.global_statement,
-      $.nonlocal_statement,
-      $.exec_statement
+      $.continue_statement
     ),
 
     import_statement: $ => seq(
@@ -133,9 +130,9 @@ module.exports = grammar({
 
     wildcard_import: $ => '*',
 
-    echo_statement: $ =>
-      prec(-1, seq(
-        'echo',
+    omit_parens_statement: $ =>
+      prec(PREC.omit_parens, seq(
+        $.identifier,
         commaSep1(field('argument', $._expression)),
         optional(','))
       ),
@@ -248,8 +245,7 @@ module.exports = grammar({
       'while',
       field('condition', $._expression),
       ':',
-      field('body', $._suite),
-      optional(field('alternative', $.else_clause))
+      field('body', $._suite)
     ),
 
     try_statement: $ => seq(
@@ -302,7 +298,7 @@ module.exports = grammar({
 
     function_definition: $ => seq(
       choice('proc', 'func'),
-      field('name', $.identifier),
+      field('name', choice($.identifier, $.string)),
       field('parameters', $.parameters),
       optional(
         seq(
@@ -327,7 +323,6 @@ module.exports = grammar({
 
     _parameter: $ => choice(
       $.identifier,
-      $.keyword_identifier,
       $.tuple,
       $.typed_parameter,
       $.default_parameter,
@@ -335,38 +330,17 @@ module.exports = grammar({
     ),
 
     default_parameter: $ => seq(
-      field('name', choice($.identifier, $.keyword_identifier)),
+      field('name', choice($.identifier, $.string)),
       '=',
       field('value', $._expression)
     ),
 
     typed_default_parameter: $ => seq(
-      field('name', choice($.identifier, $.keyword_identifier)),
+      field('name', choice($.identifier, $.string)),
       ':',
       field('type', $.type),
       '=',
       field('value', $._expression)
-    ),
-
-    global_statement: $ => seq(
-      'global',
-      commaSep1($.identifier)
-    ),
-
-    nonlocal_statement: $ => seq(
-      'nonlocal',
-      commaSep1($.identifier)
-    ),
-
-    exec_statement: $ => seq(
-      'exec',
-      field('code', $.string),
-      optional(
-        seq(
-          'in',
-          commaSep1($._expression)
-        )
-      )
     ),
 
     argument_list: $ => seq(
@@ -415,7 +389,6 @@ module.exports = grammar({
     _primary_expression: $ => choice(
       $.operator,
       $.identifier,
-      $.keyword_identifier,
       $.string,
       $.concatenated_string,
       $.integer,
@@ -487,7 +460,7 @@ module.exports = grammar({
     },
 
     lambda: $ => seq(
-      'proc',
+      choice('proc', 'func'),
       field('parameters', $.parameters),
       ':',
       field('type', $.type),
@@ -546,7 +519,7 @@ module.exports = grammar({
     subscript: $ => seq(
       field('value', $._primary_expression),
       '[',
-      field('subscript', $._expression),
+      field('subscript', commaSep1($._expression)),
       ']'
     ),
 
@@ -567,7 +540,7 @@ module.exports = grammar({
     type: $ => $._expression,
 
     keyword_argument: $ => seq(
-      field('name', choice($.identifier, $.keyword_identifier)),
+      field('name', choice($.identifier, $.string)),
       '=',
       field('value', $._expression)
     ),
@@ -729,8 +702,6 @@ module.exports = grammar({
     },
 
     identifier: $ => /[a-zA-Zα-ωΑ-Ω_][a-zA-Zα-ωΑ-Ω_0-9]*/,
-
-    keyword_identifier: $ => alias(choice('print', 'exec'), $.identifier),
 
     true: $ => 'true',
     false: $ => 'false',

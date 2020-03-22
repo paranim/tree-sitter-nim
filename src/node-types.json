@@ -188,19 +188,7 @@
         "named": true
       },
       {
-        "type": "echo_statement",
-        "named": true
-      },
-      {
-        "type": "exec_statement",
-        "named": true
-      },
-      {
         "type": "expression_statement",
-        "named": true
-      },
-      {
-        "type": "global_statement",
         "named": true
       },
       {
@@ -212,7 +200,7 @@
         "named": true
       },
       {
-        "type": "nonlocal_statement",
+        "type": "omit_parens_statement",
         "named": true
       },
       {
@@ -582,6 +570,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       },
@@ -670,22 +662,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "echo_statement",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -786,32 +762,6 @@
         },
         {
           "type": "block",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "exec_statement",
-    "named": true,
-    "fields": {
-      "code": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "_expression",
           "named": true
         }
       ]
@@ -995,6 +945,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       },
@@ -1045,21 +999,6 @@
         },
         {
           "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "global_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -1263,6 +1202,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       },
@@ -1405,11 +1348,22 @@
     }
   },
   {
-    "type": "nonlocal_statement",
+    "type": "omit_parens_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -1697,9 +1651,13 @@
     "named": true,
     "fields": {
       "subscript": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": ",",
+            "named": false
+          },
           {
             "type": "_expression",
             "named": true
@@ -1797,6 +1755,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       },
@@ -1871,16 +1833,6 @@
     "type": "while_statement",
     "named": true,
     "fields": {
-      "alternative": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "else_clause",
-            "named": true
-          }
-        ]
-      },
       "body": {
         "multiple": false,
         "required": true,
@@ -2095,10 +2047,6 @@
     "named": false
   },
   {
-    "type": "echo",
-    "named": false
-  },
-  {
     "type": "elif",
     "named": false
   },
@@ -2112,10 +2060,6 @@
   },
   {
     "type": "except",
-    "named": false
-  },
-  {
-    "type": "exec",
     "named": false
   },
   {
@@ -2140,10 +2084,6 @@
   },
   {
     "type": "func",
-    "named": false
-  },
-  {
-    "type": "global",
     "named": false
   },
   {
@@ -2185,10 +2125,6 @@
   {
     "type": "none",
     "named": true
-  },
-  {
-    "type": "nonlocal",
-    "named": false
   },
   {
     "type": "not",
