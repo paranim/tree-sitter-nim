@@ -1,23 +1,23 @@
 const PREC = {
-  omit_parens: -1,
+  omit_parens: -2,
   conditional: -1,
 
   parenthesized_expression: 1,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
-  op0: 9,
-  op1: 10,
-  op2: 11,
-  op3: 12,
-  op4: 13,
-  op5: 14,
-  op6: 15,
-  op7: 16,
-  op8: 17,
-  op9: 18,
-  op10: 19,
+  op0: 10,
+  op1: 11,
+  op2: 12,
+  op3: 13,
+  op4: 14,
+  op5: 15,
+  op6: 16,
+  op7: 17,
+  op8: 18,
+  op9: 19,
+  op10: 20,
 
-  call: 20,
+  call: 21,
 }
 
 module.exports = grammar({
@@ -96,14 +96,14 @@ module.exports = grammar({
 
     relative_import: $ => seq(
       $.import_prefix,
-      optional($.dotted_name)
+      optional($.slashed_name)
     ),
 
     import_from_statement: $ => seq(
       'from',
       field('module_name', choice(
         $.relative_import,
-        $.dotted_name
+        $.slashed_name
       )),
       'import',
       choice(
@@ -115,14 +115,14 @@ module.exports = grammar({
 
     _import_list: $ => seq(
       commaSep1(field('name', choice(
-        $.dotted_name,
+        $.slashed_name,
         $.aliased_import
       ))),
       optional(',')
     ),
 
     aliased_import: $ => seq(
-      field('name', $.dotted_name),
+      field('name', $.slashed_name),
       'as',
       field('alias', $.identifier)
     ),
@@ -367,7 +367,7 @@ module.exports = grammar({
       optional(',')
     )),
 
-    dotted_name: $ => sep1($.identifier, '.'),
+    slashed_name: $ => sep1($.identifier, '/'),
 
     // Expressions
 
@@ -413,7 +413,9 @@ module.exports = grammar({
         // If the operator ends with = and its first character is none of <, >, !, =, ~, ?
         [prec.left, /[+\-*/@$&%|\^.:\\]+[=+\-*/<>@$~&%|!?\^.:\\]*=/, PREC.op1],
         // (first char @ : ?)
-        [prec.left, /[@:?][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op2],
+        [prec.left, /[@:?][=+\-*/<>@$~&%|!?\^.:\\]+/, PREC.op2],
+        [prec.left, '@', PREC.op2],
+        [prec.left, '?', PREC.op2],
         // or xor
         [prec.left, 'or', PREC.op3],
         [prec.left, 'xor', PREC.op3],
@@ -434,7 +436,9 @@ module.exports = grammar({
         // (first char + - ~ |)
         [prec.left, /[+\-~|][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op8],
         // (first char * % \ /)
-        [prec.left, /[*%\\/][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op9],
+        [prec.left, /[%\\\/][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op9],
+        [prec.left, '*', PREC.op9], // starts with * and ends with anyhting but :
+        [prec.left, /\*[=+\-*/<>@$~&%|!?\^.:\\]*[=+\-*/<>@$~&%|!?\^.\\]/, PREC.op9], // starts with * and ends with anything but :
         [prec.left, 'div', PREC.op9],
         [prec.left, 'mod', PREC.op9],
         [prec.left, 'shl', PREC.op9],
@@ -446,7 +450,7 @@ module.exports = grammar({
 
       return choice(...table.map(([fn, operator, precedence]) => fn(precedence, seq(
         optional(field('left', $._primary_expression)),
-        field('operator', operator),
+        alias(operator, $.op),
         field('right', $._primary_expression)
       ))));
     },
@@ -462,7 +466,8 @@ module.exports = grammar({
 
     assignment: $ => seq(
       field('left', $.expression_list),
-      seq('=', field('right', $._right_hand_side))
+      field('op', '='),
+      field('right', $._right_hand_side)
     ),
 
     declaration: $ => seq(

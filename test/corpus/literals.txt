@@ -10,9 +10,9 @@ Integers
 ---
 
 (module
-  (expression_statement (operator (integer)))
+  (expression_statement (operator (op) (integer)))
   (expression_statement (integer))
-  (expression_statement (operator (integer)))
+  (expression_statement (operator (op) (integer)))
   (expression_statement (integer)))
 
 =====================================
@@ -33,8 +33,8 @@ Floats
 ---
 
 (module
-  (expression_statement (operator (float)))
-  (expression_statement (operator (float)))
+  (expression_statement (operator (op) (float)))
+  (expression_statement (operator (op) (float)))
   (expression_statement (float))
   (expression_statement (float))
   (expression_statement (float))
@@ -64,7 +64,7 @@ Scientific Notation Floats
   (expression_statement (float))
   (expression_statement (float))
   (expression_statement (float))
-  (expression_statement (operator (float))))
+  (expression_statement (operator (op) (float))))
 
 =====================================
 Strings
@@ -310,7 +310,7 @@ List comprehensions
 (module
   (expression_statement
     (list_comprehension
-      (operator (identifier) (identifier))
+      (operator (identifier) (op) (identifier))
       (for_in_clause
         (variables (tuple (identifier) (identifier))) (identifier))))
   (expression_statement

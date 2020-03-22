@@ -232,7 +232,7 @@
         "required": true,
         "types": [
           {
-            "type": "dotted_name",
+            "type": "slashed_name",
             "named": true
           }
         ]
@@ -284,6 +284,16 @@
           {
             "type": "expression_list",
             "named": true
+          }
+        ]
+      },
+      "op": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "=",
+            "named": false
           }
         ]
       },
@@ -513,21 +523,6 @@
         },
         {
           "type": "if_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "dotted_name",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -969,11 +964,11 @@
         "required": true,
         "types": [
           {
-            "type": "dotted_name",
+            "type": "relative_import",
             "named": true
           },
           {
-            "type": "relative_import",
+            "type": "slashed_name",
             "named": true
           }
         ]
@@ -987,7 +982,7 @@
             "named": true
           },
           {
-            "type": "dotted_name",
+            "type": "slashed_name",
             "named": true
           }
         ]
@@ -1022,7 +1017,7 @@
             "named": true
           },
           {
-            "type": "dotted_name",
+            "type": "slashed_name",
             "named": true
           }
         ]
@@ -1248,64 +1243,6 @@
           }
         ]
       },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "and",
-            "named": false
-          },
-          {
-            "type": "div",
-            "named": false
-          },
-          {
-            "type": "in",
-            "named": false
-          },
-          {
-            "type": "is",
-            "named": false
-          },
-          {
-            "type": "isnot",
-            "named": false
-          },
-          {
-            "type": "mod",
-            "named": false
-          },
-          {
-            "type": "not",
-            "named": false
-          },
-          {
-            "type": "notin",
-            "named": false
-          },
-          {
-            "type": "of",
-            "named": false
-          },
-          {
-            "type": "or",
-            "named": false
-          },
-          {
-            "type": "shl",
-            "named": false
-          },
-          {
-            "type": "shr",
-            "named": false
-          },
-          {
-            "type": "xor",
-            "named": false
-          }
-        ]
-      },
       "right": {
         "multiple": false,
         "required": true,
@@ -1316,6 +1253,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "op",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1414,11 +1361,11 @@
       "required": true,
       "types": [
         {
-          "type": "dotted_name",
+          "type": "import_prefix",
           "named": true
         },
         {
-          "type": "import_prefix",
+          "type": "slashed_name",
           "named": true
         }
       ]
@@ -1479,6 +1426,21 @@
         },
         {
           "type": "if_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "slashed_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -1709,6 +1671,11 @@
     }
   },
   {
+    "type": "wildcard_import",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "with_item",
     "named": true,
     "fields": {
@@ -1773,11 +1740,19 @@
     "named": false
   },
   {
+    "type": "*",
+    "named": false
+  },
+  {
     "type": ",",
     "named": false
   },
   {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "/",
     "named": false
   },
   {
@@ -1801,10 +1776,6 @@
     "named": false
   },
   {
-    "type": "and",
-    "named": false
-  },
-  {
     "type": "as",
     "named": false
   },
@@ -1822,10 +1793,6 @@
   },
   {
     "type": "continue",
-    "named": false
-  },
-  {
-    "type": "div",
     "named": false
   },
   {
@@ -1889,19 +1856,7 @@
     "named": true
   },
   {
-    "type": "is",
-    "named": false
-  },
-  {
-    "type": "isnot",
-    "named": false
-  },
-  {
     "type": "let",
-    "named": false
-  },
-  {
-    "type": "mod",
     "named": false
   },
   {
@@ -1909,20 +1864,8 @@
     "named": true
   },
   {
-    "type": "not",
-    "named": false
-  },
-  {
-    "type": "notin",
-    "named": false
-  },
-  {
-    "type": "of",
-    "named": false
-  },
-  {
-    "type": "or",
-    "named": false
+    "type": "op",
+    "named": true
   },
   {
     "type": "pass",
@@ -1938,14 +1881,6 @@
   },
   {
     "type": "return",
-    "named": false
-  },
-  {
-    "type": "shl",
-    "named": false
-  },
-  {
-    "type": "shr",
     "named": false
   },
   {
@@ -1969,15 +1904,7 @@
     "named": false
   },
   {
-    "type": "wildcard_import",
-    "named": true
-  },
-  {
     "type": "with",
-    "named": false
-  },
-  {
-    "type": "xor",
     "named": false
   },
   {

@@ -3,21 +3,21 @@ Import statements
 =====================================
 
 import a, b
-import b.c as d
-import a.b.c
+import b/c as d
+import a/b/c
 
 ---
 
 (module
   (import_statement
-    (dotted_name (identifier))
-    (dotted_name (identifier)))
+    (slashed_name (identifier))
+    (slashed_name (identifier)))
   (import_statement
     (aliased_import
-      (dotted_name (identifier) (identifier))
+      (slashed_name (identifier) (identifier))
       (identifier)))
   (import_statement
-    (dotted_name (identifier) (identifier) (identifier))))
+    (slashed_name (identifier) (identifier) (identifier))))
 
 =====================================
 Import-from statements
@@ -26,44 +26,24 @@ Import-from statements
 from a import b
 from a import *
 from a import (b, c)
-from a.b import c
-from . import b
-from .. import b
-from .a import b
-from ..a import b
+from a/b import c
 
 ---
 
 (module
   (import_from_statement
-    (dotted_name (identifier))
-    (dotted_name (identifier)))
+    (slashed_name (identifier))
+    (slashed_name (identifier)))
   (import_from_statement
-    (dotted_name (identifier))
+    (slashed_name (identifier))
     (wildcard_import))
   (import_from_statement
-    (dotted_name (identifier))
-    (dotted_name (identifier))
-    (dotted_name (identifier)))
+    (slashed_name (identifier))
+    (slashed_name (identifier))
+    (slashed_name (identifier)))
   (import_from_statement
-    (dotted_name (identifier) (identifier))
-    (dotted_name (identifier)))
-  (import_from_statement
-    (relative_import (import_prefix))
-    (dotted_name (identifier)))
-  (import_from_statement
-    (relative_import (import_prefix))
-    (dotted_name (identifier)))
-  (import_from_statement
-    (relative_import
-      (import_prefix)
-      (dotted_name (identifier)))
-      (dotted_name (identifier)))
-  (import_from_statement
-    (relative_import
-      (import_prefix)
-      (dotted_name (identifier)))
-      (dotted_name (identifier))))
+    (slashed_name (identifier) (identifier))
+    (slashed_name (identifier))))
 
 =====================================
 Echo statements
@@ -80,10 +60,10 @@ echo 0 or 1
   (omit_parens_statement (identifier) (identifier))
   (omit_parens_statement (identifier) (identifier) (identifier))
   (omit_parens_statement (identifier)
-    (operator (integer) (integer))
-    (operator (integer) (integer)))
+    (operator (integer) (op) (integer))
+    (operator (integer) (op) (integer)))
   (omit_parens_statement (identifier)
-    (operator (integer) (integer))))
+    (operator (integer) (op) (integer))))
 
 =====================================
 Assert statements
@@ -111,7 +91,7 @@ b + c
 
 (module
   (expression_statement (identifier))
-  (expression_statement (operator (identifier) (identifier)))
+  (expression_statement (operator (identifier) (op) (identifier)))
   (expression_statement (integer) (integer) (integer))
   (expression_statement (integer) (integer) (integer)))
 
@@ -147,9 +127,9 @@ return not b
 (module
   (return_statement)
   (return_statement (expression_list
-    (operator (identifier) (identifier))
+    (operator (identifier) (op) (identifier))
     (identifier)))
-  (return_statement (expression_list (operator (identifier)))))
+  (return_statement (expression_list (operator (op) (identifier)))))
 
 =====================================
 If statements
@@ -398,7 +378,7 @@ proc `$`(a: array[2, int]): string =
           (expression_statement
             (call
               function: (attribute object: (identifier) attribute: (identifier))
-              arguments: (argument_list (operator right: (identifier))))))))))
+              arguments: (argument_list (operator (op) right: (identifier))))))))))
 
 
 

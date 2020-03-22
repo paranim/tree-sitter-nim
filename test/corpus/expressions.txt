@@ -11,6 +11,7 @@ Identifiers with Greek letters
     left: (expression_list (identifier))
     right: (expression_list (operator
       left: (identifier)
+      (op)
       right: (identifier))))))
 
 =====================================
@@ -36,7 +37,7 @@ b[5..6]
 (module
   (expression_statement (subscript
     (identifier)
-    (operator (integer) (integer)))))
+    (operator (integer) (op) (integer)))))
 
 =====================================
 Attribute references
@@ -187,17 +188,22 @@ not x
     (operator
       (operator
         (identifier)
+        (op)
         (operator
           (identifier)
+          (op)
           (operator
             (identifier)
+            (op)
             (identifier))))
+      (op)
       (operator
         (identifier)
+        (op)
         (integer))))
-  (expression_statement (operator (integer)))
-  (expression_statement (operator (identifier)))
-  (expression_statement (operator (identifier))))
+  (expression_statement (operator (op) (integer)))
+  (expression_statement (operator (op) (identifier)))
+  (expression_statement (operator (op) (identifier))))
 
 =====================================
 Binary Addition / Subtraction With Floats
@@ -215,17 +221,17 @@ Binary Addition / Subtraction With Floats
 
 (module
   (expression_statement
-    (operator (float) (float)))
+    (operator (float) (op) (float)))
   (expression_statement
-    (operator (float) (float)))
+    (operator (float) (op) (float)))
   (expression_statement
-    (operator (float) (integer)))
+    (operator (float) (op) (integer)))
   (expression_statement
-    (operator (float) (integer)))
+    (operator (float) (op) (integer)))
   (expression_statement
-    (operator (integer) (float)))
+    (operator (integer) (op) (float)))
   (expression_statement
-    (operator (integer) (float))))
+    (operator (integer) (op) (float))))
 
 =====================================
 Power Operator Precedence
@@ -240,13 +246,17 @@ Power Operator Precedence
   (expression_statement
     (operator
       (integer)
+      (op)
       (operator
         (integer)
+        (op)
         (integer))))
   (expression_statement
     (operator
+      (op)
       (operator
         (integer)
+        (op)
         (integer)))))
 
 =====================================
@@ -263,8 +273,10 @@ a() + b * c.d.e
       left: (call
         function: (identifier)
         arguments: (argument_list))
+      (op)
       right: (operator
         left: (identifier)
+        (op)
         right: (attribute
           object: (attribute
             object: (identifier)
@@ -284,11 +296,15 @@ a shl b or c shr d and e
     (operator
       (operator
         (identifier)
+        (op)
         (identifier))
+      (op)
       (operator
         (operator
           (identifier)
+          (op)
           (identifier))
+        (op)
         (identifier)))))
 
 =====================================
@@ -304,11 +320,13 @@ not d
   (expression_statement
     (operator
       (identifier)
+      (op)
       (operator
         (identifier)
+        (op)
         (identifier))))
   (expression_statement
-    (operator (identifier))))
+    (operator (op) (identifier))))
 
 =====================================
 Comparison operators
@@ -327,15 +345,21 @@ a == b or c == d
           (operator
             (operator
               (identifier)
+              (op)
               (identifier))
+            (op)
             (identifier))
+          (op)
           (identifier))
+        (op)
         (identifier))
+      (op)
       (identifier)))
   (expression_statement
     (operator
-      (operator (identifier) (identifier))
-      (operator (identifier) (identifier)))))
+      (operator (identifier) (op) (identifier))
+      (op)
+      (operator (identifier) (op) (identifier)))))
 
 =====================================
 Arrow operators
@@ -354,7 +378,7 @@ passTwoAndTwo((x, y) => x + y)
     (parameters
       (typed_parameter
         (identifier)
-        (type (operator (tuple (identifier) (identifier)) (identifier)))))
+        (type (operator (tuple (identifier) (identifier)) (op) (identifier)))))
     (type (identifier))
     (block
       (expression_statement (call (identifier) (argument_list (integer) (integer))))))
@@ -362,7 +386,7 @@ passTwoAndTwo((x, y) => x + y)
     (call
       (identifier)
       (argument_list
-        (operator (tuple (identifier) (identifier)) (operator (identifier) (identifier)))))))
+        (operator (tuple (identifier) (identifier)) (op) (operator (identifier) (op) (identifier)))))))
 
 ====================================================
 Assignments
@@ -432,10 +456,12 @@ c /= 1
   (expression_statement
     (operator
       (identifier)
+      (op)
       (integer)))
   (expression_statement
     (operator
       (identifier)
+      (op)
       (integer))))
 
 ====================================================
@@ -531,7 +557,7 @@ proc (a: int, b: int): int = a + b
         (typed_parameter (identifier) (type (identifier)))
         (typed_parameter (identifier) (type (identifier))))
       (type (identifier))
-      (operator (identifier) (identifier)))))
+      (operator (identifier) (op) (identifier)))))
 
 =====================================
 Conditional if expressions
@@ -540,6 +566,7 @@ Conditional if expressions
 a = if c: b else: d
 if a: something() else: d
 if a: slice(1,1,1) else: d
+echo if a: "hi" else: "bye"
 
 ---
 
@@ -554,5 +581,6 @@ if a: slice(1,1,1) else: d
   (expression_statement
     (if_expression (identifier)
       (call (identifier) (argument_list (integer) (integer) (integer)))
-      (else_expression (identifier)))))
+      (else_expression (identifier))))
+  (omit_parens_statement (identifier) (if_expression (identifier) (string) (else_expression (string)))))
 
