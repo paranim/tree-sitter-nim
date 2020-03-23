@@ -8,7 +8,7 @@ Identifiers with Greek letters
 
 (module
   (expression_statement (assignment
-    left: (expression_list (identifier))
+    left: (identifier)
     (op)
     right: (block (expression_statement (operator
       left: (identifier)
@@ -349,14 +349,12 @@ a[b] = c
 (module
   (expression_statement
     (assignment
-      (expression_list
-        (identifier))
+      (identifier)
       (op)
       (block (expression_statement (integer)))))
   (expression_statement
     (assignment
-      (expression_list
-        (subscript (identifier) (identifier)))
+      (subscript (identifier) (identifier))
       (op)
       (block (expression_statement (identifier))))))
 

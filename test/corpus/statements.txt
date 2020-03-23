@@ -72,16 +72,12 @@ Expression statements
 
 a
 b + c
-1, 2, 3
-1, 2, 3,
 
 ---
 
 (module
   (expression_statement (identifier))
-  (expression_statement (operator (identifier) (op) (identifier)))
-  (expression_statement (integer) (integer) (integer))
-  (expression_statement (integer) (integer) (integer)))
+  (expression_statement (operator (identifier) (op) (identifier))))
 
 
 =====================================
@@ -176,4 +172,41 @@ echo "a"
 
 (module (omit_parens_statement (identifier) (string)) (comment))
 
+=====================================
+Declaration statements
+=====================================
+
+let a = 1
+let a: int = 1
+var a: int
+var
+  a = 1
+  b = 2
+  c: int = 3
+  d: string
+  e =
+    when defined(release):
+      1
+    else:
+      2
+  f = hello()
+const a = "hello"
+
+---
+
+(module
+  (expression_statement (declaration (block (assignment (identifier) (op) (block (expression_statement (integer)))))))
+  (expression_statement (declaration (block (decl (identifier) (type (identifier)) (op) (block (expression_statement (integer)))))))
+  (expression_statement (declaration (block (decl (identifier) (type (identifier))))))
+  (expression_statement (declaration (block
+    (assignment (identifier) (op) (block (expression_statement (integer))))
+    (assignment (identifier) (op) (block (expression_statement (integer))))
+    (decl (identifier) (type (identifier)) (op) (block (expression_statement (integer))))
+    (decl (identifier) (type (identifier)))
+    (assignment (identifier) (op) (block
+      (generic_statement (identifier) (call (identifier) (argument_list (identifier)))
+        (block (expression_statement (integer))))
+      (generic_statement (identifier) (block (expression_statement (integer))))))
+    (assignment (identifier) (op) (block (expression_statement (call (identifier) (argument_list))))))))
+  (expression_statement (declaration (block (assignment (identifier) (op) (block (expression_statement (string))))))))
 

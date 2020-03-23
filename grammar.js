@@ -1,6 +1,5 @@
 const PREC = {
-  omit_parens: -2,
-  conditional: -1,
+  omit_parens: -1,
 
   parenthesized_expression: 1,
 
@@ -116,9 +115,8 @@ module.exports = grammar({
 
     expression_statement: $ => choice(
       $._expression,
-      seq(commaSep1($._expression), optional(',')),
       $.assignment,
-      //$.declaration,
+      $.declaration,
     ),
 
     // Compount statements
@@ -311,19 +309,36 @@ module.exports = grammar({
     },
 
     assignment: $ => seq(
-      field('left', $.expression_list),
-      alias('=', $.op),
-      field('right', $._suite)
+      field('left', $._expression),
+      seq(alias('=', $.op), field('right', $._suite)),
+    ),
+
+    decl: $ => seq(
+      field('left', $._expression),
+      choice(
+        seq(':', field('type', $.type)),
+        seq(':', field('type', $.type), alias('=', $.op), field('right', $._suite))
+      )
+    ),
+
+    _decl_line: $ => seq(
+      choice($.assignment, $.decl),
+      $._newline
+    ),
+
+    _decl_block: $ => seq(
+      repeat($._decl_line),
+      $._dedent
+    ),
+
+    _decl_body: $ => choice(
+      $._decl_line,
+      seq($._indent, $._decl_block)
     ),
 
     declaration: $ => seq(
       choice('var', 'let', 'const'),
-      field('left', $.expression_list),
-      choice(
-        seq(alias('=', $.op), field('right', $._suite)),
-        seq(':', field('type', $.type)),
-        seq(':', field('type', $.type), alias('=', $.op), field('right', $._suite))
-      )
+      alias(field('body', $._decl_body), $.block)
     ),
 
     attribute: $ => prec(PREC.call, seq(
