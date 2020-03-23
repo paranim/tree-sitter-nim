@@ -361,14 +361,18 @@ module.exports = grammar({
 
     assignment: $ => seq(
       field('left', $._expression),
-      seq($._equals, field('right', $._suite)),
+      optional($._star),
+      $._equals,
+      field('right', $._suite),
     ),
 
     decl: $ => seq(
       field('left', $._expression),
+      optional($._star),
+      $._colon,
       choice(
-        seq($._colon, field('type', $.type)),
-        seq($._colon, field('type', $.type), $._equals, field('right', $._suite))
+        field('type', $.type),
+        seq(field('type', $.type), $._equals, field('right', $._suite))
       )
     ),
 

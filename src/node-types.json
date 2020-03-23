@@ -168,7 +168,7 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -2268,7 +2268,7 @@
   },
   {
     "type": "type",
-    "named": false,
+    "named": true,
     "fields": {},
     "children": {
       "multiple": false,

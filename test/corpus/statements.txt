@@ -210,7 +210,8 @@ var
     else:
       2
   f = hello()
-const a = "hello"
+const a* = "hello"
+let x = a * b
 
 ---
 
@@ -228,7 +229,8 @@ const a = "hello"
         (block (integer)))
       (identifier) (op) (integer)))
     (assignment (identifier) (op) (block (call (identifier) (argument_list)))))))
-  (block (declaration (block (assignment (identifier) (op) (block (string)))))))
+  (block (declaration (block (assignment (identifier) (op) (op) (block (string))))))
+  (block (declaration (block (assignment (identifier) (op) (block (operator (identifier) (op) (identifier))))))))
 
 
 =====================================
