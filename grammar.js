@@ -3,7 +3,6 @@ const PREC = {
   conditional: -1,
 
   parenthesized_expression: 1,
-  subscript: 2,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
   op0: 10,
@@ -33,7 +32,7 @@ module.exports = grammar({
     $._simple_statement,
     $._compound_statement,
     $._expression,
-    $._primary_expression,
+    $._expression,
     $._parameter,
   ],
 
@@ -267,10 +266,6 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
-      $._primary_expression,
-    ),
-
-    _primary_expression: $ => choice(
       $.operator,
       $.identifier,
       $.string,
@@ -336,9 +331,9 @@ module.exports = grammar({
       ];
 
       return choice(...table.map(([fn, operator, precedence]) => fn(precedence, seq(
-        optional(field('left', $._primary_expression)),
+        optional(field('left', $._expression)),
         alias(operator, $.op),
-        field('right', $._primary_expression)
+        field('right', $._expression)
       ))));
     },
 
@@ -359,20 +354,20 @@ module.exports = grammar({
     ),
 
     attribute: $ => prec(PREC.call, seq(
-      field('object', $._primary_expression),
+      field('object', $._expression),
       '.',
       field('attribute', $.identifier)
     )),
 
-    subscript: $ => prec(PREC.subscript, seq(
-      field('value', $._primary_expression),
+    subscript: $ => seq(
+      field('value', $._expression),
       '[',
       field('subscript', commaSep1($._expression)),
       ']'
-    )),
+    ),
 
     call: $ => prec(PREC.call, seq(
-      field('function', $._primary_expression),
+      field('function', $._expression),
       field('arguments', $.argument_list)
     )),
 
@@ -382,7 +377,7 @@ module.exports = grammar({
       field('type', $.type)
     ),
 
-    type: $ => $._primary_expression,
+    type: $ => $._expression,
 
     keyword_argument: $ => seq(
       field('name', choice($.identifier, $.string)),
