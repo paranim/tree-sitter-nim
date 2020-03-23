@@ -3,7 +3,7 @@ const PREC = {
 
   parenthesized_expression: 1,
   subscript: 2,
-  public_id: 3,
+  private_id: 3,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
   op0: 10,
@@ -27,14 +27,6 @@ module.exports = grammar({
   extras: $ => [
     $.comment,
     /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
-  ],
-
-  supertypes: $ => [
-    $._simple_statement,
-    $._compound_statement,
-    $._expression,
-    $._expression,
-    $._parameter,
   ],
 
   externals: $ => [
@@ -117,15 +109,55 @@ module.exports = grammar({
 
     _expression_statement: $ => choice(
       $._expression,
+      seq(sep1($._expression, $._comma), optional($._comma)),
       $.assignment,
       $.declaration,
+    ),
+
+    // Type definitions
+    
+    generics: $ => seq(
+      '[',
+      sep1($._id_or_str, $._comma_or_semi),
+      optional($._comma_or_semi),
+      ']'
+    ),
+
+    _type: $ => seq(
+      choice($.public_id, $._id_or_str),
+      optional($.generics),
+      $._equals,
+      alias($.type, 'type'), // this makes it a non-named node for now
+      optional($._suite),
+    ),
+
+    _type_line: $ => seq(
+      $._type,
+      $._newline
+    ),
+
+    _type_block: $ => seq(
+      repeat($._type_line),
+      $._dedent
+    ),
+
+    _type_body: $ => choice(
+      $._type_line,
+      seq($._indent, $._type_block)
+    ),
+
+    type_definition: $ => seq(
+      'type',
+      alias($._type_body, $.block)
     ),
 
     // Compount statements
 
     _compound_statement: $ => choice(
       $.function_definition,
-      $.generic_statement
+      alias($.generic_statement, $.block),
+      $.type_definition,
+      $._object_pair,
     ),
 
     generic_statement: $ => seq(
@@ -133,6 +165,12 @@ module.exports = grammar({
       repeat($._expression),
       $._colon,
       field('body', $._suite)
+    ),
+
+    _object_pair: $ => seq(
+      choice($.public_id, $._id_or_str),
+      $._colon,
+      alias($.type, 'type'), // this makes it a non-named node, because it may not actually be a type
     ),
 
     pragma: $ => seq(
@@ -300,7 +338,7 @@ module.exports = grammar({
         [prec.left, /[+\-~|][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op8],
         // (first char * % \ /)
         [prec.left, /[%\\\/][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op9],
-        [prec.left, '*', PREC.op9], // starts with * and ends with anyhting but :
+        [prec.left, '*', PREC.op9],
         [prec.left, /\*[=+\-*/<>@$~&%|!?\^.:\\]*[=+\-*/<>@$~&%|!?\^.\\]/, PREC.op9], // starts with * and ends with anything but :
         [prec.left, 'div', PREC.op9],
         [prec.left, 'mod', PREC.op9],
@@ -318,6 +356,8 @@ module.exports = grammar({
         field('right', $._expression)
       ))));
     },
+
+    // Assignments and Declarations
 
     assignment: $ => seq(
       field('left', $._expression),
@@ -352,6 +392,8 @@ module.exports = grammar({
       alias(field('body', $._decl_body), $.block)
     ),
 
+    // Misc
+
     attribute: $ => prec(PREC.call, seq(
       field('object', $._expression),
       $._period,
@@ -361,7 +403,8 @@ module.exports = grammar({
     subscript: $ => prec(PREC.subscript, seq(
       field('value', $._expression),
       '[',
-      field('subscript', sep1($._expression, $._comma)),
+      field('subscript', sep1(choice($._expression, $.pair), $._comma)),
+      optional($._comma),
       ']'
     )),
 
@@ -376,7 +419,10 @@ module.exports = grammar({
       field('type', $.type)
     ),
 
-    type: $ => $._expression,
+    type: $ => seq(
+      optional(choice('ref', 'ptr')),
+      $._expression
+    ),
 
     keyword_argument: $ => seq(
       field('name', choice($.identifier, $.string)),
@@ -492,10 +538,10 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Zα-ωΑ-Ω_][a-zA-Zα-ωΑ-Ω_0-9]*/,
 
     // treat strings as identifiers, so backtick-quoted ids like `this` are treated like normal ids
-    _id_or_str: $ => choice($.identifier, alias($.string, $.identifier)),
+    _id_or_str: $ => prec(PREC.private_id, choice($.identifier, alias($.string, $.identifier))),
 
     // function and type names that are marked as public
-    public_id: $ => prec(PREC.public_id, seq($._id_or_str, '*')),
+    public_id: $ => seq($._id_or_str, '*'),
 
     true: $ => 'true',
     false: $ => 'false',
@@ -513,6 +559,7 @@ module.exports = grammar({
     _colon: $ => alias(':', $.op),
     _period: $ => alias('.', $.op),
     _slash: $ => alias('/', $.op),
+    _star: $ => alias('*', $.op),
   }
 })
 

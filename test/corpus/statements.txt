@@ -103,14 +103,14 @@ when not defined(release):
 
 (module
   (block
-    (generic_statement
+    (block
       (identifier)
       (identifier) (op)
       body: (block
         (identifier)
         (identifier))))
   (block
-    (generic_statement (identifier)
+    (block (identifier)
       (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier))))
       (op)
       body: (block (omit_parens_statement (identifier) argument: (string))))))
@@ -150,7 +150,7 @@ if a:
 
 (module
   (block
-    (generic_statement (identifier) (identifier) (op)
+    (block (identifier) (identifier) (op)
       (comment)
       (comment)
       (comment)
@@ -173,7 +173,7 @@ c
 
 (module
   (block
-    (generic_statement (identifier)
+    (block (identifier)
       (identifier) (op)
       (block
         (identifier))))
@@ -224,9 +224,9 @@ const a = "hello"
     (decl (identifier) (op) (type (identifier)) (op) (block (integer)))
     (decl (identifier) (op) (type (identifier)))
     (assignment (identifier) (op) (block
-      (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op)
+      (block (identifier) (call (identifier) (argument_list (identifier))) (op)
         (block (integer)))
-      (generic_statement (identifier) (op) (block (integer)))))
+      (identifier) (op) (integer)))
     (assignment (identifier) (op) (block (call (identifier) (argument_list)))))))
   (block (declaration (block (assignment (identifier) (op) (block (string)))))))
 
@@ -280,8 +280,33 @@ proc getLib(): string =
       (block
         (declaration (block
           (assignment (identifier) (op) (block
-            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
-            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
-            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))))))
+            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
+            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
+            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))))))
         (call (attribute (call (identifier) (argument_list)) (op) (identifier)) (argument_list (operator (string) (op) (identifier))))))))
+
+
+=====================================
+Type definitions
+=====================================
+
+type
+  Field* = enum
+    Identifier, Attribute, Value
+  Fact[T] = tuple[id: T, attr: T, value: T]
+  Var* = object
+    name*: string
+    field: Field
+
+---
+
+(module
+  (block
+    (type_definition (block
+      (public_id (identifier)) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier))
+      (identifier) (generics (identifier)) (op)
+        (subscript (identifier) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)))
+      (public_id (identifier)) (op) (identifier) (block
+        (public_id (identifier)) (op) (identifier)
+        (identifier) (op) (identifier))))))
 
