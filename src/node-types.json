@@ -128,32 +128,6 @@
     ]
   },
   {
-    "type": "aliased_import",
-    "named": true,
-    "fields": {
-      "alias": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "slashed_name",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "argument_list",
     "named": true,
     "fields": {},
@@ -415,19 +389,49 @@
     }
   },
   {
+    "type": "id_or_str",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "import_from_statement",
     "named": true,
     "fields": {
-      "module_name": {
+      "alias": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
-            "type": "relative_import",
-            "named": true
-          },
-          {
-            "type": "slashed_name",
+            "type": "id_or_str",
             "named": true
           }
         ]
@@ -437,7 +441,7 @@
         "required": true,
         "types": [
           {
-            "type": "aliased_import",
+            "type": "id_or_str",
             "named": true
           },
           {
@@ -449,22 +453,23 @@
     }
   },
   {
-    "type": "import_prefix",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "import_statement",
     "named": true,
     "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "id_or_str",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": true,
         "required": true,
         "types": [
-          {
-            "type": "aliased_import",
-            "named": true
-          },
           {
             "type": "slashed_name",
             "named": true
@@ -679,25 +684,6 @@
     }
   },
   {
-    "type": "relative_import",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "import_prefix",
-          "named": true
-        },
-        {
-          "type": "slashed_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "set",
     "named": true,
     "fields": {},
@@ -722,6 +708,10 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_list",
           "named": true
         }
       ]

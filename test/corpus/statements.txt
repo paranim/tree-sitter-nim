@@ -4,7 +4,7 @@ Import statements
 
 import a, b
 import b/c as d
-import a/b/c
+import a/b/[c, d]
 
 ---
 
@@ -13,33 +13,37 @@ import a/b/c
     (slashed_name (identifier))
     (slashed_name (identifier)))
   (import_statement
-    (aliased_import
-      (slashed_name (identifier) (identifier))
-      (identifier)))
+    (slashed_name (identifier) (identifier))
+    (id_or_str (identifier)))
   (import_statement
-    (slashed_name (identifier) (identifier) (identifier))))
+    (slashed_name (identifier) (identifier) (identifier_list (identifier) (identifier)))))
 
 =====================================
 Import-from statements
 =====================================
 
 from a import b
-from a import (b, c)
+from a import b, c
 from a/b import c
+from a as b import `c`
 
 ---
 
 (module
   (import_from_statement
     (slashed_name (identifier))
-    (slashed_name (identifier)))
+    (id_or_str (identifier)))
   (import_from_statement
     (slashed_name (identifier))
-    (slashed_name (identifier))
-    (slashed_name (identifier)))
+    (id_or_str (identifier))
+    (id_or_str (identifier)))
   (import_from_statement
     (slashed_name (identifier) (identifier))
-    (slashed_name (identifier))))
+    (id_or_str (identifier)))
+  (import_from_statement
+    (slashed_name (identifier))
+    (id_or_str (identifier))
+    (id_or_str (string))))
 
 =====================================
 Echo statements

@@ -83,41 +83,28 @@ module.exports = grammar({
 
     import_statement: $ => seq(
       'import',
-      $._import_list
-    ),
-
-    import_prefix: $ => repeat1('.'),
-
-    relative_import: $ => seq(
-      $.import_prefix,
-      optional($.slashed_name)
+      $._module_list,
     ),
 
     import_from_statement: $ => seq(
       'from',
-      field('module_name', choice(
-        $.relative_import,
-        $.slashed_name
-      )),
+      $._module_list,
       'import',
-      choice(
-        $._import_list,
-        seq('(', $._import_list, ')')
-      )
+      $._import_list,
+    ),
+
+    _module_list: $ => seq(
+      commaSep1(field('name', $.slashed_name)),
+      optional($._aliased_import),
     ),
 
     _import_list: $ => seq(
-      commaSep1(field('name', choice(
-        $.slashed_name,
-        $.aliased_import
-      ))),
-      optional(',')
+      commaSep1(field('name', $.id_or_str)),
     ),
 
-    aliased_import: $ => seq(
-      field('name', $.slashed_name),
+    _aliased_import: $ => seq(
       'as',
-      field('alias', $.identifier)
+      field('alias', $.id_or_str)
     ),
 
     omit_parens_statement: $ =>
@@ -232,7 +219,22 @@ module.exports = grammar({
       optional(',')
     )),
 
-    slashed_name: $ => sep1($.identifier, '/'),
+    identifier_list: $ => seq(
+      '[',
+      optional(commaSep1($.identifier)),
+      optional(','),
+      ']'
+    ),
+
+    slashed_name: $ => seq(
+      sep1($.identifier, '/'),
+      optional(
+        seq(
+          '/',
+          $.identifier_list
+        )
+      )
+    ),
 
     // Expressions
 
@@ -462,6 +464,7 @@ module.exports = grammar({
     },
 
     identifier: $ => /[a-zA-Zα-ωΑ-Ω_][a-zA-Zα-ωΑ-Ω_0-9]*/,
+    id_or_str: $ => choice($.identifier, $.string),
 
     true: $ => 'true',
     false: $ => 'false',
