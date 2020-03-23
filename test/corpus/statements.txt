@@ -11,15 +11,15 @@ import a/b/[c, d]
 (module
   (block
     (import_statement
-      (slashed_name (identifier))
-      (slashed_name (identifier))))
-  (block
-    (import_statement
-      (slashed_name (identifier) (identifier))
+      (identifier) (op)
       (identifier)))
   (block
     (import_statement
-      (slashed_name (identifier) (identifier) (identifier_list (identifier) (identifier))))))
+      (identifier) (op) (identifier)
+      (identifier)))
+  (block
+    (import_statement
+      (identifier) (op) (identifier) (op) (identifier_list (identifier) (op) (identifier)))))
 
 =====================================
 Import-from statements
@@ -35,20 +35,20 @@ from a as b import `c`
 (module
   (block
     (import_from_statement
-      (slashed_name (identifier))
-      (identifier)))
-  (block
-    (import_from_statement
-      (slashed_name (identifier))
       (identifier)
       (identifier)))
   (block
     (import_from_statement
-      (slashed_name (identifier) (identifier))
+      (identifier)
+      (identifier) (op)
       (identifier)))
   (block
     (import_from_statement
-      (slashed_name (identifier))
+      (identifier) (op) (identifier)
+      (identifier)))
+  (block
+    (import_from_statement
+      (identifier)
       (identifier)
       (identifier))))
 
@@ -65,11 +65,11 @@ echo 0 or 1
 
 (module
   (block (omit_parens_statement (identifier) (identifier)))
-  (block (omit_parens_statement (identifier) (identifier) (identifier)))
+  (block (omit_parens_statement (identifier) (identifier) (op) (identifier)))
   (block
     (omit_parens_statement (identifier)
-      (operator (integer) (op) (integer))
-      (operator (integer) (op) (integer))))
+      (operator (integer) (op) (integer)) (op)
+      (operator (integer) (op) (integer)) (op)))
   (block
     (omit_parens_statement (identifier)
       (operator (integer) (op) (integer)))))
@@ -105,13 +105,14 @@ when not defined(release):
   (block
     (generic_statement
       (identifier)
-      (identifier)
+      (identifier) (op)
       body: (block
         (identifier)
         (identifier))))
   (block
     (generic_statement (identifier)
       (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier))))
+      (op)
       body: (block (omit_parens_statement (identifier) argument: (string))))))
 
 
@@ -149,7 +150,7 @@ if a:
 
 (module
   (block
-    (generic_statement (identifier) (identifier)
+    (generic_statement (identifier) (identifier) (op)
       (comment)
       (comment)
       (comment)
@@ -173,7 +174,7 @@ c
 (module
   (block
     (generic_statement (identifier)
-      (identifier)
+      (identifier) (op)
       (block
         (identifier))))
   (comment)
@@ -215,17 +216,17 @@ const a = "hello"
 
 (module
   (block (declaration (block (assignment (identifier) (op) (block (integer))))))
-  (block (declaration (block (decl (identifier) (type (identifier)) (op) (block (integer))))))
-  (block (declaration (block (decl (identifier) (type (identifier))))))
+  (block (declaration (block (decl (identifier) (op) (type (identifier)) (op) (block (integer))))))
+  (block (declaration (block (decl (identifier) (op) (type (identifier))))))
   (block (declaration (block
     (assignment (identifier) (op) (block (integer)))
     (assignment (identifier) (op) (block (integer)))
-    (decl (identifier) (type (identifier)) (op) (block (integer)))
-    (decl (identifier) (type (identifier)))
+    (decl (identifier) (op) (type (identifier)) (op) (block (integer)))
+    (decl (identifier) (op) (type (identifier)))
     (assignment (identifier) (op) (block
-      (generic_statement (identifier) (call (identifier) (argument_list (identifier)))
+      (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op)
         (block (integer)))
-      (generic_statement (identifier) (block (integer)))))
+      (generic_statement (identifier) (op) (block (integer)))))
     (assignment (identifier) (op) (block (call (identifier) (argument_list)))))))
   (block (declaration (block (assignment (identifier) (op) (block (string)))))))
 
@@ -265,21 +266,22 @@ proc getLib(): string =
   (block 
     (function_definition (identifier)
       (parameters
-        (typed_parameter (identifier) (type (identifier)))
-        (typed_parameter (identifier) (type (subscript (identifier) (integer) (identifier)))))))
+        (typed_parameter (identifier) (op) (type (identifier))) (op)
+        (typed_parameter (identifier) (op) (type (subscript (identifier) (integer) (op) (identifier)))))))
   (block (function_definition (identifier) (parameters) (pragma (identifier))))
   (block 
     (function_definition (public_id (identifier))
-      (parameters (identifier) (typed_parameter (identifier) (type (identifier))))
+      (parameters (identifier) (op) (typed_parameter (identifier) (op) (type (identifier))))
+      (op)
       (type (identifier))
-      (pragma (pair (identifier) (string)) (identifier) (pair (identifier) (string)))))
+      (pragma (pair (identifier) (op) (string)) (op) (identifier) (op) (pair (identifier) (op) (string)))))
   (block 
-    (function_definition (identifier) (parameters) (type (identifier)) (op)
+    (function_definition (identifier) (parameters) (op) (type (identifier)) (op)
       (block
         (declaration (block
           (assignment (identifier) (op) (block
-            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block (string)))
-            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block (string)))
-            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block (string)))))))
-        (call (attribute (call (identifier) (argument_list)) (identifier)) (argument_list (operator (string) (op) (identifier))))))))
+            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
+            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
+            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))))))
+        (call (attribute (call (identifier) (argument_list)) (op) (identifier)) (argument_list (operator (string) (op) (identifier))))))))
 

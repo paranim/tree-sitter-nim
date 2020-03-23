@@ -134,7 +134,7 @@ re.compile(r"(\n|\A)#include\s*['\"]" &
 (module
   (block
     (call
-      (attribute (identifier) (identifier))
+      (attribute (identifier) (op) (identifier))
       (argument_list
         (operator (string) (op) (string))))))
 
@@ -171,15 +171,15 @@ f"{b:{c.d}.{d.e}}"
 (module
   (block
     (string
-      (interpolation (identifier) (format_specifier))
-      (interpolation (identifier) (format_specifier))))
+      (interpolation (identifier) (format_specifier (op)))
+      (interpolation (identifier) (format_specifier (op)))))
   (block
     (string
       (interpolation
         (identifier)
-        (format_specifier
-          (format_expression (attribute (identifier) (identifier)))
-          (format_expression (attribute (identifier) (identifier))))))))
+        (format_specifier (op)
+          (format_expression (attribute (identifier) (op) (identifier)))
+          (format_expression (attribute (identifier) (op) (identifier))))))))
 
 =====================================
 Unicode escape sequences
@@ -296,10 +296,10 @@ Lists
 (module
   (block
     (list
-      (identifier)
-      (identifier)
+      (identifier) (op)
+      (identifier) (op)
       (list
-        (identifier)
+        (identifier) (op)
         (identifier)))))
 
 
@@ -315,8 +315,8 @@ Dictionaries
 (module
   (block
     (dictionary
-      (pair (identifier) (integer))
-      (pair (identifier) (integer))))
+      (pair (identifier) (op) (integer)) (op)
+      (pair (identifier) (op) (integer))))
   (block
     (dictionary)))
 
@@ -330,7 +330,7 @@ Sets
 ---
 
 (module
-  (block (set (identifier) (identifier) (identifier))))
+  (block (set (identifier) (op) (identifier) (op) (identifier) (op))))
 
 =====================================
 Tuples
@@ -345,7 +345,7 @@ Tuples
 
 (module
   (block (tuple))
-  (block (tuple (identifier) (identifier)))
-  (block (tuple (identifier) (identifier) (identifier)))
-  (block (tuple (identifier) (identifier))))
+  (block (tuple (identifier) (op) (identifier)))
+  (block (tuple (identifier) (op) (identifier) (op) (identifier) (op)))
+  (block (tuple (identifier) (op) (identifier))))
 

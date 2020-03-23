@@ -51,7 +51,7 @@ a.b.c
 (module
   (block
     (attribute
-      (attribute (identifier) (identifier))
+      (attribute (identifier) (op) (identifier)) (op)
       (identifier))))
 
 
@@ -76,11 +76,11 @@ i(j, 5,)
   (block (call
     (identifier)
     (argument_list
-      (identifier)
-      (keyword_argument (identifier) (identifier)))))
+      (identifier) (op)
+      (keyword_argument (identifier) (op) (identifier)))))
   (block (call
     (identifier)
-    (argument_list (identifier) (integer)))))
+    (argument_list (identifier) (op) (integer) (op)))))
 
 =====================================
 Print used as an identifier
@@ -107,13 +107,13 @@ a(print)
     (call
       (identifier)
       (argument_list
-        (identifier)
-        (keyword_argument (identifier) (identifier)))))
+        (identifier) (op)
+        (keyword_argument (identifier) (op) (identifier)))))
   (block
     (call
       (identifier)
       (argument_list
-        (identifier)
+        (identifier) (op)
         (identifier))))
   (block
     (call
@@ -138,8 +138,8 @@ exec("""exec _code_ in _globs_, _locs_""")
       (argument_list
         (string
            (escape_sequence)
-           (escape_sequence))
-        (dictionary (pair (string) (none)))
+           (escape_sequence)) (op)
+        (dictionary (pair (string) (op) (none))) (op)
         (identifier))))
   (block
     (call
@@ -254,8 +254,8 @@ a() + b * c.d.e
         (op)
         right: (attribute
           object: (attribute
-            object: (identifier)
-            attribute: (identifier))
+            object: (identifier) (op)
+            attribute: (identifier)) (op)
           attribute: (identifier))))))
 
 =====================================

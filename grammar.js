@@ -95,12 +95,12 @@ module.exports = grammar({
     ),
 
     _module_list: $ => seq(
-      commaSep1(field('name', $.slashed_name)),
+      sep1(field('name', $._slashed_name), $._comma),
       optional($._aliased_import),
     ),
 
     _import_list: $ => seq(
-      commaSep1(field('name', $._id_or_str)),
+      sep1(field('name', $._id_or_str), $._comma),
     ),
 
     _aliased_import: $ => seq(
@@ -111,8 +111,8 @@ module.exports = grammar({
     omit_parens_statement: $ =>
       prec(PREC.omit_parens, seq(
         $.identifier,
-        commaSep1(field('argument', $._expression)),
-        optional(','))
+        sep1(field('argument', $._expression), $._comma),
+        optional($._comma))
       ),
 
     _expression_statement: $ => choice(
@@ -131,14 +131,14 @@ module.exports = grammar({
     generic_statement: $ => seq(
       $.identifier,
       repeat($._expression),
-      ':',
+      $._colon,
       field('body', $._suite)
     ),
 
     pragma: $ => seq(
       '{.',
-      optional(commaSep1(choice($._expression, $.pair))),
-      optional(','),
+      optional(sep1(choice($._expression, $.pair), $._comma)),
+      optional($._comma),
       '.}'
     ),
 
@@ -148,14 +148,14 @@ module.exports = grammar({
       field('parameters', $.parameters),
       optional(
         seq(
-          ':',
+          $._colon,
           field('return_type', $.type)
         )
       ),
       optional($.pragma),
       optional(
         seq(
-          alias('=', $.op),
+          $._equals,
           field('body', $._suite)
         )
       ),
@@ -168,8 +168,8 @@ module.exports = grammar({
     ),
 
     _parameters: $ => seq(
-      commaOrSemiSep1($._parameter),
-      optional(choice(',', ';'))
+      sep1($._parameter, $._comma_or_semi),
+      optional($._comma_or_semi)
     ),
 
     _parameter: $ => choice(
@@ -182,27 +182,28 @@ module.exports = grammar({
 
     default_parameter: $ => seq(
       field('name', choice($.identifier, $.string)),
-      '=',
+      $._equals,
       field('value', $._expression)
     ),
 
     typed_default_parameter: $ => seq(
       field('name', choice($.identifier, $.string)),
-      ':',
+      $._colon,
       field('type', $.type),
-      '=',
+      $._equals,
       field('value', $._expression)
     ),
 
     argument_list: $ => seq(
       '(',
-      optional(commaSep1(
+      optional(sep1(
         choice(
           $._expression,
           $.keyword_argument
-        )
+        ),
+        $._comma
       )),
-      optional(','),
+      optional($._comma),
       ')'
     ),
 
@@ -217,27 +218,27 @@ module.exports = grammar({
     ),
 
     variables: $ => seq(
-      commaSep1(choice($.identifier, $.tuple)),
-      optional(',')
+      sep1(choice($.identifier, $.tuple), $._comma),
+      optional($._comma)
     ),
 
     expression_list: $ => prec.right(seq(
-      commaSep1($._expression),
-      optional(',')
+      sep1($._expression, $._comma),
+      optional($._comma)
     )),
 
     identifier_list: $ => seq(
       '[',
-      optional(commaSep1($.identifier)),
-      optional(','),
+      optional(sep1($.identifier, $._comma)),
+      optional($._comma),
       ']'
     ),
 
-    slashed_name: $ => seq(
-      sep1($.identifier, '/'),
+    _slashed_name: $ => seq(
+      sep1($.identifier, $._slash),
       optional(
         seq(
-          '/',
+          $._slash,
           $.identifier_list
         )
       )
@@ -320,14 +321,14 @@ module.exports = grammar({
 
     assignment: $ => seq(
       field('left', $._expression),
-      seq(alias('=', $.op), field('right', $._suite)),
+      seq($._equals, field('right', $._suite)),
     ),
 
     decl: $ => seq(
       field('left', $._expression),
       choice(
-        seq(':', field('type', $.type)),
-        seq(':', field('type', $.type), alias('=', $.op), field('right', $._suite))
+        seq($._colon, field('type', $.type)),
+        seq($._colon, field('type', $.type), $._equals, field('right', $._suite))
       )
     ),
 
@@ -353,14 +354,14 @@ module.exports = grammar({
 
     attribute: $ => prec(PREC.call, seq(
       field('object', $._expression),
-      '.',
+      $._period,
       field('attribute', $.identifier)
     )),
 
     subscript: $ => prec(PREC.subscript, seq(
       field('value', $._expression),
       '[',
-      field('subscript', commaSep1($._expression)),
+      field('subscript', sep1($._expression, $._comma)),
       ']'
     )),
 
@@ -371,7 +372,7 @@ module.exports = grammar({
 
     typed_parameter: $ => seq(
       $.identifier,
-      ':',
+      $._colon,
       field('type', $.type)
     ),
 
@@ -379,7 +380,7 @@ module.exports = grammar({
 
     keyword_argument: $ => seq(
       field('name', choice($.identifier, $.string)),
-      '=',
+      $._equals,
       field('value', $._expression)
     ),
 
@@ -387,28 +388,28 @@ module.exports = grammar({
 
     list: $ => seq(
       '[',
-      optional(commaSep1($._expression)),
-      optional(','),
+      optional(sep1($._expression, $._comma)),
+      optional($._comma),
       ']'
     ),
 
     dictionary: $ => seq(
       '{',
-      optional(commaSep1($.pair)),
-      optional(','),
+      optional(sep1($.pair, $._comma)),
+      optional($._comma),
       '}'
     ),
 
     pair: $ => seq(
       field('key', $._expression),
-      ':',
+      $._colon,
       field('value', $._expression)
     ),
 
     set: $ => seq(
       '{',
-      commaSep1($._expression),
-      optional(','),
+      sep1($._expression, $._comma),
+      optional($._comma),
       '}'
     ),
 
@@ -420,8 +421,8 @@ module.exports = grammar({
 
     tuple: $ => seq(
       '(',
-      optional(commaSep1($._expression)),
-      optional(','),
+      optional(sep1($._expression, $._comma)),
+      optional($._comma),
       ')'
     ),
 
@@ -454,7 +455,7 @@ module.exports = grammar({
     _not_escape_sequence: $ => '\\',
 
     format_specifier: $ => seq(
-      ':',
+      $._colon,
       repeat(choice(
         /[^{}\n]+/,
         $.format_expression
@@ -505,17 +506,15 @@ module.exports = grammar({
       seq('#[', /[^\]]*\]+([^#\]][^\]]*\]+)*/, '#')
     )),
 
-    _semicolon: $ => ';'
+    _semicolon: $ => alias(';', $.op),
+    _comma: $ => alias(',', $.op),
+    _comma_or_semi: $ => choice($._semicolon, $._comma),
+    _equals: $ => alias('=', $.op),
+    _colon: $ => alias(':', $.op),
+    _period: $ => alias('.', $.op),
+    _slash: $ => alias('/', $.op),
   }
 })
-
-function commaSep1 (rule) {
-  return sep1(rule, ',')
-}
-
-function commaOrSemiSep1 (rule) {
-  return sep1(rule, choice(',', ';'))
-}
 
 function sep1 (rule, separator) {
   return seq(rule, repeat(seq(separator, rule)))
