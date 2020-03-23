@@ -3,6 +3,7 @@ const PREC = {
 
   parenthesized_expression: 1,
   subscript: 2,
+  public_id: 3,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
   op0: 10,
@@ -99,12 +100,12 @@ module.exports = grammar({
     ),
 
     _import_list: $ => seq(
-      commaSep1(field('name', $.id_or_str)),
+      commaSep1(field('name', $._id_or_str)),
     ),
 
     _aliased_import: $ => seq(
       'as',
-      field('alias', $.id_or_str)
+      field('alias', $._id_or_str)
     ),
 
     omit_parens_statement: $ =>
@@ -123,8 +124,7 @@ module.exports = grammar({
     // Compount statements
 
     _compound_statement: $ => choice(
-      // not ready for prime time...
-      //$.function_definition,
+      $.function_definition,
       $.generic_statement
     ),
 
@@ -135,9 +135,16 @@ module.exports = grammar({
       field('body', $._suite)
     ),
 
+    pragma: $ => seq(
+      '{.',
+      optional(commaSep1(choice($._expression, $.pair))),
+      optional(','),
+      '.}'
+    ),
+
     function_definition: $ => seq(
       choice('proc', 'func'),
-      field('name', choice($.identifier, $.string)),
+      field('name', choice($.public_id, $._id_or_str)),
       field('parameters', $.parameters),
       optional(
         seq(
@@ -145,6 +152,7 @@ module.exports = grammar({
           field('return_type', $.type)
         )
       ),
+      optional($.pragma),
       optional(
         seq(
           alias('=', $.op),
@@ -481,7 +489,12 @@ module.exports = grammar({
     },
 
     identifier: $ => /[a-zA-Zα-ωΑ-Ω_][a-zA-Zα-ωΑ-Ω_0-9]*/,
-    id_or_str: $ => choice($.identifier, $.string),
+
+    // treat strings as identifiers, so backtick-quoted ids like `this` are treated like normal ids
+    _id_or_str: $ => choice($.identifier, alias($.string, $.identifier)),
+
+    // function and type names that are marked as public
+    public_id: $ => prec(PREC.public_id, seq($._id_or_str, '*')),
 
     true: $ => 'true',
     false: $ => 'false',

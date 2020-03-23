@@ -14,7 +14,7 @@ import a/b/[c, d]
     (slashed_name (identifier)))
   (import_statement
     (slashed_name (identifier) (identifier))
-    (id_or_str (identifier)))
+    (identifier))
   (import_statement
     (slashed_name (identifier) (identifier) (identifier_list (identifier) (identifier)))))
 
@@ -32,18 +32,18 @@ from a as b import `c`
 (module
   (import_from_statement
     (slashed_name (identifier))
-    (id_or_str (identifier)))
+    (identifier))
   (import_from_statement
     (slashed_name (identifier))
-    (id_or_str (identifier))
-    (id_or_str (identifier)))
+    (identifier)
+    (identifier))
   (import_from_statement
     (slashed_name (identifier) (identifier))
-    (id_or_str (identifier)))
+    (identifier))
   (import_from_statement
     (slashed_name (identifier))
-    (id_or_str (identifier))
-    (id_or_str (string))))
+    (identifier)
+    (identifier)))
 
 =====================================
 Echo statements
@@ -213,4 +213,59 @@ const a = "hello"
       (generic_statement (identifier) (block (expression_statement (integer))))))
     (assignment (identifier) (op) (block (expression_statement (call (identifier) (argument_list))))))))
   (expression_statement (declaration (block (assignment (identifier) (op) (block (expression_statement (string))))))))
+
+
+=====================================
+Function definitions
+=====================================
+
+proc hello()
+func goodbye()
+
+proc hello() =
+  echo "hello"
+
+proc a(x: int, y: array[2, string])
+proc hello() {.cdecl.}
+
+proc `==`*(a, b: NimIdent): bool {.magic: "EqIdent", noSideEffect, deprecated:
+  "Deprecated since version 0.18.1; Use '==' on 'NimNode' instead.".}
+
+proc getLib(): string =
+  const extension =
+    when defined(windows):
+      "dll"
+    elif defined(macosx):
+      "dylib"
+    elif defined(linux):
+      "so"
+  getAppDir().joinPath("libvim." & extension)
+
+---
+
+(module
+  (function_definition (identifier) (parameters))
+  (function_definition (identifier) (parameters))
+  (function_definition (identifier) (parameters) (op) (block (omit_parens_statement (identifier) (string))))
+  (function_definition (identifier)
+    (parameters
+      (typed_parameter (identifier) (type (identifier)))
+      (typed_parameter (identifier) (type (subscript (identifier) (integer) (identifier))))))
+  (function_definition (identifier) (parameters) (pragma (identifier)))
+  (function_definition (public_id (identifier))
+    (parameters (identifier) (typed_parameter (identifier) (type (identifier))))
+    (type (identifier))
+    (pragma (pair (identifier) (string)) (identifier) (pair (identifier) (string))))
+  (function_definition (identifier) (parameters) (type (identifier)) (op)
+    (block
+      (expression_statement (declaration (block
+        (assignment (identifier) (op) (block
+          (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block
+            (expression_statement (string))))
+          (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block
+            (expression_statement (string))))
+          (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block
+            (expression_statement (string)))))))))
+      (expression_statement
+        (call (attribute (call (identifier) (argument_list)) (identifier)) (argument_list (operator (string) (op) (identifier))))))))
 
