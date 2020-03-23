@@ -24,7 +24,6 @@ Import-from statements
 =====================================
 
 from a import b
-from a import *
 from a import (b, c)
 from a/b import c
 
@@ -34,9 +33,6 @@ from a/b import c
   (import_from_statement
     (slashed_name (identifier))
     (slashed_name (identifier)))
-  (import_from_statement
-    (slashed_name (identifier))
-    (wildcard_import))
   (import_from_statement
     (slashed_name (identifier))
     (slashed_name (identifier))
@@ -65,18 +61,6 @@ echo 0 or 1
   (omit_parens_statement (identifier)
     (operator (integer) (op) (integer))))
 
-=====================================
-Assert statements
-=====================================
-
-assert a
-assert b, c
-
----
-
-(module
-  (assert_statement (identifier))
-  (assert_statement (identifier) (identifier)))
 
 =====================================
 Expression statements
@@ -95,42 +79,6 @@ b + c
   (expression_statement (integer) (integer) (integer))
   (expression_statement (integer) (integer) (integer)))
 
-=====================================
-Control-flow statements
-=====================================
-
-while true:
-  pass
-  break
-  continue
-
----
-
-(module
-  (generic_statement
-    (identifier)
-    (true)
-    body: (block
-      (pass_statement)
-      (break_statement)
-      (continue_statement))))
-
-=====================================
-Return statements
-=====================================
-
-return
-return a + b, c
-return not b
-
----
-
-(module
-  (return_statement)
-  (return_statement (expression_list
-    (operator (identifier) (op) (identifier))
-    (identifier)))
-  (return_statement (expression_list (operator (op) (identifier)))))
 
 =====================================
 If statements
@@ -151,24 +99,6 @@ if a:
       (expression_statement (identifier)))))
 
 
-
-====================================================
-Raise statements
-====================================================
-
-raise
-raise RuntimeError('NO')
-raise RunTimeError('NO') from e
-
----
-
-(module
-  (raise_statement)
-  (raise_statement
-    (expression_list (call (identifier) (argument_list (string)))))
-  (raise_statement
-    (expression_list (call (identifier) (argument_list (string))))
-    (identifier)))
 
 ====================================================
 Comments

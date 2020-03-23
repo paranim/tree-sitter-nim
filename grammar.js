@@ -78,13 +78,7 @@ module.exports = grammar({
       $.import_statement,
       $.import_from_statement,
       $.omit_parens_statement,
-      $.assert_statement,
       $.expression_statement,
-      $.return_statement,
-      $.raise_statement,
-      $.pass_statement,
-      $.break_statement,
-      $.continue_statement
     ),
 
     import_statement: $ => seq(
@@ -107,7 +101,6 @@ module.exports = grammar({
       )),
       'import',
       choice(
-        $.wildcard_import,
         $._import_list,
         seq('(', $._import_list, ')')
       )
@@ -127,8 +120,6 @@ module.exports = grammar({
       field('alias', $.identifier)
     ),
 
-    wildcard_import: $ => '*',
-
     omit_parens_statement: $ =>
       prec(PREC.omit_parens, seq(
         $.identifier,
@@ -136,32 +127,12 @@ module.exports = grammar({
         optional(','))
       ),
 
-    assert_statement: $ => seq(
-      'assert',
-      commaSep1($._expression)
-    ),
-
     expression_statement: $ => choice(
       $._expression,
       seq(commaSep1($._expression), optional(',')),
       $.assignment,
       //$.declaration,
     ),
-
-    return_statement: $ => seq(
-      'return',
-      optional($.expression_list)
-    ),
-
-    raise_statement: $ => seq(
-      'raise',
-      optional($.expression_list),
-      optional(seq('from', field('cause', $._expression)))
-    ),
-
-    pass_statement: $ => prec.left('pass'),
-    break_statement: $ => prec.left('break'),
-    continue_statement: $ => prec.left('continue'),
 
     // Compount statements
 

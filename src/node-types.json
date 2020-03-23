@@ -110,18 +110,6 @@
     "named": true,
     "subtypes": [
       {
-        "type": "assert_statement",
-        "named": true
-      },
-      {
-        "type": "break_statement",
-        "named": true
-      },
-      {
-        "type": "continue_statement",
-        "named": true
-      },
-      {
         "type": "expression_statement",
         "named": true
       },
@@ -135,18 +123,6 @@
       },
       {
         "type": "omit_parens_statement",
-        "named": true
-      },
-      {
-        "type": "pass_statement",
-        "named": true
-      },
-      {
-        "type": "raise_statement",
-        "named": true
-      },
-      {
-        "type": "return_statement",
         "named": true
       }
     ]
@@ -191,21 +167,6 @@
         },
         {
           "type": "keyword_argument",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "assert_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_expression",
           "named": true
         }
       ]
@@ -293,11 +254,6 @@
     }
   },
   {
-    "type": "break_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "call",
     "named": true,
     "fields": {
@@ -322,11 +278,6 @@
         ]
       }
     }
-  },
-  {
-    "type": "continue_statement",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "default_parameter",
@@ -483,7 +434,7 @@
       },
       "name": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "aliased_import",
@@ -495,16 +446,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "wildcard_import",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -738,37 +679,6 @@
     }
   },
   {
-    "type": "pass_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "raise_statement",
-    "named": true,
-    "fields": {
-      "cause": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "expression_list",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "relative_import",
     "named": true,
     "fields": {},
@@ -782,21 +692,6 @@
         },
         {
           "type": "slashed_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "return_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "expression_list",
           "named": true
         }
       ]
@@ -978,11 +873,6 @@
     }
   },
   {
-    "type": "wildcard_import",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "\"",
     "named": false
   },
@@ -992,10 +882,6 @@
   },
   {
     "type": ")",
-    "named": false
-  },
-  {
-    "type": "*",
     "named": false
   },
   {
@@ -1035,19 +921,7 @@
     "named": false
   },
   {
-    "type": "assert",
-    "named": false
-  },
-  {
-    "type": "break",
-    "named": false
-  },
-  {
     "type": "const",
-    "named": false
-  },
-  {
-    "type": "continue",
     "named": false
   },
   {
@@ -1095,19 +969,7 @@
     "named": true
   },
   {
-    "type": "pass",
-    "named": false
-  },
-  {
     "type": "proc",
-    "named": false
-  },
-  {
-    "type": "raise",
-    "named": false
-  },
-  {
-    "type": "return",
     "named": false
   },
   {
