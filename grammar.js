@@ -2,6 +2,7 @@ const PREC = {
   omit_parens: -1,
 
   parenthesized_expression: 1,
+  subscript: 2,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
   op0: 10,
@@ -129,7 +130,7 @@ module.exports = grammar({
 
     generic_statement: $ => seq(
       $.identifier,
-      optional($._expression),
+      repeat($._expression),
       ':',
       field('body', $._suite)
     ),
@@ -302,7 +303,8 @@ module.exports = grammar({
       ];
 
       return choice(...table.map(([fn, operator, precedence]) => fn(precedence, seq(
-        optional(field('left', $._expression)),
+        // The not keyword is always a unary operator, a not b is parsed as a(not b), not as (a) not (b)
+        operator == 'not' ? blank() : optional(field('left', $._expression)),
         alias(operator, $.op),
         field('right', $._expression)
       ))));
@@ -347,12 +349,12 @@ module.exports = grammar({
       field('attribute', $.identifier)
     )),
 
-    subscript: $ => seq(
+    subscript: $ => prec(PREC.subscript, seq(
       field('value', $._expression),
       '[',
       field('subscript', commaSep1($._expression)),
       ']'
-    ),
+    )),
 
     call: $ => prec(PREC.call, seq(
       field('function', $._expression),

@@ -87,6 +87,8 @@ If statements
 if a:
   b
   c
+when not defined(release):
+  echo "hi"
 
 ---
 
@@ -96,8 +98,10 @@ if a:
     (identifier)
     body: (block
       (expression_statement (identifier))
-      (expression_statement (identifier)))))
-
+      (expression_statement (identifier))))
+  (generic_statement (identifier)
+    (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier))))
+    body: (block (omit_parens_statement (identifier) argument: (string)))))
 
 
 ====================================================
