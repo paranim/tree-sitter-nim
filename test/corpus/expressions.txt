@@ -360,20 +360,6 @@ a[b] = c
       (op)
       (block (expression_statement (identifier))))))
 
-====================================================
-Declarations with type annotations
-====================================================
-
-let tail_leaves: seq[Leaf] = []
-
----
-
-(module
-  (expression_statement (declaration
-    (expression_list (identifier))
-    (type (subscript (identifier) (identifier)))
-    (op)
-    (block (expression_statement (list))))))
 
 ====================================================
 Augmented assignments

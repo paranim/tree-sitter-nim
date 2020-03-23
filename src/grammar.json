@@ -458,10 +458,6 @@
         {
           "type": "SYMBOL",
           "name": "assignment"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "declaration"
         }
       ]
     },

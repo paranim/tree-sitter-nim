@@ -146,7 +146,7 @@ module.exports = grammar({
       $._expression,
       seq(commaSep1($._expression), optional(',')),
       $.assignment,
-      $.declaration,
+      //$.declaration,
     ),
 
     return_statement: $ => seq(

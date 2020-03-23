@@ -339,52 +339,6 @@
     "fields": {}
   },
   {
-    "type": "declaration",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression_list",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "op",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "default_parameter",
     "named": true,
     "fields": {
@@ -458,10 +412,6 @@
         },
         {
           "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "declaration",
           "named": true
         }
       ]
