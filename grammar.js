@@ -56,7 +56,7 @@ module.exports = grammar({
   word: $ => $.identifier,
 
   rules: {
-    module: $ => repeat($._statement),
+    module: $ => repeat(alias($._statement, $.block)),
 
     _statement: $ => choice(
       $._simple_statements,
@@ -79,7 +79,7 @@ module.exports = grammar({
       $.import_statement,
       $.import_from_statement,
       $.omit_parens_statement,
-      $.expression_statement,
+      $._expression_statement,
     ),
 
     import_statement: $ => seq(
@@ -115,7 +115,7 @@ module.exports = grammar({
         optional(','))
       ),
 
-    expression_statement: $ => choice(
+    _expression_statement: $ => choice(
       $._expression,
       $.assignment,
       $.declaration,

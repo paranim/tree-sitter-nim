@@ -11,11 +11,11 @@ Integers
 ---
 
 (module
-  (expression_statement (operator (op) (integer)))
-  (expression_statement (integer))
-  (expression_statement (operator (op) (integer)))
-  (expression_statement (integer))
-  (expression_statement (integer)))
+  (block (operator (op) (integer)))
+  (block (integer))
+  (block (operator (op) (integer)))
+  (block (integer))
+  (block (integer)))
 
 =====================================
 Floats
@@ -35,16 +35,16 @@ Floats
 ---
 
 (module
-  (expression_statement (operator (op) (float)))
-  (expression_statement (operator (op) (float)))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float)))
+  (block (operator (op) (float)))
+  (block (operator (op) (float)))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float)))
 
 
 =====================================
@@ -61,12 +61,12 @@ Scientific Notation Floats
 ---
 
 (module
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (operator (op) (float))))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (float))
+  (block (operator (op) (float))))
 
 =====================================
 Strings
@@ -89,18 +89,18 @@ b"\x12\u12\U12\x13\N{WINKING FACE}"
 ---
 
 (module
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string (escape_sequence)))
-  (expression_statement (string))
-  (expression_statement (string (escape_sequence)))
-  (expression_statement (string (escape_sequence) (escape_sequence)))
-  (expression_statement (string (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence)))
-  (expression_statement (string)))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string (escape_sequence)))
+  (block (string))
+  (block (string (escape_sequence)))
+  (block (string (escape_sequence) (escape_sequence)))
+  (block (string (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence) (escape_sequence)))
+  (block (string)))
 
 =====================================
 Raw strings
@@ -116,11 +116,11 @@ ur"\n"
 ---
 
 (module
-  (expression_statement (string (escape_sequence)))
-  (expression_statement (string (escape_sequence)))
+  (block (string (escape_sequence)))
+  (block (string (escape_sequence)))
   (comment)
-  (expression_statement (string))
-  (expression_statement (string)))
+  (block (string))
+  (block (string)))
 
 =====================================
 Raw strings with escaped quotes
@@ -132,7 +132,7 @@ re.compile(r"(\n|\A)#include\s*['\"]" &
 ---
 
 (module
-  (expression_statement
+  (block
     (call
       (attribute (identifier) (identifier))
       (argument_list
@@ -150,14 +150,14 @@ f"a {{}} e"
 
 (module
   (comment)
-  (expression_statement (string
+  (block (string
     (interpolation
       (call
         (identifier)
         (argument_list
           (string (interpolation
             (identifier))))))))
-  (expression_statement (string)))
+  (block (string)))
 
 ======================================
 Format strings with format specifiers
@@ -169,11 +169,11 @@ f"{b:{c.d}.{d.e}}"
 ---
 
 (module
-  (expression_statement
+  (block
     (string
       (interpolation (identifier) (format_specifier))
       (interpolation (identifier) (format_specifier))))
-  (expression_statement
+  (block
     (string
       (interpolation
         (identifier)
@@ -190,7 +190,7 @@ Unicode escape sequences
 ---
 
 (module
-  (expression_statement (string
+  (block (string
     (escape_sequence)
     (escape_sequence)
     (escape_sequence))))
@@ -206,9 +206,9 @@ nil
 ---
 
 (module
-  (expression_statement (true))
-  (expression_statement (false))
-  (expression_statement (none)))
+  (block (true))
+  (block (false))
+  (block (none)))
 
 =====================================
 Concatenated strings
@@ -219,7 +219,7 @@ Concatenated strings
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (operator
         (string)
@@ -271,13 +271,13 @@ and another escaped newline\n\
 ---
 
 (module
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string))
+  (block (string
     (escape_sequence)
     (escape_sequence)
     (escape_sequence)
@@ -294,7 +294,7 @@ Lists
 ---
 
 (module
-  (expression_statement
+  (block
     (list
       (identifier)
       (identifier)
@@ -313,11 +313,11 @@ Dictionaries
 ---
 
 (module
-  (expression_statement
+  (block
     (dictionary
       (pair (identifier) (integer))
       (pair (identifier) (integer))))
-  (expression_statement
+  (block
     (dictionary)))
 
 
@@ -330,7 +330,7 @@ Sets
 ---
 
 (module
-  (expression_statement (set (identifier) (identifier) (identifier))))
+  (block (set (identifier) (identifier) (identifier))))
 
 =====================================
 Tuples
@@ -344,8 +344,8 @@ Tuples
 ---
 
 (module
-  (expression_statement (tuple))
-  (expression_statement (tuple (identifier) (identifier)))
-  (expression_statement (tuple (identifier) (identifier) (identifier)))
-  (expression_statement (tuple (identifier) (identifier))))
+  (block (tuple))
+  (block (tuple (identifier) (identifier)))
+  (block (tuple (identifier) (identifier) (identifier)))
+  (block (tuple (identifier) (identifier))))
 

@@ -5,8 +5,13 @@
     "module": {
       "type": "REPEAT",
       "content": {
-        "type": "SYMBOL",
-        "name": "_statement"
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_statement"
+        },
+        "named": true,
+        "value": "block"
       }
     },
     "_statement": {
@@ -88,7 +93,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression_statement"
+          "name": "_expression_statement"
         }
       ]
     },
@@ -289,7 +294,7 @@
         ]
       }
     },
-    "expression_statement": {
+    "_expression_statement": {
       "type": "CHOICE",
       "members": [
         {

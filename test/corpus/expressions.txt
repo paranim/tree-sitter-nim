@@ -7,13 +7,13 @@ Identifiers with Greek letters
 ---
 
 (module
-  (expression_statement (assignment
+  (block (assignment
     left: (identifier)
     (op)
-    right: (block (expression_statement (operator
+    right: (block (operator
       left: (identifier)
       (op)
-      right: (identifier)))))))
+      right: (identifier))))))
 
 =====================================
 Subscript expressions
@@ -24,7 +24,7 @@ a[1]
 ---
 
 (module
-  (expression_statement (subscript (identifier) (integer))))
+  (block (subscript (identifier) (integer))))
 
 
 =====================================
@@ -36,7 +36,7 @@ b[5..6]
 ---
 
 (module
-  (expression_statement (subscript
+  (block (subscript
     (identifier)
     (operator (integer) (op) (integer)))))
 
@@ -49,7 +49,7 @@ a.b.c
 ---
 
 (module
-  (expression_statement
+  (block
     (attribute
       (attribute (identifier) (identifier))
       (identifier))))
@@ -67,18 +67,18 @@ i(j, 5,)
 ---
 
 (module
-  (expression_statement (call
+  (block (call
     (identifier)
     (argument_list)))
-  (expression_statement (call
+  (block (call
     (identifier)
     (argument_list (integer))))
-  (expression_statement (call
+  (block (call
     (identifier)
     (argument_list
       (identifier)
       (keyword_argument (identifier) (identifier)))))
-  (expression_statement (call
+  (block (call
     (identifier)
     (argument_list (identifier) (integer)))))
 
@@ -95,27 +95,27 @@ a(print)
 ---
 
 (module
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list)))
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list (identifier))))
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list
         (identifier)
         (keyword_argument (identifier) (identifier)))))
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list
         (identifier)
         (identifier))))
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list (identifier)))))
@@ -132,7 +132,7 @@ exec("""exec _code_ in _globs_, _locs_""")
 ---
 
 (module
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list
@@ -141,7 +141,7 @@ exec("""exec _code_ in _globs_, _locs_""")
            (escape_sequence))
         (dictionary (pair (string) (none)))
         (identifier))))
-  (expression_statement
+  (block
     (call
       (identifier)
       (argument_list (string)))))
@@ -159,7 +159,7 @@ not x
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (operator
         (identifier)
@@ -176,9 +176,9 @@ not x
         (identifier)
         (op)
         (integer))))
-  (expression_statement (operator (op) (integer)))
-  (expression_statement (operator (op) (identifier)))
-  (expression_statement (operator (op) (identifier))))
+  (block (operator (op) (integer)))
+  (block (operator (op) (identifier)))
+  (block (operator (op) (identifier))))
 
 =====================================
 Binary Addition / Subtraction With Floats
@@ -195,17 +195,17 @@ Binary Addition / Subtraction With Floats
 ---
 
 (module
-  (expression_statement
+  (block
     (operator (float) (op) (float)))
-  (expression_statement
+  (block
     (operator (float) (op) (float)))
-  (expression_statement
+  (block
     (operator (float) (op) (integer)))
-  (expression_statement
+  (block
     (operator (float) (op) (integer)))
-  (expression_statement
+  (block
     (operator (integer) (op) (float)))
-  (expression_statement
+  (block
     (operator (integer) (op) (float))))
 
 =====================================
@@ -218,7 +218,7 @@ Power Operator Precedence
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (integer)
       (op)
@@ -226,7 +226,7 @@ Power Operator Precedence
         (integer)
         (op)
         (integer))))
-  (expression_statement
+  (block
     (operator
       (op)
       (operator
@@ -243,7 +243,7 @@ a() + b * c.d.e
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       left: (call
         function: (identifier)
@@ -267,7 +267,7 @@ a shl b or c shr d and e
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (operator
         (identifier)
@@ -292,7 +292,7 @@ not d
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (identifier)
       (op)
@@ -300,7 +300,7 @@ not d
         (identifier)
         (op)
         (identifier))))
-  (expression_statement
+  (block
     (operator (op) (identifier))))
 
 =====================================
@@ -313,7 +313,7 @@ a == b or c == d
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (operator
         (operator
@@ -330,7 +330,7 @@ a == b or c == d
         (identifier))
       (op)
       (identifier)))
-  (expression_statement
+  (block
     (operator
       (operator (identifier) (op) (identifier))
       (op)
@@ -347,16 +347,16 @@ a[b] = c
 ---
 
 (module
-  (expression_statement
+  (block
     (assignment
       (identifier)
       (op)
-      (block (expression_statement (integer)))))
-  (expression_statement
+      (block (integer))))
+  (block
     (assignment
       (subscript (identifier) (identifier))
       (op)
-      (block (expression_statement (identifier))))))
+      (block (identifier)))))
 
 
 ====================================================
@@ -369,12 +369,12 @@ c /= 1
 ---
 
 (module
-  (expression_statement
+  (block
     (operator
       (identifier)
       (op)
       (integer)))
-  (expression_statement
+  (block
     (operator
       (identifier)
       (op)

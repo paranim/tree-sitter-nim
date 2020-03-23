@@ -9,14 +9,17 @@ import a/b/[c, d]
 ---
 
 (module
-  (import_statement
-    (slashed_name (identifier))
-    (slashed_name (identifier)))
-  (import_statement
-    (slashed_name (identifier) (identifier))
-    (identifier))
-  (import_statement
-    (slashed_name (identifier) (identifier) (identifier_list (identifier) (identifier)))))
+  (block
+    (import_statement
+      (slashed_name (identifier))
+      (slashed_name (identifier))))
+  (block
+    (import_statement
+      (slashed_name (identifier) (identifier))
+      (identifier)))
+  (block
+    (import_statement
+      (slashed_name (identifier) (identifier) (identifier_list (identifier) (identifier))))))
 
 =====================================
 Import-from statements
@@ -30,20 +33,24 @@ from a as b import `c`
 ---
 
 (module
-  (import_from_statement
-    (slashed_name (identifier))
-    (identifier))
-  (import_from_statement
-    (slashed_name (identifier))
-    (identifier)
-    (identifier))
-  (import_from_statement
-    (slashed_name (identifier) (identifier))
-    (identifier))
-  (import_from_statement
-    (slashed_name (identifier))
-    (identifier)
-    (identifier)))
+  (block
+    (import_from_statement
+      (slashed_name (identifier))
+      (identifier)))
+  (block
+    (import_from_statement
+      (slashed_name (identifier))
+      (identifier)
+      (identifier)))
+  (block
+    (import_from_statement
+      (slashed_name (identifier) (identifier))
+      (identifier)))
+  (block
+    (import_from_statement
+      (slashed_name (identifier))
+      (identifier)
+      (identifier))))
 
 =====================================
 Echo statements
@@ -57,13 +64,15 @@ echo 0 or 1
 ---
 
 (module
-  (omit_parens_statement (identifier) (identifier))
-  (omit_parens_statement (identifier) (identifier) (identifier))
-  (omit_parens_statement (identifier)
-    (operator (integer) (op) (integer))
-    (operator (integer) (op) (integer)))
-  (omit_parens_statement (identifier)
-    (operator (integer) (op) (integer))))
+  (block (omit_parens_statement (identifier) (identifier)))
+  (block (omit_parens_statement (identifier) (identifier) (identifier)))
+  (block
+    (omit_parens_statement (identifier)
+      (operator (integer) (op) (integer))
+      (operator (integer) (op) (integer))))
+  (block
+    (omit_parens_statement (identifier)
+      (operator (integer) (op) (integer)))))
 
 
 =====================================
@@ -76,8 +85,8 @@ b + c
 ---
 
 (module
-  (expression_statement (identifier))
-  (expression_statement (operator (identifier) (op) (identifier))))
+  (block (identifier))
+  (block (operator (identifier) (op) (identifier))))
 
 
 =====================================
@@ -93,15 +102,17 @@ when not defined(release):
 ---
 
 (module
-  (generic_statement
-    (identifier)
-    (identifier)
-    body: (block
-      (expression_statement (identifier))
-      (expression_statement (identifier))))
-  (generic_statement (identifier)
-    (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier))))
-    body: (block (omit_parens_statement (identifier) argument: (string)))))
+  (block
+    (generic_statement
+      (identifier)
+      (identifier)
+      body: (block
+        (identifier)
+        (identifier))))
+  (block
+    (generic_statement (identifier)
+      (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier))))
+      body: (block (omit_parens_statement (identifier) argument: (string))))))
 
 
 ====================================================
@@ -116,11 +127,11 @@ echo c
 ---
 
 (module
-  (omit_parens_statement (identifier) (identifier))
+  (block (omit_parens_statement (identifier) (identifier)))
   (comment)
-  (omit_parens_statement (identifier) (identifier))
-  (comment)
-  (omit_parens_statement (identifier) (identifier)))
+  (block (omit_parens_statement (identifier) (identifier))
+    (comment))
+  (block (omit_parens_statement (identifier) (identifier))))
 
 ====================================================
 Comments at different indentation levels
@@ -137,14 +148,15 @@ if a:
 ---
 
 (module
-  (generic_statement (identifier) (identifier)
-    (comment)
-    (comment)
-    (comment)
-    (block
-      (expression_statement (identifier))
+  (block
+    (generic_statement (identifier) (identifier)
       (comment)
-      (expression_statement (identifier)))))
+      (comment)
+      (comment)
+      (block
+        (identifier)
+        (comment)
+        (identifier)))))
 
 ====================================================
 Comments after dedents
@@ -159,12 +171,13 @@ c
 ---
 
 (module
-  (generic_statement (identifier)
-    (identifier)
-    (block
-      (expression_statement (identifier))))
+  (block
+    (generic_statement (identifier)
+      (identifier)
+      (block
+        (identifier))))
   (comment)
-  (expression_statement (identifier)))
+  (block (identifier)))
 
 ====================================================
 Newline tokens followed by comments
@@ -174,7 +187,9 @@ echo "a"
   # We need to recognize the newline *preceding* this comment, because there's no newline after it
 ---
 
-(module (omit_parens_statement (identifier) (string)) (comment))
+(module
+  (block (omit_parens_statement (identifier) (string)))
+  (comment))
 
 =====================================
 Declaration statements
@@ -199,20 +214,20 @@ const a = "hello"
 ---
 
 (module
-  (expression_statement (declaration (block (assignment (identifier) (op) (block (expression_statement (integer)))))))
-  (expression_statement (declaration (block (decl (identifier) (type (identifier)) (op) (block (expression_statement (integer)))))))
-  (expression_statement (declaration (block (decl (identifier) (type (identifier))))))
-  (expression_statement (declaration (block
-    (assignment (identifier) (op) (block (expression_statement (integer))))
-    (assignment (identifier) (op) (block (expression_statement (integer))))
-    (decl (identifier) (type (identifier)) (op) (block (expression_statement (integer))))
+  (block (declaration (block (assignment (identifier) (op) (block (integer))))))
+  (block (declaration (block (decl (identifier) (type (identifier)) (op) (block (integer))))))
+  (block (declaration (block (decl (identifier) (type (identifier))))))
+  (block (declaration (block
+    (assignment (identifier) (op) (block (integer)))
+    (assignment (identifier) (op) (block (integer)))
+    (decl (identifier) (type (identifier)) (op) (block (integer)))
     (decl (identifier) (type (identifier)))
     (assignment (identifier) (op) (block
       (generic_statement (identifier) (call (identifier) (argument_list (identifier)))
-        (block (expression_statement (integer))))
-      (generic_statement (identifier) (block (expression_statement (integer))))))
-    (assignment (identifier) (op) (block (expression_statement (call (identifier) (argument_list))))))))
-  (expression_statement (declaration (block (assignment (identifier) (op) (block (expression_statement (string))))))))
+        (block (integer)))
+      (generic_statement (identifier) (block (integer)))))
+    (assignment (identifier) (op) (block (call (identifier) (argument_list)))))))
+  (block (declaration (block (assignment (identifier) (op) (block (string)))))))
 
 
 =====================================
@@ -244,28 +259,27 @@ proc getLib(): string =
 ---
 
 (module
-  (function_definition (identifier) (parameters))
-  (function_definition (identifier) (parameters))
-  (function_definition (identifier) (parameters) (op) (block (omit_parens_statement (identifier) (string))))
-  (function_definition (identifier)
-    (parameters
-      (typed_parameter (identifier) (type (identifier)))
-      (typed_parameter (identifier) (type (subscript (identifier) (integer) (identifier))))))
-  (function_definition (identifier) (parameters) (pragma (identifier)))
-  (function_definition (public_id (identifier))
-    (parameters (identifier) (typed_parameter (identifier) (type (identifier))))
-    (type (identifier))
-    (pragma (pair (identifier) (string)) (identifier) (pair (identifier) (string))))
-  (function_definition (identifier) (parameters) (type (identifier)) (op)
-    (block
-      (expression_statement (declaration (block
-        (assignment (identifier) (op) (block
-          (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block
-            (expression_statement (string))))
-          (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block
-            (expression_statement (string))))
-          (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block
-            (expression_statement (string)))))))))
-      (expression_statement
+  (block (function_definition (identifier) (parameters)))
+  (block (function_definition (identifier) (parameters)))
+  (block (function_definition (identifier) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
+  (block 
+    (function_definition (identifier)
+      (parameters
+        (typed_parameter (identifier) (type (identifier)))
+        (typed_parameter (identifier) (type (subscript (identifier) (integer) (identifier)))))))
+  (block (function_definition (identifier) (parameters) (pragma (identifier))))
+  (block 
+    (function_definition (public_id (identifier))
+      (parameters (identifier) (typed_parameter (identifier) (type (identifier))))
+      (type (identifier))
+      (pragma (pair (identifier) (string)) (identifier) (pair (identifier) (string)))))
+  (block 
+    (function_definition (identifier) (parameters) (type (identifier)) (op)
+      (block
+        (declaration (block
+          (assignment (identifier) (op) (block
+            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block (string)))
+            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block (string)))
+            (generic_statement (identifier) (call (identifier) (argument_list (identifier))) (block (string)))))))
         (call (attribute (call (identifier) (argument_list)) (identifier)) (argument_list (operator (string) (op) (identifier))))))))
 
