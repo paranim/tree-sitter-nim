@@ -158,7 +158,7 @@ module.exports = grammar({
       repeat(choice($._expression, $._comma)),
       optional(seq(
         $._colon,
-        field('body', $._suite)
+        field('body', choice($._expression, $._suite))
       ))
     )),
 

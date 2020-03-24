@@ -577,8 +577,17 @@
                     "type": "FIELD",
                     "name": "body",
                     "content": {
-                      "type": "SYMBOL",
-                      "name": "_suite"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_expression"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_suite"
+                        }
+                      ]
                     }
                   }
                 ]
