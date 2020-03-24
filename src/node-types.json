@@ -12,6 +12,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -96,6 +100,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -206,6 +214,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -451,6 +463,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -528,6 +544,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -612,6 +632,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -743,6 +767,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -849,6 +877,10 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
           "named": true
         },
         {
@@ -981,6 +1013,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -1243,6 +1279,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -1341,6 +1381,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -1454,6 +1498,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -1556,6 +1604,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -1654,6 +1706,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -1748,6 +1804,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -1819,6 +1879,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -1912,6 +1976,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -1983,6 +2051,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -2111,6 +2183,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -2187,6 +2263,10 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
           "named": true
         },
         {
@@ -2292,6 +2372,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -2394,6 +2478,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -2466,6 +2554,10 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
           "named": true
         },
         {
@@ -2553,6 +2645,10 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
           "named": true
         },
         {
@@ -2668,6 +2764,10 @@
             "named": true
           },
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "call",
             "named": true
           },
@@ -2747,6 +2847,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -2837,6 +2941,10 @@
         "types": [
           {
             "type": "attribute",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -2959,6 +3067,10 @@
   },
   {
     "type": "as",
+    "named": false
+  },
+  {
+    "type": "case",
     "named": false
   },
   {

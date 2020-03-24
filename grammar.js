@@ -18,6 +18,7 @@ const PREC = {
   op9: 19,
   op10: 20,
 
+  of_clause: 21,
   call: 21,
 }
 
@@ -134,7 +135,7 @@ module.exports = grammar({
     ),
 
     _type_line: $ => seq(
-      $._type,
+      alias($._type, $.block),
       $._newline
     ),
 
@@ -152,6 +153,38 @@ module.exports = grammar({
       'type',
       alias($._type_body, $.block)
     ),
+
+    // Case expressions
+
+    _of_clause: $ => prec(PREC.of_clause, seq(
+      alias('of', $.op),
+      sep1($._expression, $._comma),
+      $._colon,
+      $._suite,
+    )),
+
+    _case_line: $ => seq(
+      $._expression,
+      $._newline
+    ),
+
+    _case_block: $ => seq(
+      repeat($._case_line),
+      $._dedent
+    ),
+
+    _case_body: $ => choice(
+      $._case_line,
+      seq($._indent, $._case_block)
+    ),
+
+    _case_expression: $ => prec.right(seq(
+      'case',
+      $.identifier,
+      $._colon,
+      optional($._type_name),
+      alias(field('body', $._case_body), $.block)
+    )),
 
     // Compount statements
 
@@ -319,6 +352,8 @@ module.exports = grammar({
       $.tuple,
       $.parenthesized_expression,
       $.lambda_definition,
+      alias($._case_expression, $.block),
+      alias($._of_clause, $.block),
     ),
 
     operator: $ => {

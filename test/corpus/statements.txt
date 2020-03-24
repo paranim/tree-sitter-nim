@@ -301,6 +301,15 @@ type
   Field* {.pure.} = enum
     Identifier, Attribute, Value
   Fact[T] = tuple[id: T, attr: T, value: T]
+  TokenKind = enum
+    Insert, Retract, Update
+  Token[T] = object
+    fact: Fact[T]
+    case kind: TokenKind
+    of Insert, Retract:
+      nil
+    of Update:
+      oldFact: Fact[T]
   Var* = object
     name*: string
     field: Field
@@ -313,13 +322,15 @@ type
 (module
   (block
     (type_definition (block
-      (public_id (identifier)) (pragma (identifier)) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier))
-      (identifier) (generics (identifier)) (op)
-        (subscript (identifier) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)))
-      (public_id (identifier)) (op) (identifier) (block
+      (block (public_id (identifier)) (pragma (identifier)) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier)))
+      (block (identifier) (generics (identifier)) (op)
+        (subscript (identifier) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier))))
+      (block (identifier) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier)))
+      (block (identifier) (generics (identifier)) (op) (identifier) (block (identifier) (op) (subscript (identifier) (identifier)) (block (identifier) (op) (block (identifier))) (block (op) (identifier) (op) (identifier) (op) (block (none))) (block (op) (identifier) (op) (block (identifier) (op) (subscript (identifier) (identifier))))))
+      (block (public_id (identifier)) (op) (identifier) (block
         (public_id (identifier)) (op) (identifier)
-        (identifier) (op) (identifier))
-      (identifier) (generics (identifier)) (op) (subscript (identifier) (subscript (identifier) (identifier)))
-      (identifier) (generics (identifier)) (op) (operator (identifier) (op) (identifier)) (block
-        (identifier) (op) (subscript (identifier) (identifier) (op) (subscript (identifier) (identifier) (op) (subscript (identifier) (identifier)))))))))
+        (identifier) (op) (identifier)))
+      (block (identifier) (generics (identifier)) (op) (subscript (identifier) (subscript (identifier) (identifier))))
+      (block (identifier) (generics (identifier)) (op) (operator (identifier) (op) (identifier)) (block
+        (identifier) (op) (subscript (identifier) (identifier) (op) (subscript (identifier) (identifier) (op) (subscript (identifier) (identifier))))))))))
 
