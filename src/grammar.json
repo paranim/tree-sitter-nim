@@ -704,6 +704,14 @@
               {
                 "type": "STRING",
                 "value": "func"
+              },
+              {
+                "type": "STRING",
+                "value": "template"
+              },
+              {
+                "type": "STRING",
+                "value": "macro"
               }
             ]
           },

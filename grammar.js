@@ -181,7 +181,7 @@ module.exports = grammar({
     ),
 
     function_definition: $ => prec.right(seq(
-      choice('proc', 'func'),
+      choice('proc', 'func', 'template', 'macro'),
       field('name', choice($.public_id, $._id_or_str)),
       optional($.generics),
       field('parameters', $.parameters),

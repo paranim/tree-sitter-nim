@@ -2350,7 +2350,7 @@
   },
   {
     "type": "type",
-    "named": false,
+    "named": true,
     "fields": {},
     "children": {
       "multiple": false,
@@ -2655,6 +2655,10 @@
     "named": false
   },
   {
+    "type": "macro",
+    "named": false
+  },
+  {
     "type": "none",
     "named": true
   },
@@ -2672,6 +2676,10 @@
   },
   {
     "type": "ref",
+    "named": false
+  },
+  {
+    "type": "template",
     "named": false
   },
   {
