@@ -420,3 +420,17 @@ let a = case b:
     (block (op) (integer) (op) (integer) (op) (block (call (identifier) (argument_list))))
     (block (op) (integer) (op) (integer) (op) (block (call (identifier) (argument_list))))))))))))
 
+
+====================================================
+Quoting
+====================================================
+
+result.add(
+  quote do:
+    `paramNode`[`varName`]
+)
+
+---
+
+(module
+  (block (call (attribute (identifier) (op) (identifier)) (argument_list (block (identifier) (identifier) (op) (block (subscript (string) (string))))))))

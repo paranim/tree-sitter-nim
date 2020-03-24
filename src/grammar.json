@@ -15,17 +15,21 @@
       }
     },
     "_statement": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_simple_statements"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_compound_statement"
-        }
-      ]
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_simple_statements"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_compound_statement"
+          }
+        ]
+      }
     },
     "_simple_statements": {
       "type": "SEQ",
@@ -736,32 +740,36 @@
       ]
     },
     "generic_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
             "type": "SYMBOL",
-            "name": "_expression"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_colon"
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
+            "name": "identifier"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
             "type": "SYMBOL",
-            "name": "_suite"
+            "name": "_colon"
+          },
+          {
+            "type": "FIELD",
+            "name": "body",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_suite"
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "_object_pair": {
       "type": "SEQ",
@@ -1701,6 +1709,15 @@
           "content": {
             "type": "SYMBOL",
             "name": "_of_clause"
+          },
+          "named": true,
+          "value": "block"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "generic_statement"
           },
           "named": true,
           "value": "block"

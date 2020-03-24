@@ -1,5 +1,5 @@
 const PREC = {
-  omit_parens: -1,
+  statement: -1,
 
   parenthesized_expression: 1,
   subscript: 2,
@@ -51,10 +51,10 @@ module.exports = grammar({
   rules: {
     module: $ => repeat(alias($._statement, $.block)),
 
-    _statement: $ => choice(
+    _statement: $ => prec(PREC.statement, choice(
       $._simple_statements,
       $._compound_statement
-    ),
+    )),
 
     // Simple statements
 
@@ -102,7 +102,7 @@ module.exports = grammar({
     ),
 
     omit_parens_statement: $ =>
-      prec(PREC.omit_parens, seq(
+      prec(PREC.statement, seq(
         $.identifier,
         sep1(field('argument', $._expression), $._comma),
         optional($._comma))
@@ -195,12 +195,12 @@ module.exports = grammar({
       $._object_pair,
     ),
 
-    generic_statement: $ => seq(
+    generic_statement: $ => prec(PREC.statement, seq(
       $.identifier,
       repeat($._expression),
       $._colon,
       field('body', $._suite)
-    ),
+    )),
 
     _object_pair: $ => seq(
       choice($.public_id, $._id_or_str),
@@ -354,6 +354,7 @@ module.exports = grammar({
       $.lambda_definition,
       alias($._case_expression, $.block),
       alias($._of_clause, $.block),
+      alias($.generic_statement, $.block),
     ),
 
     operator: $ => {
