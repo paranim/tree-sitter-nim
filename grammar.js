@@ -200,6 +200,22 @@ module.exports = grammar({
       )),
     )),
 
+    lambda_definition: $ => prec.right(seq(
+      choice('proc', 'func'),
+      optional(field('parameters', $.parameters)),
+      optional(
+        seq(
+          $._colon,
+          field('return_type', $.type)
+        )
+      ),
+      optional($.pragma),
+      optional(seq(
+        $._equals,
+        optional(field('body', $._suite))
+      )),
+    )),
+
     parameters: $ => seq(
       '(',
       optional($._parameters),
@@ -302,6 +318,7 @@ module.exports = grammar({
       $.set,
       $.tuple,
       $.parenthesized_expression,
+      $.lambda_definition,
     ),
 
     operator: $ => {
@@ -408,7 +425,10 @@ module.exports = grammar({
     subscript: $ => prec(PREC.subscript, seq(
       field('value', $._expression),
       '[',
-      optional(sep1(choice($._expression, $.pair), $._comma)),
+      optional(sep1(choice(
+        alias($.type, 'type'), // make this a non-named node
+        $.pair
+      ), $._comma)),
       optional($._comma),
       ']'
     )),

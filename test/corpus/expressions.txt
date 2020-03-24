@@ -383,4 +383,21 @@ c /= 1
       (integer))))
 
 
+====================================================
+Lambda definitions
+====================================================
+
+let a = proc(x: int): string = $x
+let b = proc(x: string) =
+  echo x
+
+---
+
+(module
+  (block (declaration (block (assignment
+    (identifier) (op) (block
+      (lambda_definition (parameters (typed_parameter (identifier) (op) (type (identifier)))) (op) (type (identifier)) (op) (block (operator (op) (identifier)))))))))
+  (block (declaration (block (assignment
+    (identifier) (op) (block
+      (lambda_definition (parameters (typed_parameter (identifier) (op) (type (identifier)))) (op) (block (omit_parens_statement (identifier) (identifier))))))))))
 

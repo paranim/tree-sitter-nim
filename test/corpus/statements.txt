@@ -302,6 +302,7 @@ type
   Var* = object
     name*: string
     field: Field
+  PtrSet[T] = HashSet[ptr Fact[T]]
 
 ---
 
@@ -313,5 +314,6 @@ type
         (subscript (identifier) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)))
       (public_id (identifier)) (op) (identifier) (block
         (public_id (identifier)) (op) (identifier)
-        (identifier) (op) (identifier))))))
+        (identifier) (op) (identifier))
+      (identifier) (generics (identifier)) (op) (subscript (identifier) (subscript (identifier) (identifier)))))))
 

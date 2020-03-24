@@ -40,6 +40,10 @@
           "named": true
         },
         {
+          "type": "lambda_definition",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -116,6 +120,10 @@
           },
           {
             "type": "integer",
+            "named": true
+          },
+          {
+            "type": "lambda_definition",
             "named": true
           },
           {
@@ -222,6 +230,10 @@
           },
           {
             "type": "integer",
+            "named": true
+          },
+          {
+            "type": "lambda_definition",
             "named": true
           },
           {
@@ -354,6 +366,10 @@
           "named": true
         },
         {
+          "type": "lambda_definition",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -459,6 +475,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -532,6 +552,10 @@
           },
           {
             "type": "integer",
+            "named": true
+          },
+          {
+            "type": "lambda_definition",
             "named": true
           },
           {
@@ -671,6 +695,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -773,6 +801,10 @@
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "lambda_definition",
           "named": true
         },
         {
@@ -1087,6 +1119,10 @@
           "named": true
         },
         {
+          "type": "lambda_definition",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -1180,6 +1216,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1230,6 +1270,56 @@
     }
   },
   {
+    "type": "lambda_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "parameters",
+            "named": true
+          }
+        ]
+      },
+      "return_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "op",
+          "named": true
+        },
+        {
+          "type": "pragma",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "list",
     "named": true,
     "fields": {},
@@ -1263,6 +1353,10 @@
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "lambda_definition",
           "named": true
         },
         {
@@ -1360,6 +1454,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1450,6 +1548,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1517,6 +1619,10 @@
           },
           {
             "type": "integer",
+            "named": true
+          },
+          {
+            "type": "lambda_definition",
             "named": true
           },
           {
@@ -1606,6 +1712,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1673,6 +1783,10 @@
           },
           {
             "type": "integer",
+            "named": true
+          },
+          {
+            "type": "lambda_definition",
             "named": true
           },
           {
@@ -1797,6 +1911,10 @@
           "named": true
         },
         {
+          "type": "lambda_definition",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -1869,6 +1987,10 @@
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "lambda_definition",
           "named": true
         },
         {
@@ -1970,6 +2092,10 @@
           "named": true
         },
         {
+          "type": "lambda_definition",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -2068,6 +2194,10 @@
             "named": true
           },
           {
+            "type": "lambda_definition",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -2111,75 +2241,11 @@
       "required": false,
       "types": [
         {
-          "type": "attribute",
-          "named": true
-        },
-        {
-          "type": "call",
-          "named": true
-        },
-        {
-          "type": "dictionary",
-          "named": true
-        },
-        {
-          "type": "false",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "list",
-          "named": true
-        },
-        {
-          "type": "none",
-          "named": true
-        },
-        {
           "type": "op",
           "named": true
         },
         {
-          "type": "operator",
-          "named": true
-        },
-        {
           "type": "pair",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "set",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "subscript",
-          "named": true
-        },
-        {
-          "type": "true",
-          "named": true
-        },
-        {
-          "type": "tuple",
           "named": true
         }
       ]
@@ -2219,6 +2285,10 @@
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "lambda_definition",
           "named": true
         },
         {
@@ -2298,6 +2368,10 @@
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "lambda_definition",
           "named": true
         },
         {
@@ -2412,6 +2486,10 @@
           },
           {
             "type": "integer",
+            "named": true
+          },
+          {
+            "type": "lambda_definition",
             "named": true
           },
           {
