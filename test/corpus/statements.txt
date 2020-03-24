@@ -217,13 +217,13 @@ let x = a * b
 
 (module
   (block (declaration (block (assignment (identifier) (op) (block (integer))))))
-  (block (declaration (block (decl (identifier) (op) (type (identifier)) (op) (block (integer))))))
-  (block (declaration (block (decl (identifier) (op) (type (identifier))))))
+  (block (declaration (block (decl (identifier) (op) (identifier) (op) (block (integer))))))
+  (block (declaration (block (decl (identifier) (op) (identifier)))))
   (block (declaration (block
     (assignment (identifier) (op) (block (integer)))
     (assignment (identifier) (op) (block (integer)))
-    (decl (identifier) (op) (type (identifier)) (op) (block (integer)))
-    (decl (identifier) (op) (type (identifier)))
+    (decl (identifier) (op) (identifier) (op) (block (integer)))
+    (decl (identifier) (op) (identifier))
     (assignment (identifier) (op) (block
       (block (identifier) (call (identifier) (argument_list (identifier))) (op)
         (block (integer)))
@@ -265,23 +265,23 @@ proc getLib(): string =
 
 (module
   (block (function_definition (identifier) (parameters)))
-  (block (function_definition (identifier) (parameters (identifier) (op) (typed_parameter (identifier) (op) (type (identifier))))))
+  (block (function_definition (identifier) (parameters (identifier) (op) (typed_parameter (identifier) (op) (identifier)))))
   (block (function_definition (identifier) (generics (identifier)) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
   (block (pragma (identifier)))
   (block 
     (function_definition (identifier)
       (parameters
-        (typed_parameter (identifier) (op) (type (identifier))) (op)
-        (typed_parameter (identifier) (op) (type (subscript (identifier) (integer) (op) (identifier)))))))
+        (typed_parameter (identifier) (op) (identifier)) (op)
+        (typed_parameter (identifier) (op) (subscript (identifier) (integer) (op) (identifier))))))
   (block (function_definition (identifier) (parameters) (pragma (identifier))))
   (block 
     (function_definition (public_id (identifier))
-      (parameters (identifier) (op) (typed_parameter (identifier) (op) (type (identifier))))
+      (parameters (identifier) (op) (typed_parameter (identifier) (op) (identifier)))
       (op)
-      (type (identifier))
+      (identifier)
       (pragma (pair (identifier) (op) (string)) (op) (identifier) (op) (pair (identifier) (op) (string)))))
   (block 
-    (function_definition (identifier) (parameters) (op) (type (identifier)) (op)
+    (function_definition (identifier) (parameters) (op) (identifier) (op)
       (block
         (declaration (block
           (assignment (identifier) (op) (block

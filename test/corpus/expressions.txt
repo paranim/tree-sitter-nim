@@ -398,8 +398,8 @@ let b = proc(x: string) =
 (module
   (block (declaration (block (assignment
     (identifier) (op) (block
-      (lambda_definition (parameters (typed_parameter (identifier) (op) (type (identifier)))) (op) (type (identifier)) (op) (block (operator (op) (identifier)))))))))
+      (lambda_definition (parameters (typed_parameter (identifier) (op) (identifier))) (op) (identifier) (op) (block (operator (op) (identifier)))))))))
   (block (declaration (block (assignment
     (identifier) (op) (block
-      (lambda_definition (parameters (typed_parameter (identifier) (op) (type (identifier)))) (op) (block (omit_parens_statement (identifier) (identifier))))))))))
+      (lambda_definition (parameters (typed_parameter (identifier) (op) (identifier))) (op) (block (omit_parens_statement (identifier) (identifier))))))))))
 

@@ -129,7 +129,7 @@ module.exports = grammar({
       optional($.generics),
       optional($.pragma),
       $._equals,
-      alias($.type, 'type'), // this makes it a non-named node for now
+      $._type_name,
       optional($._suite),
     ),
 
@@ -172,7 +172,7 @@ module.exports = grammar({
     _object_pair: $ => seq(
       choice($.public_id, $._id_or_str),
       $._colon,
-      alias($.type, 'type'), // this makes it a non-named node, because it may not actually be a type
+      $._type_name,
     ),
 
     pragma: $ => seq(
@@ -190,7 +190,7 @@ module.exports = grammar({
       optional(
         seq(
           $._colon,
-          field('return_type', $.type)
+          field('return_type', $._type_name)
         )
       ),
       optional($.pragma),
@@ -206,7 +206,7 @@ module.exports = grammar({
       optional(
         seq(
           $._colon,
-          field('return_type', $.type)
+          field('return_type', $._type_name)
         )
       ),
       optional($.pragma),
@@ -244,7 +244,7 @@ module.exports = grammar({
     typed_default_parameter: $ => seq(
       field('name', choice($.identifier, $.string)),
       $._colon,
-      field('type', $.type),
+      field('type', $._type_name),
       $._equals,
       field('value', $._expression)
     ),
@@ -389,8 +389,8 @@ module.exports = grammar({
       optional($._star),
       $._colon,
       choice(
-        field('type', $.type),
-        seq(field('type', $.type), $._equals, field('right', $._suite))
+        field('type', $._type_name),
+        seq(field('type', $._type_name), $._equals, field('right', $._suite))
       )
     ),
 
@@ -426,7 +426,7 @@ module.exports = grammar({
       field('value', $._expression),
       '[',
       optional(sep1(choice(
-        alias($.type, 'type'), // make this a non-named node
+        $._type_name,
         $.pair
       ), $._comma)),
       optional($._comma),
@@ -442,10 +442,10 @@ module.exports = grammar({
       $.identifier,
       $._colon,
       optional('var'),
-      field('type', $.type)
+      field('type', $._type_name)
     ),
 
-    type: $ => seq(
+    _type_name: $ => seq(
       optional(choice('ref', 'ptr')),
       $._expression
     ),
