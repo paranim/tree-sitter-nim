@@ -52,7 +52,7 @@ from a as b import `c`
     (import_from_statement
       (identifier)
       (identifier)
-      (identifier))))
+      (string))))
 
 =====================================
 Echo statements
@@ -286,7 +286,7 @@ proc getLib(): string =
         (typed_parameter (identifier) (op) (subscript (identifier) (integer) (op) (identifier))))))
   (block (function_definition (identifier) (parameters) (pragma (identifier))))
   (block 
-    (function_definition (public_id (identifier))
+    (function_definition (public_id (string))
       (parameters (identifier) (op) (typed_parameter (identifier) (op) (identifier)))
       (op)
       (identifier)

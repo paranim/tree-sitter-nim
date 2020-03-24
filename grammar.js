@@ -3,7 +3,7 @@ const PREC = {
 
   parenthesized_expression: 1,
   subscript: 2,
-  private_id: 3,
+  public_id: 3,
 
   // https://nim-lang.org/docs/manual.html#syntax-precedence
   op0: 10,
@@ -45,8 +45,6 @@ module.exports = grammar({
     $._suite,
     $._parameter,
   ],
-
-  word: $ => $.identifier,
 
   rules: {
     module: $ => repeat(alias($._statement, $.block)),
@@ -180,7 +178,7 @@ module.exports = grammar({
 
     _case_expression: $ => prec.right(seq(
       'case',
-      $.identifier,
+      $._id_or_str,
       $._colon,
       optional($._type_name),
       alias(field('body', $._case_body), $.block)
@@ -261,7 +259,7 @@ module.exports = grammar({
     ),
 
     _parameter: $ => choice(
-      $.identifier,
+      $._id_or_str,
       $.tuple,
       $.typed_parameter,
       $.default_parameter,
@@ -269,13 +267,13 @@ module.exports = grammar({
     ),
 
     default_parameter: $ => seq(
-      field('name', choice($.identifier, $.string)),
+      field('name', $._id_or_str),
       $._equals,
       field('value', $._expression)
     ),
 
     typed_default_parameter: $ => seq(
-      field('name', choice($.identifier, $.string)),
+      field('name', $._id_or_str),
       $._colon,
       field('type', $._type_name),
       $._equals,
@@ -306,7 +304,7 @@ module.exports = grammar({
     ),
 
     variables: $ => seq(
-      sep1(choice($.identifier, $.tuple), $._comma),
+      sep1(choice($._id_or_str, $.tuple), $._comma),
       optional($._comma)
     ),
 
@@ -317,7 +315,7 @@ module.exports = grammar({
 
     identifier_list: $ => seq(
       '[',
-      optional(sep1($.identifier, $._comma)),
+      optional(sep1($._id_or_str, $._comma)),
       optional($._comma),
       ']'
     ),
@@ -336,8 +334,7 @@ module.exports = grammar({
 
     _expression: $ => choice(
       $.operator,
-      $.identifier,
-      $.string,
+      $._id_or_str,
       $.integer,
       $.float,
       $.true,
@@ -455,7 +452,7 @@ module.exports = grammar({
     attribute: $ => prec(PREC.call, seq(
       field('object', $._expression),
       $._period,
-      field('attribute', $.identifier)
+      field('attribute', $._id_or_str)
     )),
 
     subscript: $ => prec(PREC.subscript, seq(
@@ -475,7 +472,7 @@ module.exports = grammar({
     )),
 
     typed_parameter: $ => seq(
-      $.identifier,
+      $._id_or_str,
       $._colon,
       optional('var'),
       field('type', $._type_name)
@@ -487,7 +484,7 @@ module.exports = grammar({
     ),
 
     keyword_argument: $ => seq(
-      field('name', choice($.identifier, $.string)),
+      field('name', $._id_or_str),
       $._equals,
       field('value', $._expression)
     ),
@@ -600,10 +597,10 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Zα-ωΑ-Ω_][a-zA-Zα-ωΑ-Ω_0-9]*/,
 
     // treat strings as identifiers, so backtick-quoted ids like `this` are treated like normal ids
-    _id_or_str: $ => prec(PREC.private_id, choice($.identifier, alias($.string, $.identifier))),
+    _id_or_str: $ => choice($.identifier, $.string),
 
     // function and type names that are marked as public
-    public_id: $ => seq($._id_or_str, '*'),
+    public_id: $ => prec(PREC.public_id, seq($._id_or_str, '*')),
 
     true: $ => 'true',
     false: $ => 'false',

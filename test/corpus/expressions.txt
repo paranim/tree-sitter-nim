@@ -430,7 +430,13 @@ result.add(
     `paramNode`[`varName`]
 )
 
+quote do:
+  let `filter` = proc (`v3`: Table[string, `dataType`]): bool =
+    `varNode`
+    `condBody`
+
 ---
 
 (module
-  (block (call (attribute (identifier) (op) (identifier)) (argument_list (block (identifier) (identifier) (op) (block (subscript (string) (string))))))))
+  (block (call (attribute (identifier) (op) (identifier)) (argument_list (block (identifier) (identifier) (op) (block (subscript (string) (string)))))))
+  (block (block (identifier) (identifier) (op) (block (declaration (block (assignment (string) (op) (block (lambda_definition (parameters (typed_parameter (string) (op) (subscript (identifier) (identifier) (op) (string)))) (op) (identifier) (op) (block (string) (string)))))))))))
