@@ -296,7 +296,7 @@ Type definitions
 =====================================
 
 type
-  Field* = enum
+  Field* {.pure.} = enum
     Identifier, Attribute, Value
   Fact[T] = tuple[id: T, attr: T, value: T]
   Var* = object
@@ -308,7 +308,7 @@ type
 (module
   (block
     (type_definition (block
-      (public_id (identifier)) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier))
+      (public_id (identifier)) (pragma (identifier)) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier))
       (identifier) (generics (identifier)) (op)
         (subscript (identifier) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)))
       (public_id (identifier)) (op) (identifier) (block

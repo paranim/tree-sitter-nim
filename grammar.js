@@ -126,6 +126,7 @@ module.exports = grammar({
     _type: $ => seq(
       choice($.public_id, $._id_or_str),
       optional($.generics),
+      optional($.pragma),
       $._equals,
       alias($.type, 'type'), // this makes it a non-named node for now
       optional($._suite),
