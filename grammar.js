@@ -229,7 +229,7 @@ module.exports = grammar({
       optional($.pragma),
       optional(seq(
         $._equals,
-        optional(field('body', $._suite))
+        field('body', $._suite)
       )),
     )),
 
@@ -245,7 +245,7 @@ module.exports = grammar({
       optional($.pragma),
       optional(seq(
         $._equals,
-        optional(field('body', $._suite))
+        field('body', $._suite)
       )),
     )),
 
