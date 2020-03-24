@@ -7,6 +7,7 @@ Integers
 -1u
 1_1
 0x01
+0o10'i32
 
 ---
 
@@ -14,6 +15,7 @@ Integers
   (block (operator (op) (integer)))
   (block (integer))
   (block (operator (op) (integer)))
+  (block (integer))
   (block (integer))
   (block (integer)))
 
@@ -30,13 +32,15 @@ Floats
 1e+3_4
 0.3e1_4
 1_0.0f
-0f
+0'f32
+0xff'f64
 
 ---
 
 (module
   (block (operator (op) (float)))
   (block (operator (op) (float)))
+  (block (float))
   (block (float))
   (block (float))
   (block (float))

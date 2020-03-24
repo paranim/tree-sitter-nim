@@ -537,26 +537,30 @@ module.exports = grammar({
 
     type_conversion: $ => /![a-z]/,
 
-    integer: $ => token(choice(
-      seq(
-        optional(choice('0b', '0o', '0x')),
+    integer: $ => token(seq(
+      choice(
+        seq('0b', repeat1(/[01]+_?/)),
+        seq('0o', repeat1(/[0-7]+_?/)),
+        seq('0x', repeat1(/[0-9a-fA-F]+_?/)),
         repeat1(/[0-9]+_?/),
-        optional(choice(/[iI]/, /[iI]8/, /[iI]16/, /[iI]32/, /[iI]64/, /[uU]/, /[uU]8/, /[uU]16/, /[uU]32/, /[uU]64/))
-      )
+      ),
+      optional(choice(/'?[iI]/, /'?[iI]8/, /'?[iI]16/, /'?[iI]32/, /'?[iI]64/, /'?[uU]/, /'?[uU]8/, /'?[uU]16/, /'?[uU]32/, /'?[uU]64/))
     )),
 
     float: $ => {
       const digits = repeat1(/[0-9]+_?/);
       const exponent = seq(/[eE][\+-]?/, digits)
-      var suffix = choice(/[fF]/, /[fF]32/, /[fF]64/, /[dD]/, /[dD]32/, /[dD]64/);
+      const suffix = choice(/'?[fF]/, /'?[fF]32/, /'?[fF]64/, /'?[dD]/, /'?[dD]32/, /'?[dD]64/);
 
       return token(seq(
-        optional(choice('0b', '0o', '0x')),
         choice(
+          seq('0b', repeat1(/[01]+_?/), suffix),
+          seq('0o', repeat1(/[0-7]+_?/), suffix),
+          seq('0x', repeat1(/[0-9a-fA-F]+_?/), suffix),
           seq(digits, '.', digits, optional(exponent), optional(suffix)),
           seq(digits, exponent, optional(suffix)),
-          seq(digits, suffix)
-        )
+          seq(digits, suffix),
+        ),
       ))
     },
 
