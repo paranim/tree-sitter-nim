@@ -126,6 +126,13 @@ echo a
 # hi
 echo b # bye
 echo c
+#[a]# b #[c]#
+
+##[
+  multi-line comments don't need to start with
+  two # chars, but it should work anyway
+]#
+bar
 
 ---
 
@@ -134,7 +141,9 @@ echo c
   (comment)
   (block (omit_parens_statement (identifier) (identifier))
     (comment))
-  (block (omit_parens_statement (identifier) (identifier))))
+  (block (omit_parens_statement (identifier) (identifier)))
+  (comment) (block (identifier)) (comment)
+  (comment) (comment) (block (identifier)))
 
 ====================================================
 Comments at different indentation levels
