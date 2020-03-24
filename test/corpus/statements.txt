@@ -240,7 +240,7 @@ Function definitions
 proc hello()
 func goodbye()
 
-proc hello() =
+proc hello[T]() =
   echo "hello"
 
 proc a(x: int, y: array[2, string])
@@ -264,7 +264,7 @@ proc getLib(): string =
 (module
   (block (function_definition (identifier) (parameters)))
   (block (function_definition (identifier) (parameters)))
-  (block (function_definition (identifier) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
+  (block (function_definition (identifier) (generics (identifier)) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
   (block 
     (function_definition (identifier)
       (parameters

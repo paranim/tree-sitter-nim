@@ -183,6 +183,7 @@ module.exports = grammar({
     function_definition: $ => seq(
       choice('proc', 'func'),
       field('name', choice($.public_id, $._id_or_str)),
+      optional($.generics),
       field('parameters', $.parameters),
       optional(
         seq(
@@ -407,7 +408,7 @@ module.exports = grammar({
     subscript: $ => prec(PREC.subscript, seq(
       field('value', $._expression),
       '[',
-      field('subscript', sep1(choice($._expression, $.pair), $._comma)),
+      optional(sep1(choice($._expression, $.pair), $._comma)),
       optional($._comma),
       ']'
     )),
@@ -420,6 +421,7 @@ module.exports = grammar({
     typed_parameter: $ => seq(
       $.identifier,
       $._colon,
+      optional('var'),
       field('type', $.type)
     ),
 

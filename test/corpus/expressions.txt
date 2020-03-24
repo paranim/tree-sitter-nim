@@ -20,11 +20,13 @@ Subscript expressions
 =====================================
 
 a[1]
+n[]
 
 ---
 
 (module
-  (block (subscript (identifier) (integer))))
+  (block (subscript (identifier) (integer)))
+  (block (subscript (identifier))))
 
 
 =====================================
