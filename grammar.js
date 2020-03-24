@@ -353,7 +353,7 @@ module.exports = grammar({
         // (first char * % \ /)
         [prec.left, /[%\\\/][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op9],
         [prec.left, '*', PREC.op9],
-        [prec.left, /\*[=+\-*/<>@$~&%|!?\^.:\\]*[=+\-*/<>@$~&%|!?\^.\\]/, PREC.op9], // starts with * and ends with anything but :
+        [prec.left, /\*[=+\-*/<>@$~&%|!?\^.\\][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op9], // *, then anything but :, then anything
         [prec.left, 'div', PREC.op9],
         [prec.left, 'mod', PREC.op9],
         [prec.left, 'shl', PREC.op9],
