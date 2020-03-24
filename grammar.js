@@ -328,7 +328,9 @@ module.exports = grammar({
         // If the operator ends with = and its first character is none of <, >, !, =, ~, ?
         [prec.left, /[+\-*/@$&%|\^.:\\]+[=+\-*/<>@$~&%|!?\^.:\\]*=/, PREC.op1],
         // (first char @ : ?)
-        [prec.left, /[@:?][=+\-*/<>@$~&%|!?\^.:\\]*/, PREC.op2],
+        [prec.left, /[@:?][=+\-*/<>@$~&%|!?\^.:\\]+/, PREC.op2],
+        [prec.left, '@', PREC.op2],
+        [prec.left, '?', PREC.op2],
         // or xor
         [prec.left, 'or', PREC.op3],
         [prec.left, 'xor', PREC.op3],
