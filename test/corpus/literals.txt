@@ -340,6 +340,7 @@ Tuples
 (a, b)
 (a, b, c,)
 (print, exec)
+(a: 1, b: 2)
 
 ---
 
@@ -347,5 +348,6 @@ Tuples
   (block (tuple))
   (block (tuple (identifier) (op) (identifier)))
   (block (tuple (identifier) (op) (identifier) (op) (identifier) (op)))
-  (block (tuple (identifier) (op) (identifier))))
+  (block (tuple (identifier) (op) (identifier)))
+  (block (tuple (pair (identifier) (op) (integer)) (op) (pair (identifier) (op) (integer)))))
 

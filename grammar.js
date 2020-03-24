@@ -494,7 +494,7 @@ module.exports = grammar({
 
     tuple: $ => seq(
       '(',
-      optional(sep1($._expression, $._comma)),
+      optional(sep1(choice($._expression, $.pair), $._comma)),
       optional($._comma),
       ')'
     ),

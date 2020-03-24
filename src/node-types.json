@@ -2675,6 +2675,10 @@
           "named": true
         },
         {
+          "type": "pair",
+          "named": true
+        },
+        {
           "type": "parenthesized_expression",
           "named": true
         },
