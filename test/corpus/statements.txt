@@ -5,6 +5,7 @@ Import statements
 import a, b
 import b/c as d
 import a/b/[c, d]
+import lib/pure/os, "lib/pure/times"
 
 ---
 
@@ -19,7 +20,8 @@ import a/b/[c, d]
       (identifier)))
   (block
     (import_statement
-      (identifier) (op) (identifier) (op) (identifier_list (identifier) (op) (identifier)))))
+      (identifier) (op) (identifier) (op) (identifier_list (identifier) (op) (identifier))))
+  (block (import_statement (identifier) (op) (identifier) (op) (identifier) (op) (string))))
 
 =====================================
 Import-from statements

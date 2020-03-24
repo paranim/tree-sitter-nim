@@ -87,7 +87,7 @@ module.exports = grammar({
     ),
 
     _module_list: $ => seq(
-      sep1(field('name', $._slashed_name), $._comma),
+      sep1(field('name', choice($._slashed_name, $.string)), $._comma),
       optional($._aliased_import),
     ),
 

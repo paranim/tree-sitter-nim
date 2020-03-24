@@ -1163,6 +1163,10 @@
           {
             "type": "op",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       }
@@ -1206,6 +1210,10 @@
           },
           {
             "type": "op",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
