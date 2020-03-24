@@ -243,6 +243,8 @@ func goodbye()
 proc hello[T]() =
   echo "hello"
 
+{.pop.}
+
 proc a(x: int, y: array[2, string])
 proc hello() {.cdecl.}
 
@@ -265,6 +267,7 @@ proc getLib(): string =
   (block (function_definition (identifier) (parameters)))
   (block (function_definition (identifier) (parameters)))
   (block (function_definition (identifier) (generics (identifier)) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
+  (block (pragma (identifier)))
   (block 
     (function_definition (identifier)
       (parameters

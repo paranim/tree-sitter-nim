@@ -180,7 +180,7 @@ module.exports = grammar({
       '.}'
     ),
 
-    function_definition: $ => seq(
+    function_definition: $ => prec.right(seq(
       choice('proc', 'func'),
       field('name', choice($.public_id, $._id_or_str)),
       optional($.generics),
@@ -198,7 +198,7 @@ module.exports = grammar({
           field('body', $._suite)
         )
       ),
-    ),
+    )),
 
     parameters: $ => seq(
       '(',
@@ -302,6 +302,7 @@ module.exports = grammar({
       $.set,
       $.tuple,
       $.parenthesized_expression,
+      $.pragma,
     ),
 
     operator: $ => {
