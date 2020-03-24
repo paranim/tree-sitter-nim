@@ -1,5 +1,6 @@
 {
   "name": "nim",
+  "word": "identifier",
   "rules": {
     "module": {
       "type": "REPEAT",

@@ -25,6 +25,8 @@ const PREC = {
 module.exports = grammar({
   name: 'nim',
 
+  word: $ => $.identifier,
+
   extras: $ => [
     $.comment,
     /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
