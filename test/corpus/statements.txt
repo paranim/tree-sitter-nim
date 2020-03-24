@@ -66,14 +66,14 @@ echo 0 or 1
 ---
 
 (module
-  (block (omit_parens_statement (identifier) (identifier)))
-  (block (omit_parens_statement (identifier) (identifier) (op) (identifier)))
+  (block (block (identifier) (identifier)))
+  (block (block (identifier) (identifier) (op) (identifier)))
   (block
-    (omit_parens_statement (identifier)
+    (block (identifier)
       (operator (integer) (op) (integer)) (op)
       (operator (integer) (op) (integer)) (op)))
   (block
-    (omit_parens_statement (identifier)
+    (block (identifier)
       (operator (integer) (op) (integer)))))
 
 
@@ -110,12 +110,10 @@ when not defined(release):
       (identifier) (op)
       body: (block
         (identifier)
-        (identifier))))
-  (block
-    (block (identifier)
-      (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier))))
-      (op)
-      body: (block (omit_parens_statement (identifier) argument: (string))))))
+        (block (identifier)))))
+   (block
+     (block (identifier) (operator (op) right: (call function: (identifier) arguments: (argument_list (identifier)))) (op)
+       body: (block (block (identifier) (string))))))
 
 
 ====================================================
@@ -137,11 +135,11 @@ bar
 ---
 
 (module
-  (block (omit_parens_statement (identifier) (identifier)))
+  (block (block (identifier) (identifier)))
   (comment)
-  (block (omit_parens_statement (identifier) (identifier))
+  (block (block (identifier) (identifier))
     (comment))
-  (block (omit_parens_statement (identifier) (identifier)))
+  (block (block (identifier) (identifier)))
   (comment) (block (identifier)) (comment)
   (comment) (comment) (block (identifier)))
 
@@ -168,7 +166,7 @@ if a:
       (block
         (identifier)
         (comment)
-        (identifier)))))
+        (block (identifier))))))
 
 ====================================================
 Comments after dedents
@@ -187,7 +185,7 @@ c
     (block (identifier)
       (identifier) (op)
       (block
-        (identifier))))
+        (block (identifier)))))
   (comment)
   (block (identifier)))
 
@@ -200,7 +198,7 @@ echo "a"
 ---
 
 (module
-  (block (omit_parens_statement (identifier) (string)))
+  (block (block (identifier) (string)))
   (comment))
 
 =====================================
@@ -277,7 +275,7 @@ proc getLib(): string =
 (module
   (block (function_definition (identifier) (parameters)))
   (block (function_definition (identifier) (parameters (identifier) (op) (typed_parameter (identifier) (op) (identifier)))))
-  (block (function_definition (identifier) (generics (identifier)) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
+  (block (function_definition (identifier) (generics (identifier)) (parameters) (op) (block (block (identifier) (string)))))
   (block (pragma (identifier)))
   (block 
     (function_definition (identifier)
@@ -296,9 +294,9 @@ proc getLib(): string =
       (block
         (declaration (block
           (assignment (identifier) (op) (block
-            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
-            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))
-            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (string)))))))
+            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (block (string))))
+            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (block (string))))
+            (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (block (string))))))))
         (call (attribute (call (identifier) (argument_list)) (op) (identifier)) (argument_list (operator (string) (op) (identifier))))))))
 
 
@@ -335,7 +333,7 @@ type
       (block (identifier) (generics (identifier)) (op)
         (subscript (identifier) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier)) (op) (pair (identifier) (op) (identifier))))
       (block (identifier) (op) (identifier) (block (identifier) (op) (identifier) (op) (identifier)))
-      (block (identifier) (generics (identifier)) (op) (identifier) (block (identifier) (op) (subscript (identifier) (identifier)) (block (identifier) (op) (block (identifier))) (block (op) (identifier) (op) (identifier) (op) (block (none))) (block (op) (identifier) (op) (block (identifier) (op) (subscript (identifier) (identifier))))))
+      (block (identifier) (generics (identifier)) (op) (identifier) (block (identifier) (op) (subscript (identifier) (identifier)) (block (identifier) (identifier) (op) (block (identifier))) (block (op) (identifier) (op) (identifier) (op) (block (none))) (block (op) (identifier) (op) (block (identifier) (op) (subscript (identifier) (identifier))))))
       (block (public_id (identifier)) (op) (identifier) (block
         (public_id (identifier)) (op) (identifier)
         (identifier) (op) (identifier)))

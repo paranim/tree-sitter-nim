@@ -401,7 +401,7 @@ let b = proc(x: string) =
       (lambda_definition (parameters (typed_parameter (identifier) (op) (identifier))) (op) (identifier) (op) (block (operator (op) (identifier)))))))))
   (block (declaration (block (assignment
     (identifier) (op) (block
-      (lambda_definition (parameters (typed_parameter (identifier) (op) (identifier))) (op) (block (omit_parens_statement (identifier) (identifier))))))))))
+      (lambda_definition (parameters (typed_parameter (identifier) (op) (identifier))) (op) (block (block (identifier) (identifier))))))))))
 
 ====================================================
 Case expressions
@@ -416,7 +416,7 @@ let a = case b:
 ---
 
 (module
-  (block (declaration (block (assignment (identifier) (op) (block (block (identifier) (op) (block
+  (block (declaration (block (assignment (identifier) (op) (block (block (identifier) (identifier) (op) (block
     (block (op) (integer) (op) (integer) (op) (block (call (identifier) (argument_list))))
     (block (op) (integer) (op) (integer) (op) (block (call (identifier) (argument_list))))))))))))
 
@@ -439,4 +439,4 @@ quote do:
 
 (module
   (block (call (attribute (identifier) (op) (identifier)) (argument_list (block (identifier) (identifier) (op) (block (subscript (string) (string)))))))
-  (block (block (identifier) (identifier) (op) (block (declaration (block (assignment (string) (op) (block (lambda_definition (parameters (typed_parameter (string) (op) (subscript (identifier) (identifier) (op) (string)))) (op) (identifier) (op) (block (string) (string)))))))))))
+  (block (block (identifier) (identifier) (op) (block (declaration (block (assignment (string) (op) (block (lambda_definition (parameters (typed_parameter (string) (op) (subscript (identifier) (identifier) (op) (string)))) (op) (identifier) (op) (block (string) (block (string))))))))))))

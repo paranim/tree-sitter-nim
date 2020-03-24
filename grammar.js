@@ -69,7 +69,6 @@ module.exports = grammar({
     _simple_statement: $ => choice(
       $.import_statement,
       $.import_from_statement,
-      $.omit_parens_statement,
       $._expression_statement,
     ),
 
@@ -98,13 +97,6 @@ module.exports = grammar({
       'as',
       field('alias', $._id_or_str)
     ),
-
-    omit_parens_statement: $ =>
-      prec(PREC.statement, seq(
-        $.identifier,
-        sep1(field('argument', $._expression), $._comma),
-        optional($._comma))
-      ),
 
     _expression_statement: $ => choice(
       $._expression,
@@ -152,38 +144,6 @@ module.exports = grammar({
       alias($._type_body, $.block)
     ),
 
-    // Case expressions
-
-    _of_clause: $ => prec(PREC.of_clause, seq(
-      alias('of', $.op),
-      sep1($._expression, $._comma),
-      $._colon,
-      $._suite,
-    )),
-
-    _case_line: $ => seq(
-      $._expression,
-      $._newline
-    ),
-
-    _case_block: $ => seq(
-      repeat($._case_line),
-      $._dedent
-    ),
-
-    _case_body: $ => choice(
-      $._case_line,
-      seq($._indent, $._case_block)
-    ),
-
-    _case_expression: $ => prec.right(seq(
-      'case',
-      $._id_or_str,
-      $._colon,
-      optional($._type_name),
-      alias(field('body', $._case_body), $.block)
-    )),
-
     // Compount statements
 
     _compound_statement: $ => choice(
@@ -193,11 +153,13 @@ module.exports = grammar({
       $._object_pair,
     ),
 
-    generic_statement: $ => prec(PREC.statement, seq(
-      $.identifier,
-      repeat($._expression),
-      $._colon,
-      field('body', $._suite)
+    generic_statement: $ => prec.right(PREC.statement, seq(
+      choice($.identifier, $.string),
+      repeat(choice($._expression, $._comma)),
+      optional(seq(
+        $._colon,
+        field('body', $._suite)
+      ))
     )),
 
     _object_pair: $ => seq(
@@ -349,7 +311,6 @@ module.exports = grammar({
       $.tuple,
       $.parenthesized_expression,
       $.lambda_definition,
-      alias($._case_expression, $.block),
       alias($._of_clause, $.block),
       alias($.generic_statement, $.block),
     ),
@@ -488,6 +449,13 @@ module.exports = grammar({
       $._equals,
       field('value', $._expression)
     ),
+
+    _of_clause: $ => prec(PREC.of_clause, seq(
+      alias('of', $.op),
+      sep1($._expression, $._comma),
+      $._colon,
+      $._suite,
+    )),
 
     // Literals
 
