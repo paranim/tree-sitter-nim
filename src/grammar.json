@@ -367,7 +367,7 @@
         }
       ]
     },
-    "_type": {
+    "type_block": {
       "type": "SEQ",
       "members": [
         {
@@ -433,13 +433,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_type"
-          },
-          "named": true,
-          "value": "block"
+          "type": "SYMBOL",
+          "name": "type_block"
         },
         {
           "type": "SYMBOL",
@@ -2674,7 +2669,7 @@
         }
       ]
     },
-    "decl": {
+    "decl_block": {
       "type": "SEQ",
       "members": [
         {
@@ -2769,7 +2764,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "decl"
+          "name": "decl_block"
         },
         {
           "type": "SYMBOL",

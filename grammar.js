@@ -117,7 +117,7 @@ module.exports = grammar({
       ']'
     ),
 
-    _type: $ => seq(
+    type_block: $ => seq(
       choice($.public_id, $._id_or_str),
       optional($.generics),
       optional($.pragma),
@@ -127,7 +127,7 @@ module.exports = grammar({
     ),
 
     _type_line: $ => seq(
-      alias($._type, $.block),
+      $.type_block,
       $._newline
     ),
 
@@ -377,7 +377,7 @@ module.exports = grammar({
       field('right', $._suite),
     ),
 
-    decl: $ => seq(
+    decl_block: $ => seq(
       field('left', choice($.public_id, $._expression)),
       choice(
         seq($._equals, field('right', $._suite)),
@@ -387,7 +387,7 @@ module.exports = grammar({
     ),
 
     _decl_line: $ => seq(
-      $.decl,
+      $.decl_block,
       $._newline
     ),
 

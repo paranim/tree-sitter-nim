@@ -406,7 +406,7 @@
           "named": true
         },
         {
-          "type": "decl",
+          "type": "decl_block",
           "named": true
         },
         {
@@ -427,10 +427,6 @@
         },
         {
           "type": "function_definition",
-          "named": true
-        },
-        {
-          "type": "generics",
           "named": true
         },
         {
@@ -499,6 +495,10 @@
         },
         {
           "type": "tuple",
+          "named": true
+        },
+        {
+          "type": "type_block",
           "named": true
         },
         {
@@ -603,7 +603,7 @@
     }
   },
   {
-    "type": "decl",
+    "type": "decl_block",
     "named": true,
     "fields": {
       "left": {
@@ -2684,6 +2684,105 @@
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "subscript",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        },
+        {
+          "type": "tuple",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "call",
+          "named": true
+        },
+        {
+          "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "generics",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "lambda_definition",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "op",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "pragma",
+          "named": true
+        },
+        {
+          "type": "public_id",
           "named": true
         },
         {
