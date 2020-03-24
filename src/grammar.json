@@ -732,6 +732,10 @@
               {
                 "type": "STRING",
                 "value": "iterator"
+              },
+              {
+                "type": "STRING",
+                "value": "method"
               }
             ]
           },

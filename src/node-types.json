@@ -2649,6 +2649,10 @@
     "named": false
   },
   {
+    "type": "method",
+    "named": false
+  },
+  {
     "type": "none",
     "named": true
   },

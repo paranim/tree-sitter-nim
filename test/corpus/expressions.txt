@@ -65,6 +65,7 @@ __a__()
 b(1)
 c(e, f=g)
 i(j, 5,)
+a[float]()
 
 ---
 
@@ -82,7 +83,8 @@ i(j, 5,)
       (keyword_argument (identifier) (op) (identifier)))))
   (block (call
     (identifier)
-    (argument_list (identifier) (op) (integer) (op)))))
+    (argument_list (identifier) (op) (integer) (op))))
+  (block (call (subscript (identifier) (identifier)) (argument_list))))
 
 =====================================
 Print used as an identifier

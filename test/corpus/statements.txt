@@ -238,7 +238,7 @@ Function definitions
 =====================================
 
 proc hello()
-func goodbye()
+func goodbye(a, b: int)
 
 proc hello[T]() =
   echo "hello"
@@ -265,7 +265,7 @@ proc getLib(): string =
 
 (module
   (block (function_definition (identifier) (parameters)))
-  (block (function_definition (identifier) (parameters)))
+  (block (function_definition (identifier) (parameters (identifier) (op) (typed_parameter (identifier) (op) (type (identifier))))))
   (block (function_definition (identifier) (generics (identifier)) (parameters) (op) (block (omit_parens_statement (identifier) (string)))))
   (block (pragma (identifier)))
   (block 
@@ -303,6 +303,8 @@ type
     name*: string
     field: Field
   PtrSet[T] = HashSet[ptr Fact[T]]
+  AlphaNode[T] = ref object of Node
+    facts: Table[int, Table[int, Fact[T]]]
 
 ---
 
@@ -315,5 +317,7 @@ type
       (public_id (identifier)) (op) (identifier) (block
         (public_id (identifier)) (op) (identifier)
         (identifier) (op) (identifier))
-      (identifier) (generics (identifier)) (op) (subscript (identifier) (subscript (identifier) (identifier)))))))
+      (identifier) (generics (identifier)) (op) (subscript (identifier) (subscript (identifier) (identifier)))
+      (identifier) (generics (identifier)) (op) (operator (identifier) (op) (identifier)) (block
+        (identifier) (op) (subscript (identifier) (identifier) (op) (subscript (identifier) (identifier) (op) (subscript (identifier) (identifier)))))))))
 
