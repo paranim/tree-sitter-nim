@@ -112,6 +112,7 @@ module.exports = grammar({
       seq(sep1($._expression, $._comma), optional($._comma)),
       $.assignment,
       $.declaration,
+      $.pragma,
     ),
 
     // Type definitions
@@ -182,10 +183,10 @@ module.exports = grammar({
     ),
 
     function_definition: $ => prec.right(seq(
-      choice('proc', 'func', 'template', 'macro'),
+      choice('proc', 'func', 'template', 'macro', 'iterator'),
       field('name', choice($.public_id, $._id_or_str)),
       optional($.generics),
-      field('parameters', $.parameters),
+      optional(field('parameters', $.parameters)),
       optional(
         seq(
           $._colon,
@@ -193,12 +194,10 @@ module.exports = grammar({
         )
       ),
       optional($.pragma),
-      optional(
-        seq(
-          $._equals,
-          field('body', $._suite)
-        )
-      ),
+      optional(seq(
+        $._equals,
+        optional(field('body', $._suite))
+      )),
     )),
 
     parameters: $ => seq(
@@ -303,7 +302,6 @@ module.exports = grammar({
       $.set,
       $.tuple,
       $.parenthesized_expression,
-      $.pragma,
     ),
 
     operator: $ => {
