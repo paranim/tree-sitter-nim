@@ -184,7 +184,7 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -663,6 +663,10 @@
             "named": true
           },
           {
+            "type": "public_id",
+            "named": true
+          },
+          {
             "type": "set",
             "named": true
           },
@@ -696,7 +700,7 @@
       },
       "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "attribute",

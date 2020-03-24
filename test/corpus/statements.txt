@@ -225,21 +225,21 @@ let x = a * b
 ---
 
 (module
-  (block (declaration (block (assignment (identifier) (op) (block (integer))))))
+  (block (declaration (block (decl (identifier) (op) (block (integer))))))
   (block (declaration (block (decl (identifier) (op) (identifier) (op) (block (integer))))))
   (block (declaration (block (decl (identifier) (op) (identifier)))))
   (block (declaration (block
-    (assignment (identifier) (op) (block (integer)))
-    (assignment (identifier) (op) (block (integer)))
+    (decl (identifier) (op) (block (integer)))
+    (decl (identifier) (op) (block (integer)))
     (decl (identifier) (op) (identifier) (op) (block (integer)))
     (decl (identifier) (op) (identifier))
-    (assignment (identifier) (op) (block
+    (decl (identifier) (op) (block
       (block (identifier) (call (identifier) (argument_list (identifier))) (op)
         (block (integer)))
       (identifier) (op) (integer)))
-    (assignment (identifier) (op) (block (call (identifier) (argument_list)))))))
-  (block (declaration (block (assignment (identifier) (op) (op) (block (string))))))
-  (block (declaration (block (assignment (identifier) (op) (block (operator (identifier) (op) (identifier))))))))
+    (decl (identifier) (op) (block (call (identifier) (argument_list)))))))
+  (block (declaration (block (decl (public_id (identifier)) (op) (block (string))))))
+  (block (declaration (block (decl (identifier) (op) (block (operator (identifier) (op) (identifier))))))))
 
 
 =====================================
@@ -293,7 +293,7 @@ proc getLib(): string =
     (function_definition (identifier) (parameters) (op) (identifier) (op)
       (block
         (declaration (block
-          (assignment (identifier) (op) (block
+          (decl (identifier) (op) (block
             (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (block (string))))
             (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (block (string))))
             (block (identifier) (call (identifier) (argument_list (identifier))) (op) (block (block (string))))))))
