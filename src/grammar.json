@@ -515,6 +515,15 @@
           "value": "block"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_of_clause"
+          },
+          "named": true,
+          "value": "block"
+        },
+        {
           "type": "SYMBOL",
           "name": "type_definition"
         },
@@ -1497,15 +1506,6 @@
         {
           "type": "SYMBOL",
           "name": "lambda_definition"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_of_clause"
-          },
-          "named": true,
-          "value": "block"
         },
         {
           "type": "ALIAS",

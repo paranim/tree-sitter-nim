@@ -151,6 +151,7 @@ module.exports = grammar({
     _compound_statement: $ => choice(
       $.function_definition,
       alias($.generic_statement, $.block),
+      alias($._of_clause, $.block),
       $.type_definition,
       $._object_pair,
     ),
@@ -313,7 +314,6 @@ module.exports = grammar({
       $.tuple,
       $.parenthesized_expression,
       $.lambda_definition,
-      alias($._of_clause, $.block),
       alias($.generic_statement, $.block),
     ),
 
