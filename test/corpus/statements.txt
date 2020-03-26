@@ -256,6 +256,7 @@ proc hello[T]() =
 
 proc a(x: int, y: array[2, string])
 proc hello() {.cdecl.}
+proc goodbye(f: proc(): bool)
 
 proc `==`*(a, b: NimIdent): bool {.magic: "EqIdent", noSideEffect, deprecated:
   "Deprecated since version 0.18.1; Use '==' on 'NimNode' instead.".}
@@ -283,6 +284,7 @@ proc getLib(): string =
         (typed_parameter (identifier) (op) (identifier)) (op)
         (typed_parameter (identifier) (op) (subscript (identifier) (integer) (op) (identifier))))))
   (block (function_definition (identifier) (parameters) (pragma (identifier))))
+  (block (function_definition (identifier) (parameters (typed_parameter (identifier) (op) (lambda_definition (parameters) (op) (identifier))))))
   (block 
     (function_definition (public_id (string))
       (parameters (identifier) (op) (typed_parameter (identifier) (op) (identifier)))
