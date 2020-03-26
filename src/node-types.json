@@ -1554,7 +1554,7 @@
       },
       "parameters": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "parameters",

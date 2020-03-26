@@ -198,7 +198,7 @@ module.exports = grammar({
 
     lambda_definition: $ => prec.right(seq(
       choice('proc', 'func'),
-      optional(field('parameters', $.parameters)),
+      field('parameters', $.parameters),
       optional(
         seq(
           $._colon,
