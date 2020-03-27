@@ -1656,10 +1656,6 @@
         {
           "type": "op",
           "named": true
-        },
-        {
-          "type": "pragma",
-          "named": true
         }
       ]
     }

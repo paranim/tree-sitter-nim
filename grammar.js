@@ -205,7 +205,6 @@ module.exports = grammar({
           field('return_type', $._type_name)
         )
       ),
-      optional($.pragma),
       optional(seq(
         $._equals,
         field('body', $._suite)
