@@ -41,13 +41,6 @@ module.exports = grammar({
     $._string_end,
   ],
 
-  inline: $ => [
-    $._simple_statement,
-    $._compound_statement,
-    $._suite,
-    $._parameter,
-  ],
-
   rules: {
     module: $ => repeat(alias($._statement, $.block)),
 
