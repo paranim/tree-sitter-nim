@@ -102,7 +102,6 @@ module.exports = grammar({
 
     _expression_statement: $ => choice(
       $._expression,
-      seq(sep1($._expression, $._comma), optional($._comma)),
       $.assignment,
       $.declaration,
       $.pragma,
@@ -150,13 +149,12 @@ module.exports = grammar({
 
     _compound_statement: $ => choice(
       $.function_definition,
-      alias($.generic_statement, $.block),
       alias($._of_clause, $.block),
       $.type_definition,
       $._object_pair,
     ),
 
-    generic_statement: $ => prec.right(PREC.statement, seq(
+    _generic_statement: $ => prec.right(PREC.statement, seq(
       choice($.identifier, $.string),
       repeat(choice($._expression, $._comma)),
       optional(seq(
@@ -313,7 +311,7 @@ module.exports = grammar({
       $.tuple,
       $.parenthesized_expression,
       $.lambda_definition,
-      alias($.generic_statement, $.block),
+      $._generic_statement,
     ),
 
     operator: $ => {
